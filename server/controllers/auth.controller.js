@@ -6,7 +6,6 @@ const login = async (req, res) => {
     const { user_id, password, user_role } = req.body;
 
     try {
-        console.log(`Login attempt for user_id: ${user_id}, role: ${user_role}`);
         const user = await User.findByUserId(user_id);
 
         if (!user) {

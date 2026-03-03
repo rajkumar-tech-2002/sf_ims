@@ -1,0 +1,195 @@
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { Package, Mail, Lock, ArrowRight, AlertCircle, Home } from 'lucide-react';
+
+const LoginPage = () => {
+    const [userId, setUserId] = useState('');
+    const [password, setPassword] = useState('');
+    const [role, setRole] = useState('');
+    const [roles, setRoles] = useState([]);
+    const [error, setError] = useState('');
+    const { login } = useAuth();
+    const navigate = useNavigate();
+
+    // Fetch roles on mount
+    React.useEffect(() => {
+        const fetchRoles = async () => {
+            try {
+                const response = await fetch('/api/auth/roles');
+                if (response.ok) {
+                    const data = await response.json();
+                    setRoles(data);
+                }
+            } catch (err) {
+                console.error('Failed to fetch roles:', err);
+            }
+        };
+        fetchRoles();
+    }, []);
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setError('');
+
+        if (!userId || !password || !role) {
+            setError('Please fill in all fields');
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: userId, password, user_role: role }),
+                credentials: 'include'
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                login(data.user);
+                navigate('/dashboard');
+            } else {
+                setError(data.message || 'Login failed');
+            }
+        } catch (err) {
+            setError('Unable to connect to server');
+            console.error('Login error:', err);
+        }
+    };
+
+    return (
+        <div className="min-h-screen grid lg:grid-cols-2 bg-white">
+            {/* Left Side: Visual/Branding */}
+            <div className="hidden lg:flex flex-col justify-between p-12 bg-slate-900 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-full h-full bg-primary-600/10 blur-[150px]" />
+                <div className="relative z-10">
+                    <div className="flex items-center gap-2 text-white">
+                        <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <Package size={20} />
+                        </div>
+                        <span className="text-2xl font-bold tracking-tight">StockWise</span>
+                    </div>
+                </div>
+
+                <div className="relative z-10">
+                    <h1 className="text-5xl font-bold text-white mb-6 leading-tight">
+                        Powering the next <br />
+                        generation of <br />
+                        <span className="text-primary-400">logistics management.</span>
+                    </h1>
+                    <p className="text-slate-400 text-lg max-w-md">
+                        Join thousands of companies optimizing their supply chain with our real-time analytics and inventory tools.
+                    </p>
+                </div>
+
+                <div className="relative z-10 flex items-center gap-6 text-slate-500 text-sm font-medium">
+                    <span>© 2024 StockWise</span>
+                    <span>Privacy Policy</span>
+                    <span>Support</span>
+                </div>
+            </div>
+
+            {/* Right Side: Login Form */}
+            <div className="flex flex-col items-center justify-center p-8 lg:p-24 bg-slate-50/30 relative">
+                <Link
+                    to="/"
+                    className="absolute top-8 right-8 p-3 bg-white border border-slate-200 rounded-xl text-slate-500 hover:text-primary-600 hover:border-primary-200 hover:shadow-md transition-all duration-300 group"
+                    title="Back to Home"
+                >
+                    <Home size={20} className="group-hover:scale-110 transition-transform" />
+                </Link>
+
+                <div className="w-full max-w-md">
+                    <div className="lg:hidden flex items-center gap-2 mb-12 justify-center">
+                        <Package className="text-primary-600" size={32} />
+                        <span className="text-3xl font-bold text-slate-900">StockWise</span>
+                    </div>
+
+                    <div className="mb-10 text-center lg:text-left">
+                        <h2 className="text-3xl font-bold text-slate-900 mb-2">Welcome Back</h2>
+                        <p className="text-slate-500">Sign in to access your dashboard</p>
+                    </div>
+
+                    {error && (
+                        <div className="mb-6 p-4 bg-rose-50 border border-rose-100 rounded-xl flex items-center gap-3 text-rose-600 text-sm animate-shake">
+                            <AlertCircle size={18} />
+                            {error}
+                        </div>
+                    )}
+
+                    <form onSubmit={handleLogin} className="space-y-6">
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Select Role</label>
+                            <select
+                                required
+                                className="input-field appearance-none bg-white"
+                                value={role}
+                                onChange={(e) => setRole(e.target.value)}
+                            >
+                                <option value="">Select your role</option>
+                                {roles.map((r) => (
+                                    <option key={r} value={r}>{r}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">User ID</label>
+                            <div className="relative">
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                                <input
+                                    type="text"
+                                    required
+                                    className="input-field pl-12"
+                                    value={userId}
+                                    onChange={(e) => setUserId(e.target.value)}
+                                    placeholder="Enter your user ID"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-1.5">
+                            <div className="flex justify-between items-center px-1">
+                                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Password</label>
+                                <a href="#" className="text-xs font-bold text-primary-600 hover:text-primary-700">Forgot?</a>
+                            </div>
+                            <div className="relative">
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                                <input
+                                    type="password"
+                                    required
+                                    className="input-field pl-12"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="••••••••"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 px-1">
+                            <input type="checkbox" id="remember" className="w-4 h-4 rounded text-primary-600 focus:ring-primary-500 border-slate-300" />
+                            <label htmlFor="remember" className="text-sm text-slate-600 font-medium cursor-pointer">Remember me</label>
+                        </div>
+
+                        <button type="submit" className="w-full btn btn-primary py-4 text-base mt-2 flex items-center justify-center gap-2">
+                            Sign In <ArrowRight size={20} />
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const DemoBadge = ({ label, onClick }) => (
+    <button
+        type="button"
+        onClick={onClick}
+        className="px-2 py-1.5 bg-white border border-slate-200 rounded-lg text-[10px] font-bold text-slate-600 hover:border-primary-300 hover:text-primary-600 transition-colors shadow-sm"
+    >
+        {label}
+    </button>
+);
+
+export default LoginPage;

@@ -8,11 +8,8 @@ import {
     Save,
     X,
     Hash,
-    AlertCircle,
-    CheckCircle2,
     ChevronDown,
     ChevronUp,
-    Filter,
     Tag,
     IndianRupee,
     Layers,
@@ -23,7 +20,7 @@ import api from '../utils/api';
 import DataTable from '../components/DataTable';
 import { useToast } from '../context/ToastContext';
 
-const StockEntry = () => {
+const RawMaterialStockEntry = () => {
     const { showToast, confirmToast } = useToast();
     const [stocks, setStocks] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -32,17 +29,15 @@ const StockEntry = () => {
     const [currentId, setCurrentId] = useState(null);
     const [showTable, setShowTable] = useState(false);
     const [formData, setFormData] = useState({
-        product_name: '',
-        product_code: '',
         hsn_code: '',
-        qty: '',
+        product_code: '',
+        product_name: '',
+        detail: '',
+        qty: 0,
+        price_rate: 0,
         scale: 'PCS',
-        purchase_price: '',
-        sale_price: '',
-        gst: '0',
-        discount_percent: '0',
-        reorder_level: '10',
-        detail: ''
+        gst: 0,
+        reorder_level: 10
     });
 
     useEffect(() => {
@@ -51,10 +46,10 @@ const StockEntry = () => {
 
     const fetchStocks = async () => {
         try {
-            const response = await api.get('/stocks');
+            const response = await api.get('/raw-material-stocks');
             setStocks(response.data);
         } catch (error) {
-            showToast('error', 'Failed to fetch stock records');
+            showToast('error', 'Failed to fetch raw material stock records');
         } finally {
             setLoading(false);
         }
@@ -69,11 +64,11 @@ const StockEntry = () => {
         e.preventDefault();
         try {
             if (isEditing) {
-                await api.put(`/stocks/${currentId}`, formData);
-                showToast('success', 'Stock updated successfully');
+                await api.put(`/raw-material-stocks/${currentId}`, formData);
+                showToast('success', 'Raw material stock updated successfully');
             } else {
-                await api.post('/stocks', formData);
-                showToast('success', 'Stock added successfully');
+                await api.post('/raw-material-stocks', formData);
+                showToast('success', 'Raw material stock added successfully');
             }
             resetForm();
             fetchStocks();
@@ -84,17 +79,15 @@ const StockEntry = () => {
 
     const handleEdit = (stock) => {
         setFormData({
-            product_name: stock.product_name,
-            product_code: stock.product_code,
-            hsn_code: stock.hsn_code,
-            qty: stock.qty,
-            scale: stock.scale,
-            purchase_price: stock.purchase_price,
-            sale_price: stock.sale_price,
-            gst: stock.gst,
-            discount_percent: stock.discount_percent,
-            reorder_level: stock.reorder_level,
-            detail: stock.detail
+            hsn_code: stock.hsn_code || '',
+            product_code: stock.product_code || '',
+            product_name: stock.product_name || '',
+            detail: stock.detail || '',
+            qty: stock.qty || 0,
+            price_rate: stock.price_rate || 0,
+            scale: stock.scale || 'PCS',
+            gst: stock.gst || 0,
+            reorder_level: stock.reorder_level || 0
         });
         setCurrentId(stock.id);
         setIsEditing(true);
@@ -102,10 +95,10 @@ const StockEntry = () => {
     };
 
     const handleDelete = (id) => {
-        confirmToast('Delete this stock record permanently?', async () => {
+        confirmToast('Delete this raw material stock record permanently?', async () => {
             try {
-                await api.delete(`/stocks/${id}`);
-                showToast('success', 'Stock deleted successfully');
+                await api.delete(`/raw-material-stocks/${id}`);
+                showToast('success', 'Raw material stock deleted successfully');
                 fetchStocks();
             } catch (error) {
                 showToast('error', 'Failed to delete record');
@@ -120,19 +113,19 @@ const StockEntry = () => {
             product_name: '',
             detail: '',
             qty: 0,
-            sale_price: 0,
-            scale: '',
-            gst: 12.00,
-            discount_percent: 0.00,
+            price_rate: 0,
+            scale: 'PCS',
+            gst: 0,
+            reorder_level: 10
         });
         setIsEditing(false);
         setCurrentId(null);
     };
 
     const filteredStocks = stocks.filter(stock =>
-        stock.product_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        stock.product_code.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        stock.hsn_code.toLowerCase().includes(searchTerm.toLowerCase())
+        (stock.product_name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (stock.product_code || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (stock.hsn_code || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
@@ -141,8 +134,8 @@ const StockEntry = () => {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h1 className="section-title">Stock Registry</h1>
-                        <p className="text-slate-500 text-base mt-2 font-medium">Manage and monitor your warehouse inventory levels.</p>
+                        <h1 className="section-title text-2xl font-bold text-slate-800">Raw Material Registry</h1>
+                        <p className="text-slate-500 text-base mt-2 font-medium">Manage and monitor your raw material inventory levels.</p>
                     </div>
                     <button
                         onClick={() => setShowTable(!showTable)}
@@ -151,7 +144,7 @@ const StockEntry = () => {
                                 ? 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
                                 : 'bg-white text-primary-600 border-primary-100 hover:border-primary-300 hover:bg-primary-50'}`}
                     >
-                        {showTable ? <><ChevronUp size={20} /> Hide Registry</> : <><ChevronDown size={20} /> Show Detail</>}
+                        {showTable ? <><ChevronUp size={20} /> Hide Registry</> : <><ChevronDown size={20} /> Show Registry</>}
                     </button>
                 </div>
 
@@ -162,7 +155,7 @@ const StockEntry = () => {
                             <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white">
                                 <Plus size={20} />
                             </div>
-                            <h2 className="text-lg font-bold text-slate-800">{isEditing ? 'Edit Stock Record' : 'Add New Stock'}</h2>
+                            <h2 className="text-lg font-bold text-slate-800">{isEditing ? 'Edit Raw Material' : 'Add New Raw Material'}</h2>
                         </div>
                         {isEditing && (
                             <button onClick={resetForm} className="text-slate-400 hover:text-slate-600 transition-colors">
@@ -194,7 +187,7 @@ const StockEntry = () => {
                                     className="input-field"
                                     value={formData.product_code}
                                     onChange={handleInputChange}
-                                    placeholder="SKU-001"
+                                    placeholder="RM-001"
                                 />
                             </div>
                             <div className="space-y-1.5 lg:col-span-2">
@@ -207,7 +200,7 @@ const StockEntry = () => {
                                     className="input-field"
                                     value={formData.product_name}
                                     onChange={handleInputChange}
-                                    placeholder={'5" JACQUARD'}
+                                    placeholder='Raw Silk'
                                 />
                             </div>
                             <div className="space-y-1.5 lg:col-span-4">
@@ -219,12 +212,12 @@ const StockEntry = () => {
                                     className="input-field py-3 min-h-[80px]"
                                     value={formData.detail}
                                     onChange={handleInputChange}
-                                    placeholder="Additional product details..."
+                                    placeholder="Additional raw material details..."
                                 />
                             </div>
                             <div className="space-y-1.5">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Hash size={12} /> Quantity</label>
+                                    <Hash size={12} /> Opening Quantity</label>
                                 <input
                                     type="number"
                                     required
@@ -236,15 +229,15 @@ const StockEntry = () => {
                             </div>
                             <div className="space-y-1.5">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <IndianRupee size={12} /> Sale Price</label>
+                                    <IndianRupee size={12} /> Price Rate</label>
                                 <div className="relative">
                                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
                                     <input
                                         type="number"
                                         required
-                                        name="sale_price"
+                                        name="price_rate"
                                         className="input-field pl-8"
-                                        value={formData.sale_price}
+                                        value={formData.price_rate}
                                         onChange={handleInputChange}
                                     />
                                 </div>
@@ -255,7 +248,7 @@ const StockEntry = () => {
                                 <div className="relative">
                                     <select
                                         name="scale"
-                                        className="input-field appearance-none bg-white"
+                                        className="input-field appearance-none bg-white font-bold"
                                         value={formData.scale}
                                         onChange={handleInputChange}
                                     >
@@ -277,30 +270,18 @@ const StockEntry = () => {
                                     type="number"
                                     step="0.01"
                                     name="gst"
-                                    className="input-field"
+                                    className="input-field font-bold"
                                     value={formData.gst}
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Percent size={12} /> Discount %</label>
-                                <input
-                                    type="number"
-                                    step="0.01"
-                                    name="discount_percent"
-                                    className="input-field"
-                                    value={formData.discount_percent}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="space-y-1.5">
+                            <div className="space-y-1.5 lg:col-span-2">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <AlertTriangle size={12} /> ReOrder Level</label>
                                 <input
                                     type="number"
                                     name="reorder_level"
-                                    className="input-field"
+                                    className="input-field font-bold"
                                     value={formData.reorder_level}
                                     onChange={handleInputChange}
                                 />
@@ -330,7 +311,7 @@ const StockEntry = () => {
                                 },
                                 {
                                     key: 'product_name',
-                                    label: 'Product Info',
+                                    label: 'Material Info',
                                     render: (value, stock) => (
                                         <div className="flex flex-col">
                                             <span className="font-bold text-slate-900 group-hover:text-primary-600 transition-colors uppercase">{value}</span>
@@ -350,7 +331,7 @@ const StockEntry = () => {
                                 },
                                 {
                                     key: 'qty',
-                                    label: 'Qty / Scale',
+                                    label: 'Current Qty',
                                     className: 'text-center',
                                     render: (value, stock) => (
                                         <div className="flex flex-col items-center">
@@ -360,28 +341,23 @@ const StockEntry = () => {
                                     )
                                 },
                                 {
-                                    key: 'sale_price',
-                                    label: 'Sale Price',
+                                    key: 'price_rate',
+                                    label: 'Price Rate',
                                     className: 'text-right',
                                     render: (value) => <span className="font-bold text-slate-900">₹{parseFloat(value).toLocaleString()}</span>
                                 },
                                 {
                                     key: 'gst',
-                                    label: 'GST / Disc',
+                                    label: 'GST %',
                                     className: 'text-center',
-                                    render: (_, stock) => (
-                                        <div className="flex flex-col gap-1 items-center">
-                                            <span className="px-2 py-0.5 bg-emerald-50 text-emerald-600 rounded-lg text-[10px] font-bold">GST: {stock.gst}%</span>
-                                            <span className="px-2 py-0.5 bg-amber-50 text-amber-600 rounded-lg text-[10px] font-bold">Disc: {stock.discount_percent}%</span>
-                                        </div>
-                                    )
+                                    render: (value) => <span className="px-2 py-0.5 bg-emerald-50 text-emerald-600 rounded-lg text-[10px] font-bold">{value}%</span>
                                 }
                             ]}
                             data={filteredStocks}
                             loading={loading}
                             searchTerm={searchTerm}
                             onSearchChange={setSearchTerm}
-                            searchPlaceholder="Search by name or code..."
+                            searchPlaceholder="Search material by name or code..."
                             actions={(stock) => (
                                 <div className="flex items-center justify-end gap-2">
                                     <button
@@ -398,7 +374,7 @@ const StockEntry = () => {
                                     </button>
                                 </div>
                             )}
-                            emptyMessage="No stock records found"
+                            emptyMessage="No raw material records found"
                         />
                     </div>
                 )}
@@ -407,4 +383,4 @@ const StockEntry = () => {
     );
 };
 
-export default StockEntry;
+export default RawMaterialStockEntry;

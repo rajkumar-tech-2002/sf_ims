@@ -40,4 +40,18 @@ const createUser = async (req, res) => {
     }
 };
 
-module.exports = { getAllUsers, createUser };
+const deleteUser = async (req, res) => {
+    try {
+        const success = await User.delete(req.params.id);
+        if (success) {
+            res.json({ message: 'User deleted successfully' });
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+module.exports = { getAllUsers, createUser, deleteUser };

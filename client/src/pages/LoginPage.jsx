@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Package, Mail, Lock, ArrowRight, AlertCircle, Home } from 'lucide-react';
+import { useToast } from '../context/ToastContext';
+import { Package, Mail, Lock, Eye, EyeOff, ArrowRight, Home, ChevronDown, Shield } from 'lucide-react';
 
 const LoginPage = () => {
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [role, setRole] = useState('');
     const [roles, setRoles] = useState([]);
-    const [error, setError] = useState('');
     const { login } = useAuth();
+    const { showToast } = useToast();
     const navigate = useNavigate();
 
     // Fetch roles on mount
@@ -23,17 +25,17 @@ const LoginPage = () => {
                 }
             } catch (err) {
                 console.error('Failed to fetch roles:', err);
+                showToast('error', 'Failed to connect to authentication server');
             }
         };
         fetchRoles();
-    }, []);
+    }, [showToast]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        setError('');
 
         if (!userId || !password || !role) {
-            setError('Please fill in all fields');
+            showToast('error', 'Please fill in all fields');
             return;
         }
 
@@ -49,12 +51,13 @@ const LoginPage = () => {
 
             if (response.ok) {
                 login(data.user);
+                showToast('success', `Welcome back, ${data.user.user_name}!`);
                 navigate('/dashboard');
             } else {
-                setError(data.message || 'Login failed');
+                showToast('error', data.message || 'Login failed');
             }
         } catch (err) {
-            setError('Unable to connect to server');
+            showToast('error', 'Unable to connect to server');
             console.error('Login error:', err);
         }
     };
@@ -112,30 +115,30 @@ const LoginPage = () => {
                         <p className="text-slate-500">Sign in to access your dashboard</p>
                     </div>
 
-                    {error && (
-                        <div className="mb-6 p-4 bg-rose-50 border border-rose-100 rounded-xl flex items-center gap-3 text-rose-600 text-sm animate-shake">
-                            <AlertCircle size={18} />
-                            {error}
-                        </div>
-                    )}
-
                     <form onSubmit={handleLogin} className="space-y-6">
                         <div className="space-y-1.5">
-                            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Select Role</label>
-                            <select
-                                required
-                                className="input-field appearance-none bg-white"
-                                value={role}
-                                onChange={(e) => setRole(e.target.value)}
-                            >
-                                <option value="">Select your role</option>
-                                {roles.map((r) => (
-                                    <option key={r} value={r}>{r}</option>
-                                ))}
-                            </select>
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <Shield size={12} /> Select Role</label>
+                            <div className="relative">
+                                <select
+                                    required
+                                    className="input-field appearance-none bg-white"
+                                    value={role}
+                                    onChange={(e) => setRole(e.target.value)}
+                                >
+                                    <option value="">Select your role</option>
+                                    {roles.map((r) => (
+                                        <option key={r} value={r}>{r}</option>
+                                    ))}
+                                </select>
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                                    <ChevronDown size={18} />
+                                </div>
+                            </div>
                         </div>
                         <div className="space-y-1.5">
-                            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">User ID</label>
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <Mail size={12} /> User ID</label>
                             <div className="relative">
                                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                                 <input
@@ -151,19 +154,26 @@ const LoginPage = () => {
 
                         <div className="space-y-1.5">
                             <div className="flex justify-between items-center px-1">
-                                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Password</label>
-                                <a href="#" className="text-xs font-bold text-primary-600 hover:text-primary-700">Forgot?</a>
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                    <Lock size={12} /> Password</label>
                             </div>
                             <div className="relative">
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     required
-                                    className="input-field pl-12"
+                                    className="input-field pl-12 pr-12"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="••••••••"
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary-600 transition-colors"
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
                             </div>
                         </div>
 

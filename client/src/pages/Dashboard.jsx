@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Package,
     AlertTriangle,
@@ -6,10 +6,22 @@ import {
     TrendingUp,
     ArrowUpRight,
     ArrowDownRight,
-    Clock,
     Plus,
     Filter
 } from 'lucide-react';
+import {
+    AreaChart,
+    Area,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer,
+    BarChart,
+    Bar,
+    Cell
+} from 'recharts';
+import api from '../utils/api';
 
 const StatCard = ({ title, value, icon, color, change, trend }) => (
     <div className="card group hover:-translate-y-1 duration-500">
@@ -33,44 +45,67 @@ const StatCard = ({ title, value, icon, color, change, trend }) => (
 );
 
 const Dashboard = () => {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchDashboardData = async () => {
+            try {
+                const response = await api.get('/dashboard/stats');
+                setData(response.data);
+            } catch (error) {
+                console.error('Failed to fetch dashboard stats:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchDashboardData();
+    }, []);
+
+    if (loading || !data) {
+        return (
+            <div className="page-container flex items-center justify-center min-h-[60vh]">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-12 h-12 border-4 border-primary-100 border-t-primary-600 rounded-full animate-spin" />
+                    <p className="text-slate-400 font-bold animate-pulse uppercase tracking-widest text-xs">Loading Live Data...</p>
+                </div>
+            </div>
+        );
+    }
+
+    const { summary, activities, trend } = data;
+
     const stats = [
         {
             title: 'Total Products',
-            value: '1,284',
+            value: summary.totalProducts.toLocaleString(),
             icon: <Package className="text-blue-600" size={24} />,
             color: 'bg-blue-50',
-            change: '12%',
+            change: 'Live',
             trend: 'up'
         },
         {
             title: 'Low Stock Items',
-            value: '12',
+            value: summary.lowStockItems,
             icon: <AlertTriangle className="text-amber-600" size={24} />,
             color: 'bg-amber-50',
-            change: '2 items',
-            trend: 'down'
+            change: summary.lowStockItems > 0 ? `${summary.lowStockItems} critical` : 'All clear',
+            trend: summary.lowStockItems > 0 ? 'down' : 'up'
         },
         {
             title: 'Total Categories',
-            value: '24',
+            value: summary.totalCategories,
             icon: <Layers className="text-purple-600" size={24} />,
             color: 'bg-purple-50'
         },
         {
-            title: 'Total Sales',
-            value: '$42,500',
+            title: 'Total Sales Value',
+            value: `₹${summary.totalSales.toLocaleString()}`,
             icon: <TrendingUp className="text-emerald-600" size={24} />,
             color: 'bg-emerald-50',
-            change: '8.5%',
+            change: 'Usage Based',
             trend: 'up'
         },
-    ];
-
-    const recentActivities = [
-        { id: 1, type: 'stock_in', product: 'MacBook Pro M2', qty: '+50', user: 'Admin', time: '2 hours ago' },
-        { id: 2, type: 'sale', product: 'iPhone 15 Pro', qty: '-3', user: 'Staff Sarah', time: '4 hours ago' },
-        { id: 3, id_str: 'ACT-902', type: 'low_stock', product: 'Sony WH-1000XM5', qty: '3 units left', user: 'System', time: '6 hours ago' },
-        { id: 4, type: 'stock_in', product: 'Samsung S23 Ultra', qty: '+20', user: 'Manager Mike', time: 'Yesterday' },
     ];
 
     return (
@@ -108,35 +143,76 @@ const Dashboard = () => {
                             <button className="px-4 py-1.5 text-xs font-bold text-slate-400 hover:text-slate-600">Volume</button>
                         </div>
                     </div>
-                    <div className="h-80 flex flex-col items-center justify-center bg-slate-50/50 rounded-2xl border border-slate-100 relative overflow-hidden">
-                        <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:20px_20px]" />
-                        <TrendingUp size={48} className="text-slate-200 mb-4" />
-                        <p className="text-slate-400 font-semibold italic text-sm">Interactive Visualization Engine Placeholder</p>
+                    <div className="h-80 w-full">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <AreaChart data={trend}>
+                                <defs>
+                                    <linearGradient id="colorVolume" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#2563eb" stopOpacity={0.3} />
+                                        <stop offset="95%" stopColor="#2563eb" stopOpacity={0} />
+                                    </linearGradient>
+                                </defs>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                                <XAxis
+                                    dataKey="date"
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 600 }}
+                                    dy={10}
+                                />
+                                <YAxis
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 600 }}
+                                />
+                                <Tooltip
+                                    contentStyle={{
+                                        borderRadius: '16px',
+                                        border: 'none',
+                                        boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
+                                        padding: '12px'
+                                    }}
+                                />
+                                <Area
+                                    type="monotone"
+                                    dataKey="volume"
+                                    stroke="#2563eb"
+                                    strokeWidth={3}
+                                    fillOpacity={1}
+                                    fill="url(#colorVolume)"
+                                />
+                            </AreaChart>
+                        </ResponsiveContainer>
                     </div>
                 </div>
 
                 <div className="card p-10 h-full">
                     <h3 className="text-xl font-bold text-slate-900 mb-10">Operational Log</h3>
                     <div className="space-y-8 relative before:absolute before:inset-0 before:ml-1 before:w-0.5 before:-translate-x-px before:bg-slate-100">
-                        {recentActivities.map((activity) => (
-                            <div key={activity.id} className="relative flex items-start gap-4 pl-8">
-                                <div className={`absolute left-0 w-2.5 h-2.5 rounded-full border-2 border-white shadow-sm ring-2 ${activity.type === 'stock_in' ? 'bg-emerald-500 ring-emerald-100' :
-                                        activity.type === 'sale' ? 'bg-blue-500 ring-blue-100' : 'bg-amber-500 ring-amber-100'
-                                    }`} />
+                        {activities.map((activity, index) => (
+                            <div key={index} className="relative flex items-start gap-4 pl-8">
+                                <div className={`absolute left-0 w-2.5 h-2.5 rounded-full border-2 border-white shadow-sm ring-2 bg-primary-500 ring-primary-100`} />
                                 <div className="flex-1 min-w-0">
                                     <div className="flex justify-between items-start mb-1">
-                                        <p className="text-sm text-slate-900 font-bold truncate">{activity.product}</p>
-                                        <span className="text-[10px] font-bold text-slate-400 whitespace-nowrap ml-2 uppercase tracking-tighter">{activity.time}</span>
+                                        <p className="text-sm text-slate-900 font-bold truncate">{activity.username}</p>
+                                        <span className="text-[10px] font-bold text-slate-400 whitespace-nowrap ml-2 uppercase tracking-tighter">
+                                            {new Date(activity.login_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                        </span>
                                     </div>
-                                    <p className="text-xs text-slate-500 leading-relaxed">
-                                        Action: <span className="font-semibold text-slate-700">{activity.type.replace('_', ' ')}</span> by {activity.user}
+                                    <p className="text-xs text-slate-500 leading-relaxed italic">
+                                        "{activity.action}"
                                     </p>
-                                    <div className="mt-2 text-[10px] font-bold text-primary-600 bg-primary-50 px-2 py-0.5 rounded-md w-fit">
-                                        {activity.qty}
+                                    <div className="mt-2 text-[10px] font-bold text-primary-600 bg-primary-50 px-2 py-0.5 rounded-md w-fit uppercase tracking-tighter">
+                                        {activity.role}
                                     </div>
                                 </div>
                             </div>
                         ))}
+                        {activities.length === 0 && (
+                            <div className="flex flex-col items-center justify-center py-10 text-center opacity-40">
+                                <p className="text-xs font-bold">No recent activity detected</p>
+                            </div>
+                        )}
                     </div>
                     <button className="w-full mt-10 btn btn-secondary text-xs uppercase tracking-widest font-bold">
                         Full Audit Trail

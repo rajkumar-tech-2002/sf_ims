@@ -136,7 +136,7 @@ const Enquiry = () => {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h1 className="section-title">Enquiry Detail</h1>
+                        <h1 className="section-title text-2xl font-bold text-slate-800">Enquiry Detail</h1>
                         <p className="text-slate-500 text-base mt-2 font-medium">Record and track customer inquiries and follow-ups.</p>
                     </div>
                     <button
@@ -170,7 +170,7 @@ const Enquiry = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             {/* Date */}
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Calendar size={12} /> Date
                                 </label>
                                 <input
@@ -185,7 +185,7 @@ const Enquiry = () => {
 
                             {/* Regarding Dropdown */}
                             <div className="space-y-1.5 lg:col-span-1">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <MessageSquare size={12} /> Regarding
                                 </label>
                                 <div className="relative">
@@ -209,7 +209,7 @@ const Enquiry = () => {
 
                             {/* Description */}
                             <div className="space-y-1.5 lg:col-span-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <FileText size={12} /> Description
                                 </label>
                                 <input
@@ -225,7 +225,7 @@ const Enquiry = () => {
 
                             {/* Person */}
                             <div className="space-y-1.5 lg:col-span-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <User size={12} /> Person
                                 </label>
                                 <input
@@ -241,7 +241,7 @@ const Enquiry = () => {
 
                             {/* Contact */}
                             <div className="space-y-1.5 lg:col-span-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Phone size={12} /> Contact
                                 </label>
                                 <input
@@ -258,7 +258,7 @@ const Enquiry = () => {
 
                             {/* Remarks */}
                             <div className="space-y-1.5 lg:col-span-4">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <FileSearch size={12} /> Remarks</label>
                                 <textarea
                                     name="remarks"

@@ -171,7 +171,7 @@ const PurchaseEntry = () => {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h1 className="section-title">Purchase Entry</h1>
+                        <h1 className="section-title text-2xl font-bold text-slate-800">Purchase Entry</h1>
                         <p className="text-slate-500 text-base mt-2 font-medium">Record and track inventory procurement from vendors.</p>
                     </div>
                     <button
@@ -247,7 +247,7 @@ const PurchaseEntry = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {/* Date */}
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Calendar size={12} /> Purchase Date
                                 </label>
                                 <input
@@ -262,7 +262,7 @@ const PurchaseEntry = () => {
 
                             {/* Product Dropdown */}
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Package size={12} /> Product Name
                                 </label>
                                 <div className="relative">
@@ -286,7 +286,7 @@ const PurchaseEntry = () => {
 
                             {/* Vendor Dropdown */}
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Truck size={12} /> Vendor Name
                                 </label>
                                 <div className="relative">
@@ -310,7 +310,7 @@ const PurchaseEntry = () => {
 
                             {/* Qty */}
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Hash size={12} /> Quantity
                                 </label>
                                 <input
@@ -326,7 +326,7 @@ const PurchaseEntry = () => {
 
                             {/* Purchase Rate */}
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <IndianRupee size={12} /> Purchase Rate
                                 </label>
                                 <div className="relative">

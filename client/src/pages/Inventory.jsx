@@ -126,7 +126,7 @@ const Inventory = () => {
         <div className="page-container">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
                 <div>
-                    <h1 className="section-title">Inventory Control</h1>
+                    <h1 className="section-title text-2xl font-bold text-slate-800">Inventory Control</h1>
                     <p className="text-slate-500 text-base mt-2 font-medium">Precision tracking for your global supply chain assets.</p>
                 </div>
                 <div className="flex items-center gap-3">

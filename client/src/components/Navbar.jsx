@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useSidebar } from '../context/SidebarContext';
 import { LogOut, User, ChevronDown, Bell, Search, Menu } from 'lucide-react';
+import NotificationBell from './NotificationBell';
 
 const Navbar = () => {
     const { user, logout } = useAuth();
@@ -31,10 +32,7 @@ const Navbar = () => {
 
             {/* Actions */}
             <div className="flex items-center gap-6 ml-auto">
-                <button className="relative p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-xl transition-all">
-                    <Bell size={20} />
-                    <span className="absolute top-2 right-2.5 w-2 h-2 bg-rose-500 border-2 border-white rounded-full" />
-                </button>
+                <NotificationBell />
 
                 {/* Profile Dropdown */}
                 <div className="relative">

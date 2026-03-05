@@ -31,6 +31,9 @@ const StockEntry = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [currentId, setCurrentId] = useState(null);
     const [showTable, setShowTable] = useState(false);
+    const [scaleUnits, setScaleUnits] = useState([]);
+    const [isAddingUnit, setIsAddingUnit] = useState(false);
+    const [newUnitName, setNewUnitName] = useState('');
     const [formData, setFormData] = useState({
         product_name: '',
         product_code: '',
@@ -47,7 +50,17 @@ const StockEntry = () => {
 
     useEffect(() => {
         fetchStocks();
+        fetchScaleUnits();
     }, []);
+
+    const fetchScaleUnits = async () => {
+        try {
+            const response = await api.get('/scale-units');
+            setScaleUnits(response.data);
+        } catch (error) {
+            console.error('Error fetching scale units:', error);
+        }
+    };
 
     const fetchStocks = async () => {
         try {
@@ -129,6 +142,24 @@ const StockEntry = () => {
         setCurrentId(null);
     };
 
+    const handleAddScaleUnit = async () => {
+        if (!newUnitName.trim()) {
+            showToast('warning', 'Please enter a unit name');
+            return;
+        }
+
+        try {
+            const response = await api.post('/scale-units', { unit_name: newUnitName.trim() });
+            showToast('success', 'New scale unit added');
+            setNewUnitName('');
+            setIsAddingUnit(false);
+            fetchScaleUnits();
+            setFormData(prev => ({ ...prev, scale: newUnitName.trim() }));
+        } catch (error) {
+            showToast('error', error.response?.data?.message || 'Failed to add unit');
+        }
+    };
+
     const filteredStocks = stocks.filter(stock =>
         stock.product_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         stock.product_code.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -141,7 +172,7 @@ const StockEntry = () => {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h1 className="section-title">Stock Registry</h1>
+                        <h1 className="section-title text-2xl font-bold text-slate-800">Stock Registry</h1>
                         <p className="text-slate-500 text-base mt-2 font-medium">Manage and monitor your warehouse inventory levels.</p>
                     </div>
                     <button
@@ -174,7 +205,7 @@ const StockEntry = () => {
                     <form onSubmit={handleSubmit} className="p-8 space-y-8">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Hash size={12} /> HSN Code</label>
                                 <input
                                     type="text"
@@ -186,7 +217,7 @@ const StockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Hash size={12} /> Product Code</label>
                                 <input
                                     type="text"
@@ -198,7 +229,7 @@ const StockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5 lg:col-span-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Tag size={12} /> Product Name</label>
                                 <input
                                     type="text"
@@ -211,7 +242,7 @@ const StockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5 lg:col-span-4">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Package size={12} /> Detail / Description</label>
                                 <textarea
                                     name="detail"
@@ -223,7 +254,7 @@ const StockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Hash size={12} /> Quantity</label>
                                 <input
                                     type="number"
@@ -235,7 +266,7 @@ const StockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <IndianRupee size={12} /> Sale Price</label>
                                 <div className="relative">
                                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
@@ -250,29 +281,65 @@ const StockEntry = () => {
                                 </div>
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Layers size={12} /> Scale / Unit</label>
-                                <div className="relative">
-                                    <select
-                                        name="scale"
-                                        className="input-field appearance-none bg-white"
-                                        value={formData.scale}
-                                        onChange={handleInputChange}
+                                <div className="flex items-center justify-between ml-1">
+                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                                        <Layers size={12} /> Scale / Unit</label>
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsAddingUnit(!isAddingUnit)}
+                                        className="text-primary-600 hover:text-primary-700 p-0.5 rounded-md hover:bg-primary-50 transition-colors"
+                                        title="Add New Unit"
                                     >
-                                        <option value="">Select Unit</option>
-                                        <option value="Meter">Meter</option>
-                                        <option value="Pcs">Pcs</option>
-                                        <option value="Kg">Kg</option>
-                                        <option value="Roll">Roll</option>
-                                    </select>
-                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
-                                        <ChevronDown size={18} />
-                                    </div>
+                                        <Plus size={14} strokeWidth={3} />
+                                    </button>
                                 </div>
+                                {isAddingUnit ? (
+                                    <div className="flex gap-2">
+                                        <input
+                                            type="text"
+                                            className="input-field py-2 text-xs"
+                                            placeholder="Unit Name"
+                                            value={newUnitName}
+                                            onChange={(e) => setNewUnitName(e.target.value)}
+                                            autoFocus
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={handleAddScaleUnit}
+                                            className="px-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-all shadow-sm"
+                                        >
+                                            <Save size={14} />
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsAddingUnit(false)}
+                                            className="px-3 bg-slate-100 text-slate-500 rounded-xl hover:bg-slate-200 transition-all border border-slate-200"
+                                        >
+                                            <X size={14} />
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="relative">
+                                        <select
+                                            name="scale"
+                                            className="input-field appearance-none bg-white font-bold text-slate-700 uppercase"
+                                            value={formData.scale}
+                                            onChange={handleInputChange}
+                                        >
+                                            <option value="">Select Unit</option>
+                                            {scaleUnits.map(unit => (
+                                                <option key={unit.id} value={unit.unit_name}>{unit.unit_name}</option>
+                                            ))}
+                                        </select>
+                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                                            <ChevronDown size={18} />
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Percent size={12} /> GST %</label>
+                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                    <Percent size={12} /> GST</label>
                                 <input
                                     type="number"
                                     step="0.01"
@@ -283,8 +350,8 @@ const StockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Percent size={12} /> Discount %</label>
+                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                    <Percent size={12} /> Discount</label>
                                 <input
                                     type="number"
                                     step="0.01"
@@ -295,7 +362,7 @@ const StockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <AlertTriangle size={12} /> ReOrder Level</label>
                                 <input
                                     type="number"

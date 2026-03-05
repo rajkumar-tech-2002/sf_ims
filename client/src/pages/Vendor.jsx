@@ -115,7 +115,7 @@ const Vendor = () => {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h1 className="section-title">Vendor Registry</h1>
+                        <h1 className="section-title text-2xl font-bold text-slate-800">Vendor Registry</h1>
                         <p className="text-slate-500 text-base mt-2 font-medium">Manage and monitor your project supply partners.</p>
                     </div>
                     <button
@@ -148,7 +148,7 @@ const Vendor = () => {
                     <form onSubmit={handleSubmit} className="p-8 space-y-8">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             <div className="space-y-1.5 lg:col-span-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Truck size={12} /> Vendor Name</label>
                                 <input
                                     type="text"
@@ -161,7 +161,7 @@ const Vendor = () => {
                                 />
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Phone size={12} /> Phone Number</label>
                                 <input
                                     type="text"
@@ -175,7 +175,7 @@ const Vendor = () => {
                                 />
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Mail size={12} /> Email Address</label>
                                 <input
                                     type="email"
@@ -187,7 +187,7 @@ const Vendor = () => {
                                 />
                             </div>
                             <div className="space-y-1.5 lg:col-span-3">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <MapPin size={12} /> Address</label>
                                 <input
                                     type="text"

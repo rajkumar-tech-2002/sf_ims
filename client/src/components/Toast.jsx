@@ -65,7 +65,7 @@ const Toast = ({ toast, onRemove }) => {
                             }}
                             className="px-4 py-2 text-xs font-bold text-white bg-amber-500 hover:bg-amber-600 rounded-lg transition-colors shadow-sm"
                         >
-                            Confirm Delete
+                            {toast.confirmLabel || 'Confirm'}
                         </button>
                     </div>
                 )}

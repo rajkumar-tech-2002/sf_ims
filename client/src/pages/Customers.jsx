@@ -148,7 +148,7 @@ const Customers = () => {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h1 className="section-title">Customer Master</h1>
+                        <h2 className="section-title text-2xl font-bold text-slate-800">Customer Details</h2>
                         <p className="text-slate-500 text-base mt-2 font-medium">Manage your customer relationships and contact details.</p>
                     </div>
                     <button
@@ -182,7 +182,7 @@ const Customers = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             {/* Customer ID */}
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Hash size={12} /> Customer ID
                                 </label>
                                 <input
@@ -198,7 +198,7 @@ const Customers = () => {
 
                             {/* Customer Name */}
                             <div className="space-y-1.5 lg:col-span-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Users size={12} /> Customer Name
                                 </label>
                                 <input
@@ -214,7 +214,7 @@ const Customers = () => {
 
                             {/* GST NO */}
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Briefcase size={12} /> GST NO
                                 </label>
                                 <input
@@ -229,7 +229,7 @@ const Customers = () => {
 
                             {/* Address */}
                             <div className="space-y-1.5 lg:col-span-4">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <MapPin size={12} /> Address
                                 </label>
                                 <textarea
@@ -244,7 +244,7 @@ const Customers = () => {
 
                             {/* Contact Person */}
                             <div className="space-y-1.5 lg:col-span-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Phone size={12} /> Contact Person
                                 </label>
                                 <input
@@ -260,7 +260,7 @@ const Customers = () => {
 
                             {/* Mobile */}
                             <div className="space-y-1.5 lg:col-span-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Smartphone size={12} /> Mobile Number
                                 </label>
                                 <input
@@ -277,8 +277,8 @@ const Customers = () => {
 
                             {/* State */}
                             <div className="space-y-1.5 lg:col-span-3">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    State
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                    <MapPin size={12} /> State
                                 </label>
                                 <input
                                     type="text"
@@ -292,8 +292,8 @@ const Customers = () => {
 
                             {/* State Code */}
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    State Code
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                    <Hash size={12} /> State Code
                                 </label>
                                 <input
                                     type="text"

@@ -135,7 +135,7 @@ const UserCreation = () => {
         <div className="page-container">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
                 <div>
-                    <h1 className="section-title">User Registry</h1>
+                    <h1 className="section-title text-2xl font-bold text-slate-800">User Registry</h1>
                     <p className="text-slate-500 mt-2 font-medium">Create and manage access for your system personnel.</p>
                 </div>
                 <button
@@ -164,7 +164,7 @@ const UserCreation = () => {
                     <form onSubmit={handleSubmit} className="p-8 space-y-8">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 gap-y-10">
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <User size={12} /> Full Name</label>
                                 <input
                                     type="text"
@@ -178,7 +178,7 @@ const UserCreation = () => {
                             </div>
 
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Shield size={12} /> Role</label>
                                 <div className="relative">
                                     <select
@@ -198,7 +198,7 @@ const UserCreation = () => {
                             </div>
 
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Briefcase size={12} /> Department</label>
                                 <input
                                     type="text"
@@ -211,7 +211,7 @@ const UserCreation = () => {
                             </div>
 
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <GraduationCap size={12} /> Qualification</label>
                                 <input
                                     type="text"
@@ -224,7 +224,7 @@ const UserCreation = () => {
                             </div>
 
                             <div className="space-y-1.5 relative">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Hash size={12} /> Login User ID</label>
                                 <input
                                     type="text"
@@ -235,13 +235,13 @@ const UserCreation = () => {
                                     placeholder="Enter User ID"
                                     required
                                 />
-                                <p className="absolute -bottom-5 left-1 text-[10px] text-danger-600 whitespace-nowrap">
+                                <p className="absolute -bottom-5 left-1 text-[12px] text-danger-600 whitespace-nowrap">
                                     Note: No special characters or spaces.
                                 </p>
                             </div>
 
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Lock size={12} /> Password</label>
                                 <div className="relative">
                                     <input
@@ -264,7 +264,7 @@ const UserCreation = () => {
                             </div>
 
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Phone size={12} /> Contact Number</label>
                                 <input
                                     type="text"

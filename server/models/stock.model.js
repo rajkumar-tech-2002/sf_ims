@@ -61,6 +61,17 @@ const Stock = {
     delete: async (id) => {
         const [result] = await db.execute('DELETE FROM stock_master WHERE id = ?', [id]);
         return result.affectedRows > 0;
+    },
+
+    findLowStock: async () => {
+        const query = `
+            SELECT id, product_name, product_code, qty, reorder_level, scale 
+            FROM stock_master 
+            WHERE qty <= reorder_level 
+            ORDER BY qty ASC
+        `;
+        const [rows] = await db.execute(query);
+        return rows;
     }
 };
 

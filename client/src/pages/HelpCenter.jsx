@@ -33,7 +33,7 @@ const HelpCenter = () => {
         <div className="page-container space-y-8 animate-fade-in pb-10">
             {/* Header Section */}
             <div className="mb-4">
-                <h1 className="section-title">Help & Support</h1>
+                <h1 className="section-title text-2xl font-bold text-slate-800">Help & Support</h1>
                 <p className="text-slate-500 mt-2 font-medium max-w-2xl">
                     Need assistance with StockWise? Our developer support team is here to help you resolve issues,
                     answer questions, and ensure your inventory management is seamless.

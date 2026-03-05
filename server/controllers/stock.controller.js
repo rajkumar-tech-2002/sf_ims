@@ -50,9 +50,20 @@ const deleteStock = async (req, res) => {
     }
 };
 
+const getLowStock = async (req, res) => {
+    try {
+        const stocks = await Stock.findLowStock();
+        res.json(stocks);
+    } catch (err) {
+        console.error('Error fetching low stock:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
 module.exports = {
     createStock,
     getAllStocks,
     updateStock,
-    deleteStock
+    deleteStock,
+    getLowStock
 };

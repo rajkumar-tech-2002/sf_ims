@@ -63,12 +63,10 @@ const Sidebar = () => {
                 { title: 'Stock Entry', icon: <Package size={18} />, path: '/stock-entry', roles: ['admin', 'manager'] },
                 { title: 'Vendor', icon: <Truck size={18} />, path: '/vendor', roles: ['admin', 'manager'] },
                 { title: 'Purchase Entry', icon: <ShoppingCart size={18} />, path: '/purchase-entry', roles: ['admin', 'manager'] },
-                { title: 'Product Used', icon: <Box size={18} />, path: '/product-used', roles: ['admin', 'manager'] },
                 { title: 'Enquiry Detail', icon: <FileSearch size={18} />, path: '/enquiry', roles: ['admin', 'manager'] },
                 { title: 'Customer Details', icon: <Users size={18} />, path: '/customers', roles: ['admin', 'manager'] },
                 { title: 'Raw Material Stock', icon: <HardDrive size={18} />, path: '/raw-material-stock', roles: ['admin', 'manager'] },
                 { title: 'Raw Material Purchase', icon: <ShoppingCart size={18} />, path: '/raw-material-purchase', roles: ['admin', 'manager'] },
-                { title: 'Raw Material Used', icon: <Box size={18} />, path: '/raw-material-product-used', roles: ['admin', 'manager'] },
             ]
         },
         {
@@ -78,6 +76,14 @@ const Sidebar = () => {
             children: [
                 { title: 'Invoice', icon: <FileText size={18} />, path: '/invoice', roles: ['admin', 'manager', 'staff'] },
                 { title: 'Quotation', icon: <FileText size={18} />, path: '/quotation', roles: ['admin', 'manager', 'staff'] },
+            ]
+        },
+        {
+            title: 'Return Billing',
+            icon: <History size={20} />,
+            roles: ['admin', 'manager', 'staff'],
+            children: [
+                { title: 'Stock Return', icon: <Package size={18} />, path: '/stock-return', roles: ['admin', 'manager', 'staff'] },
             ]
         },
         {

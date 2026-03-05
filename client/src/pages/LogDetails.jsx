@@ -76,7 +76,7 @@ const LogDetails = () => {
         <div className="page-container">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
                 <div>
-                    <h1 className="section-title">Audit Logs</h1>
+                    <h1 className="section-title text-2xl font-bold text-slate-800">Audit Logs</h1>
                     <p className="text-slate-500 text-base mt-2 font-medium">Real-time monitoring of system access and activity.</p>
                 </div>
                 <div className="p-4 bg-primary-50 rounded-2xl border border-primary-100 flex items-center gap-4">

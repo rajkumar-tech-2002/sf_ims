@@ -242,7 +242,7 @@ const RawMaterialPurchaseEntry = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Calendar size={12} /> Purchase Date
                                 </label>
                                 <input
@@ -256,7 +256,7 @@ const RawMaterialPurchaseEntry = () => {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Package size={12} /> Material Name
                                 </label>
                                 <div className="relative">
@@ -279,7 +279,7 @@ const RawMaterialPurchaseEntry = () => {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Truck size={12} /> Vendor Name
                                 </label>
                                 <div className="relative">
@@ -302,7 +302,7 @@ const RawMaterialPurchaseEntry = () => {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Hash size={12} /> Bill Number
                                 </label>
                                 <input
@@ -316,7 +316,7 @@ const RawMaterialPurchaseEntry = () => {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Hash size={12} /> Purchase Quantity
                                 </label>
                                 <input
@@ -331,7 +331,7 @@ const RawMaterialPurchaseEntry = () => {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <IndianRupee size={12} /> Purchase Rate
                                 </label>
                                 <div className="relative">
@@ -349,8 +349,8 @@ const RawMaterialPurchaseEntry = () => {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Percent size={12} /> GST %
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                    <Percent size={12} /> GST
                                 </label>
                                 <input
                                     type="number"

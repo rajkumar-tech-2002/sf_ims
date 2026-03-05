@@ -9,13 +9,15 @@ const stockRoutes = require('./routes/stock.routes');
 const logRoutes = require('./routes/log.routes');
 const vendorRoutes = require('./routes/vendor.routes');
 const purchaseRoutes = require('./routes/purchase.routes');
-const productUsedRoutes = require('./routes/productUsed.routes');
 const enquiryRoutes = require('./routes/enquiry.routes');
 const dashboardRoutes = require('./routes/dashboard.routes');
 const customerRoutes = require('./routes/customer.routes');
 const rawMaterialStockRoutes = require('./routes/rawMaterialStock.routes');
 const rawMaterialPurchaseRoutes = require('./routes/rawMaterialPurchase.routes');
-const rawMaterialProductUsedRoutes = require('./routes/rawMaterialProductUsed.routes');
+const quotationRoutes = require('./routes/quotation.routes');
+const scaleUnitRoutes = require('./routes/scaleUnit.routes');
+const invoiceRoutes = require('./routes/invoice.routes');
+const stockReturnRoutes = require('./routes/stockReturn.routes');
 
 const app = express();
 
@@ -34,13 +36,15 @@ app.use('/api/stocks', stockRoutes);
 app.use('/api/logs', logRoutes);
 app.use('/api/vendors', vendorRoutes);
 app.use('/api/purchases', purchaseRoutes);
-app.use('/api/product-used', productUsedRoutes);
 app.use('/api/enquiries', enquiryRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api/raw-material-stocks', rawMaterialStockRoutes);
 app.use('/api/raw-material-purchases', rawMaterialPurchaseRoutes);
-app.use('/api/raw-material-product-used', rawMaterialProductUsedRoutes);
+app.use('/api/quotations', quotationRoutes);
+app.use('/api/scale-units', scaleUnitRoutes);
+app.use('/api/invoices', invoiceRoutes);
+app.use('/api/stock-returns', stockReturnRoutes);
 
 // Basic error handler
 app.use((err, req, res, next) => {

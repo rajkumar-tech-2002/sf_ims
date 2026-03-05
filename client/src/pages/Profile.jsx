@@ -28,7 +28,7 @@ const Profile = () => {
     return (
         <div className="page-container">
             <div className="mb-12">
-                <h1 className="section-title">Account Settings</h1>
+                <h1 className="section-title text-2xl font-bold text-slate-800">Account Settings</h1>
                 <p className="text-slate-500 text-base mt-2">Manage your professional identity and session security.</p>
             </div>
 

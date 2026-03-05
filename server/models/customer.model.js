@@ -6,6 +6,19 @@ const Customer = {
         return rows;
     },
 
+    getNextCustomerId: async () => {
+        const [rows] = await pool.execute('SELECT customer_id FROM customer_details ORDER BY id DESC LIMIT 1');
+        if (rows.length === 0) return 'CUST-001';
+
+        const lastId = rows[0].customer_id;
+        const match = lastId.match(/CUST-(\d+)/);
+        if (!match) return 'CUST-001';
+
+        const lastNumber = parseInt(match[1]);
+        const nextNumber = lastNumber + 1;
+        return `CUST-${String(nextNumber).padStart(3, '0')}`;
+    },
+
     findById: async (id) => {
         const [rows] = await pool.execute('SELECT * FROM customer_details WHERE id = ?', [id]);
         return rows[0];

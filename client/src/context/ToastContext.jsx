@@ -27,9 +27,9 @@ export const ToastProvider = ({ children }) => {
         setToasts(prev => prev.filter(toast => toast.id !== id));
     }, []);
 
-    const confirmToast = useCallback((message, onConfirm) => {
+    const confirmToast = useCallback((message, onConfirm, confirmLabel = 'Confirm') => {
         const id = Date.now();
-        setToasts(prev => [...prev, { id, type: 'confirm', message, onConfirm }]);
+        setToasts(prev => [...prev, { id, type: 'confirm', message, onConfirm, confirmLabel }]);
     }, []);
 
     return (

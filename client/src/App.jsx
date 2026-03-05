@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
-import ProductUsed from './pages/ProductUsed';
 import Inventory from './pages/Inventory';
 import Reports from './pages/Reports';
 import Profile from './pages/Profile';
@@ -17,7 +16,9 @@ import Enquiry from './pages/Enquiry';
 import Customers from './pages/Customers';
 import RawMaterialStockEntry from './pages/RawMaterialStockEntry';
 import RawMaterialPurchaseEntry from './pages/RawMaterialPurchaseEntry';
-import RawMaterialProductUsed from './pages/RawMaterialProductUsed';
+import Quotation from './pages/Quotation';
+import Invoice from './pages/Invoice';
+import StockReturn from './pages/StockReturn';
 import NotFound from './pages/NotFound';
 import MainLayout from './layouts/MainLayout';
 import { AuthProvider } from './context/AuthContext';
@@ -38,7 +39,6 @@ function App() {
                         <Route element={<PrivateRoute />}>
                             <Route element={<MainLayout />}>
                                 <Route path="/dashboard" element={<Dashboard />} />
-                                <Route path="/product-used" element={<ProductUsed />} />
                                 <Route path="/inventory" element={<Inventory />} />
                                 <Route path="/stock-entry" element={<StockEntry />} />
                                 <Route path="/purchase-entry" element={<PurchaseEntry />} />
@@ -52,7 +52,9 @@ function App() {
                                 <Route path="/customers" element={<Customers />} />
                                 <Route path="/raw-material-stock" element={<RawMaterialStockEntry />} />
                                 <Route path="/raw-material-purchase" element={<RawMaterialPurchaseEntry />} />
-                                <Route path="/raw-material-product-used" element={<RawMaterialProductUsed />} />
+                                <Route path="/quotation" element={<Quotation />} />
+                                <Route path="/invoice" element={<Invoice />} />
+                                <Route path="/stock-return" element={<StockReturn />} />
                             </Route>
                         </Route>
 

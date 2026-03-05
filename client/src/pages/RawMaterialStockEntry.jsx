@@ -167,7 +167,7 @@ const RawMaterialStockEntry = () => {
                     <form onSubmit={handleSubmit} className="p-8 space-y-8">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Hash size={12} /> HSN Code</label>
                                 <input
                                     type="text"
@@ -179,7 +179,7 @@ const RawMaterialStockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Hash size={12} /> Product Code</label>
                                 <input
                                     type="text"
@@ -191,7 +191,7 @@ const RawMaterialStockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5 lg:col-span-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Tag size={12} /> Product Name</label>
                                 <input
                                     type="text"
@@ -204,7 +204,7 @@ const RawMaterialStockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5 lg:col-span-4">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Package size={12} /> Detail / Description</label>
                                 <textarea
                                     name="detail"
@@ -216,7 +216,7 @@ const RawMaterialStockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Hash size={12} /> Opening Quantity</label>
                                 <input
                                     type="number"
@@ -228,7 +228,7 @@ const RawMaterialStockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <IndianRupee size={12} /> Price Rate</label>
                                 <div className="relative">
                                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
@@ -243,7 +243,7 @@ const RawMaterialStockEntry = () => {
                                 </div>
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <Layers size={12} /> Scale / Unit</label>
                                 <div className="relative">
                                     <select
@@ -264,8 +264,8 @@ const RawMaterialStockEntry = () => {
                                 </div>
                             </div>
                             <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Percent size={12} /> GST %</label>
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                    <Percent size={12} /> GST</label>
                                 <input
                                     type="number"
                                     step="0.01"
@@ -276,7 +276,7 @@ const RawMaterialStockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5 lg:col-span-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
                                     <AlertTriangle size={12} /> ReOrder Level</label>
                                 <input
                                     type="number"

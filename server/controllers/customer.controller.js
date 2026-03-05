@@ -9,6 +9,15 @@ const getAllCustomers = async (req, res) => {
     }
 };
 
+const getNextCustomerId = async (req, res) => {
+    try {
+        const nextId = await Customer.getNextCustomerId();
+        res.json({ nextId });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to fetch next customer ID' });
+    }
+};
+
 const getCustomerById = async (req, res) => {
     try {
         const customer = await Customer.findById(req.params.id);
@@ -50,6 +59,7 @@ const deleteCustomer = async (req, res) => {
 
 module.exports = {
     getAllCustomers,
+    getNextCustomerId,
     getCustomerById,
     createCustomer,
     updateCustomer,

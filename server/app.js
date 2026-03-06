@@ -18,6 +18,7 @@ const quotationRoutes = require('./routes/quotation.routes');
 const scaleUnitRoutes = require('./routes/scaleUnit.routes');
 const invoiceRoutes = require('./routes/invoice.routes');
 const stockReturnRoutes = require('./routes/stockReturn.routes');
+const reportRoutes = require('./routes/report.routes');
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use('/api/quotations', quotationRoutes);
 app.use('/api/scale-units', scaleUnitRoutes);
 app.use('/api/invoices', invoiceRoutes);
 app.use('/api/stock-returns', stockReturnRoutes);
+app.use('/api/reports', reportRoutes);
 
 // Basic error handler
 app.use((err, req, res, next) => {

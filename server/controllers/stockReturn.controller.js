@@ -27,8 +27,22 @@ const getAllReturns = async (req, res) => {
     }
 };
 
+const getReturnReport = async (req, res) => {
+    try {
+        const { fromDate, toDate } = req.query;
+        if (!fromDate || !toDate) {
+            return res.status(400).json({ message: 'From Date and To Date are required' });
+        }
+        const reportData = await StockReturn.getReport(fromDate, toDate);
+        res.json(reportData);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     getNextReturnNo,
     createStockReturn,
-    getAllReturns
+    getAllReturns,
+    getReturnReport
 };

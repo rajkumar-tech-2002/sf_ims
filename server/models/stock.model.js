@@ -72,6 +72,36 @@ const Stock = {
         `;
         const [rows] = await db.execute(query);
         return rows;
+    },
+
+    getDailyReport: async (fromDate, toDate) => {
+        const query = `
+            SELECT 
+                sm.product_code, 
+                sm.product_name, 
+                sm.detail as description,
+                sm.qty as current_stock,
+                COALESCE(p.purchase_qty, 0) as purchase_qty,
+                COALESCE(s.sold_qty, 0) as sold_qty
+            FROM stock_master sm
+            LEFT JOIN (
+                SELECT product_code, SUM(qty) as purchase_qty 
+                FROM purchase_master 
+                WHERE DATE(purchase_date) BETWEEN ? AND ?
+                GROUP BY product_code
+            ) p ON sm.product_code = p.product_code
+            LEFT JOIN (
+                SELECT product_code, SUM(qty) as sold_qty 
+                FROM invoice_items ii
+                JOIN invoice_master im ON ii.invoice_id = im.id
+                WHERE DATE(im.invoice_date) BETWEEN ? AND ?
+                GROUP BY product_code
+            ) s ON sm.product_code = s.product_code
+            WHERE COALESCE(p.purchase_qty, 0) > 0 OR COALESCE(s.sold_qty, 0) > 0 OR sm.qty > 0
+            ORDER BY sm.product_name ASC
+        `;
+        const [rows] = await db.execute(query, [fromDate, toDate, fromDate, toDate]);
+        return rows;
     }
 };
 

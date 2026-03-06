@@ -137,7 +137,7 @@ const Enquiry = () => {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <h1 className="section-title text-2xl font-bold text-slate-800">Enquiry Detail</h1>
-                        <p className="text-slate-500 text-base mt-2 font-medium">Record and track customer inquiries and follow-ups.</p>
+                        <p className="text-slate-500 text-base font-medium">Record and track customer inquiries and follow-ups.</p>
                     </div>
                     <button
                         onClick={() => setShowTable(!showTable)}
@@ -171,7 +171,7 @@ const Enquiry = () => {
                             {/* Date */}
                             <div className="space-y-1.5">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Calendar size={12} /> Date
+                                    <Calendar size={12} className="text-primary-500"/> Date
                                 </label>
                                 <input
                                     type="date"
@@ -186,7 +186,7 @@ const Enquiry = () => {
                             {/* Regarding Dropdown */}
                             <div className="space-y-1.5 lg:col-span-1">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <MessageSquare size={12} /> Regarding
+                                    <MessageSquare size={12} className="text-primary-500"/> Regarding
                                 </label>
                                 <div className="relative">
                                     <select
@@ -210,7 +210,7 @@ const Enquiry = () => {
                             {/* Description */}
                             <div className="space-y-1.5 lg:col-span-2">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <FileText size={12} /> Description
+                                    <FileText size={12} className="text-primary-500" /> Description
                                 </label>
                                 <input
                                     type="text"
@@ -226,7 +226,7 @@ const Enquiry = () => {
                             {/* Person */}
                             <div className="space-y-1.5 lg:col-span-2">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <User size={12} /> Person
+                                    <User size={12} className="text-primary-500" /> Person
                                 </label>
                                 <input
                                     type="text"
@@ -242,7 +242,7 @@ const Enquiry = () => {
                             {/* Contact */}
                             <div className="space-y-1.5 lg:col-span-2">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Phone size={12} /> Contact
+                                    <Phone size={12} className="text-primary-500" /> Contact
                                 </label>
                                 <input
                                     type="text"
@@ -259,7 +259,7 @@ const Enquiry = () => {
                             {/* Remarks */}
                             <div className="space-y-1.5 lg:col-span-4">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <FileSearch size={12} /> Remarks</label>
+                                    <FileSearch size={12} className="text-primary-500" /> Remarks</label>
                                 <textarea
                                     name="remarks"
                                     rows="2"

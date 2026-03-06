@@ -27,8 +27,8 @@ const StatCard = ({ title, value, icon, color, change, trend }) => (
     <div className="card group hover:-translate-y-1 duration-500">
         <div className="flex items-start justify-between">
             <div>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{title}</p>
-                <h3 className="text-4xl font-bold mt-3 text-slate-900 tracking-tight">{value}</h3>
+                <p className="text-[11px] font-black text-slate-600 uppercase tracking-[0.2em]">{title}</p>
+                <h3 className="text-5xl font-black mt-3 text-slate-900 tracking-tighter">{value}</h3>
                 {change && (
                     <div className={`flex items-center mt-4 text-xs font-bold px-2 py-1 rounded-lg w-fit ${trend === 'up' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'
                         }`}>
@@ -109,11 +109,11 @@ const Dashboard = () => {
     ];
 
     return (
-        <div className="page-container">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
-                <div>
+        <div className="page-container bg-slate-50/50 min-h-screen">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-4">
+                <div className="space-y-1">
                     <h1 className="section-title text-2xl font-bold text-slate-800">Enterprise Dashboard</h1>
-                    <p className="text-slate-500 text-base mt-2">Precision management for your global inventory ecosystem.</p>
+                    <p className="text-slate-500 text-base font-medium">Precision management for your global inventory ecosystem.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <button className="btn btn-secondary gap-2">
@@ -132,15 +132,15 @@ const Dashboard = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-                <div className="lg:col-span-2 card p-10 h-full">
-                    <div className="flex items-center justify-between mb-10">
+                <div className="lg:col-span-2 card !p-12 h-full">
+                    <div className="flex items-center justify-between mb-12">
                         <div>
-                            <h3 className="text-xl font-bold text-slate-900">Inventory Liquidity</h3>
-                            <p className="text-slate-400 text-sm mt-1">Real-time stock value throughput analysis</p>
+                            <h3 className="text-2xl font-black text-slate-900 tracking-tight">Inventory Liquidity</h3>
+                            <p className="text-slate-500 text-sm mt-2 font-medium">Real-time stock value throughput analysis</p>
                         </div>
-                        <div className="flex bg-slate-100 p-1.5 rounded-xl">
-                            <button className="px-4 py-1.5 text-xs font-bold bg-white text-slate-900 rounded-lg shadow-sm">Trend</button>
-                            <button className="px-4 py-1.5 text-xs font-bold text-slate-400 hover:text-slate-600">Volume</button>
+                        <div className="flex bg-slate-100 p-2 rounded-2xl">
+                            <button className="px-5 py-2 text-xs font-black bg-white text-slate-900 rounded-xl shadow-sm transition-all">Trend</button>
+                            <button className="px-5 py-2 text-xs font-black text-slate-500 hover:text-slate-700 transition-colors">Volume</button>
                         </div>
                     </div>
                     <div className="h-80 w-full">
@@ -157,13 +157,13 @@ const Dashboard = () => {
                                     dataKey="date"
                                     axisLine={false}
                                     tickLine={false}
-                                    tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 600 }}
+                                    tick={{ fill: '#64748b', fontSize: 11, fontWeight: 700 }}
                                     dy={10}
                                 />
                                 <YAxis
                                     axisLine={false}
                                     tickLine={false}
-                                    tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 600 }}
+                                    tick={{ fill: '#64748b', fontSize: 11, fontWeight: 700 }}
                                 />
                                 <Tooltip
                                     contentStyle={{
@@ -194,15 +194,15 @@ const Dashboard = () => {
                                 <div className={`absolute left-0 w-2.5 h-2.5 rounded-full border-2 border-white shadow-sm ring-2 bg-primary-500 ring-primary-100`} />
                                 <div className="flex-1 min-w-0">
                                     <div className="flex justify-between items-start mb-1">
-                                        <p className="text-sm text-slate-900 font-bold truncate">{activity.username}</p>
-                                        <span className="text-[10px] font-bold text-slate-400 whitespace-nowrap ml-2 uppercase tracking-tighter">
+                                        <p className="text-sm text-slate-900 font-extrabold truncate">{activity.username}</p>
+                                        <span className="text-[10px] font-black text-slate-400 whitespace-nowrap ml-2 uppercase tracking-[0.1em]">
                                             {new Date(activity.login_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                         </span>
                                     </div>
-                                    <p className="text-xs text-slate-500 leading-relaxed italic">
+                                    <p className="text-xs text-slate-600 leading-relaxed font-medium">
                                         "{activity.action}"
                                     </p>
-                                    <div className="mt-2 text-[10px] font-bold text-primary-600 bg-primary-50 px-2 py-0.5 rounded-md w-fit uppercase tracking-tighter">
+                                    <div className="mt-3 text-[10px] font-black text-primary-600 bg-primary-100/50 px-3 py-1 rounded-lg w-fit uppercase tracking-widest border border-primary-200/50">
                                         {activity.role}
                                     </div>
                                 </div>

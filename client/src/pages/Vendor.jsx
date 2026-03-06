@@ -111,21 +111,21 @@ const Vendor = () => {
 
     return (
         <div className="page-container bg-slate-50 min-h-screen">
-            <div className="max-w-7xl mx-auto space-y-8">
-                {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
+            <div className="max-w-7xl mx-auto space-y-10">
+                {/* Header Area */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+                    <div className="space-y-1">
                         <h1 className="section-title text-2xl font-bold text-slate-800">Vendor Registry</h1>
-                        <p className="text-slate-500 text-base mt-2 font-medium">Manage and monitor your project supply partners.</p>
+                        <p className="text-slate-500 text-base font-medium">Manage and monitor your project supply partners with absolute precision.</p>
                     </div>
                     <button
                         onClick={() => setShowTable(!showTable)}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all duration-300 shadow-sm border
+                        className={`flex items-center gap-2 px-8 py-3.5 rounded-[1.25rem] font-black transition-all duration-300 shadow-sm border uppercase text-xs tracking-widest
                         ${showTable
                                 ? 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
-                                : 'bg-white text-primary-600 border-primary-100 hover:border-primary-300 hover:bg-primary-50'}`}
+                                : 'bg-white text-primary-600 border-primary-200 hover:border-primary-400 hover:bg-primary-50 hover:shadow-md'}`}
                     >
-                        {showTable ? <><ChevronUp size={20} /> Hide Registry</> : <><ChevronDown size={20} /> Show Detail</>}
+                        {showTable ? <><ChevronUp size={18} /> Hide Registry</> : <><ChevronDown size={18} /> Show Detail</>}
                     </button>
                 </div>
 
@@ -147,9 +147,10 @@ const Vendor = () => {
 
                     <form onSubmit={handleSubmit} className="p-8 space-y-8">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            <div className="space-y-1.5 lg:col-span-2">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Truck size={12} /> Vendor Name</label>
+                            <div className="space-y-3 lg:col-span-2">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Truck size={14} className="text-primary-500" /> Vendor Name
+                                </label>
                                 <input
                                     type="text"
                                     required
@@ -160,9 +161,10 @@ const Vendor = () => {
                                     placeholder="Enter vendor's full name"
                                 />
                             </div>
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Phone size={12} /> Phone Number</label>
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Phone size={14} className="text-primary-500" /> Phone Number
+                                </label>
                                 <input
                                     type="text"
                                     required
@@ -174,9 +176,10 @@ const Vendor = () => {
                                     placeholder="9876543210"
                                 />
                             </div>
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Mail size={12} /> Email Address</label>
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Mail size={14} className="text-primary-500" /> Email Address
+                                </label>
                                 <input
                                     type="email"
                                     name="vendor_gmail"
@@ -186,9 +189,10 @@ const Vendor = () => {
                                     placeholder="vendor@example.com"
                                 />
                             </div>
-                            <div className="space-y-1.5 lg:col-span-3">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <MapPin size={12} /> Address</label>
+                            <div className="space-y-3 lg:col-span-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <MapPin size={14} className="text-primary-500" /> Business Address
+                                </label>
                                 <input
                                     type="text"
                                     name="vendor_address"
@@ -229,7 +233,7 @@ const Vendor = () => {
                                         <div className="flex flex-col">
                                             <span className="font-bold text-slate-900 group-hover:text-primary-600 transition-colors uppercase">{value}</span>
                                             <div className="flex items-center gap-2 mt-1">
-                                                <MapPin size={12} className="text-slate-400" />
+                                                <MapPin size={12} className="text-primary-500" />
                                                 <span className="text-xs text-slate-400 truncate max-w-[200px]">{vendor.vendor_address || 'No address provided'}</span>
                                             </div>
                                         </div>
@@ -241,12 +245,12 @@ const Vendor = () => {
                                     render: (phone, vendor) => (
                                         <div className="flex flex-col gap-1">
                                             <div className="flex items-center gap-2">
-                                                <Phone size={12} className="text-slate-400" />
+                                                <Phone size={12} className="text-primary-500" />
                                                 <span className="text-xs font-bold text-slate-700">{phone}</span>
                                             </div>
                                             {vendor.vendor_gmail && (
                                                 <div className="flex items-center gap-2">
-                                                    <Mail size={12} className="text-slate-400" />
+                                                    <Mail size={12} className="text-primary-500" />
                                                     <span className="text-[10px] font-medium text-slate-500">{vendor.vendor_gmail}</span>
                                                 </div>
                                             )}

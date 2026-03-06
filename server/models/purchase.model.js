@@ -88,6 +88,16 @@ const Purchase = {
         } finally {
             connection.release();
         }
+    },
+
+    findByDateRange: async (fromDate, toDate) => {
+        const query = `
+            SELECT * FROM purchase_master 
+            WHERE DATE(purchase_date) BETWEEN ? AND ? 
+            ORDER BY purchase_date DESC, created_at DESC
+        `;
+        const [rows] = await db.execute(query, [fromDate, toDate]);
+        return rows;
     }
 };
 

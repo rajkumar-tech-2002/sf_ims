@@ -166,22 +166,22 @@ const PurchaseEntry = () => {
     );
 
     return (
-        <div className="p-6 lg:p-10 bg-slate-50 min-h-screen">
-            <div className="max-w-7xl mx-auto space-y-8">
-                {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
+        <div className="page-container bg-slate-50/50 min-h-screen">
+            <div className="max-w-7xl mx-auto space-y-10">
+                {/* Header Area */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+                    <div className="space-y-1">
                         <h1 className="section-title text-2xl font-bold text-slate-800">Purchase Entry</h1>
-                        <p className="text-slate-500 text-base mt-2 font-medium">Record and track inventory procurement from vendors.</p>
+                        <p className="text-slate-500 text-base font-medium">Record and track inventory procurement from vendors with enterprise-grade precision.</p>
                     </div>
                     <button
                         onClick={() => setShowTable(!showTable)}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all duration-300 shadow-sm border
+                        className={`flex items-center gap-2 px-8 py-3.5 rounded-[1.25rem] font-black transition-all duration-300 shadow-sm border uppercase text-xs tracking-widest
                         ${showTable
                                 ? 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
-                                : 'bg-white text-primary-600 border-primary-100 hover:border-primary-300 hover:bg-primary-50'}`}
+                                : 'bg-white text-primary-600 border-primary-200 hover:border-primary-400 hover:bg-primary-50 hover:shadow-md'}`}
                     >
-                        {showTable ? <><ChevronUp size={20} /> Hide Registry</> : <><ChevronDown size={20} /> Show Detail</>}
+                        {showTable ? <><ChevronUp size={18} /> Hide Registry</> : <><ChevronDown size={18} /> Show Detail</>}
                     </button>
                 </div>
 
@@ -246,30 +246,30 @@ const PurchaseEntry = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {/* Date */}
-                            <div className="space-y-2">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Calendar size={12} /> Purchase Date
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Calendar size={14} className="text-primary-500" /> Procurement Date
                                 </label>
                                 <input
                                     type="date"
                                     required
                                     name="purchase_date"
-                                    className="input-field"
+                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800"
                                     value={formData.purchase_date}
                                     onChange={handleInputChange}
                                 />
                             </div>
 
                             {/* Product Dropdown */}
-                            <div className="space-y-2">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Package size={12} /> Product Name
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Package size={14} className="text-primary-500" /> Stock Product
                                 </label>
                                 <div className="relative">
                                     <select
                                         required
                                         name="product_name"
-                                        className="input-field appearance-none bg-white"
+                                        className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-black text-slate-700 uppercase appearance-none cursor-pointer transition-all"
                                         value={formData.product_name}
                                         onChange={handleInputChange}
                                     >
@@ -278,7 +278,7 @@ const PurchaseEntry = () => {
                                             <option key={stock.id} value={stock.product_name}>{stock.product_name}</option>
                                         ))}
                                     </select>
-                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                                    <div className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
                                         <ChevronDown size={18} />
                                     </div>
                                 </div>
@@ -286,8 +286,8 @@ const PurchaseEntry = () => {
 
                             {/* Vendor Dropdown */}
                             <div className="space-y-2">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Truck size={12} /> Vendor Name
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Truck size={12} className="text-primary-500"/> Vendor Name
                                 </label>
                                 <div className="relative">
                                     <select
@@ -309,15 +309,15 @@ const PurchaseEntry = () => {
                             </div>
 
                             {/* Qty */}
-                            <div className="space-y-2">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Hash size={12} /> Quantity
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Hash size={14} className="text-primary-500" /> Procurement Qty
                                 </label>
                                 <input
                                     type="number"
                                     required
                                     name="qty"
-                                    className="input-field"
+                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800"
                                     value={formData.qty}
                                     onChange={handleInputChange}
                                     placeholder="0"
@@ -326,8 +326,8 @@ const PurchaseEntry = () => {
 
                             {/* Purchase Rate */}
                             <div className="space-y-2">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <IndianRupee size={12} /> Purchase Rate
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <IndianRupee size={12} className="text-primary-500" /> Purchase Rate
                                 </label>
                                 <div className="relative">
                                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
@@ -345,7 +345,7 @@ const PurchaseEntry = () => {
 
                             {/* Sale Rate (Auto populated but editable) */}
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-emerald-600 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="block text-[11px] font-black text-emerald-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
                                     <IndianRupee size={12} /> Final Sale Rate
                                 </label>
                                 <div className="relative">
@@ -364,8 +364,8 @@ const PurchaseEntry = () => {
                         </div>
 
                         <div className="lg:col-span-4 flex justify-end pt-4">
-                            <button type="submit" className="w-full md:w-1/3 btn btn-primary py-4 text-base flex items-center justify-center gap-2 shadow-lg shadow-primary-500/20">
-                                {isEditing ? <><Save size={24} /> Update Purchase Record</> : <><Plus size={24} /> Complete Purchase Entry</>}
+                            <button type="submit" className="w-full md:w-1/3 btn btn-primary py-4 text-base flex items-center justify-center gap-3 shadow-xl shadow-primary-500/25 rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300">
+                                {isEditing ? <><Save size={24} strokeWidth={2.5} /> Update Purchase Record</> : <><Plus size={24} strokeWidth={2.5} /> Confirm Purchase Entry</>}
                             </button>
                         </div>
                     </form>

@@ -173,7 +173,7 @@ const RawMaterialPurchaseEntry = () => {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <h1 className="section-title text-2xl font-bold text-slate-800">Raw Material Purchase Entry</h1>
-                        <p className="text-slate-500 text-base mt-2 font-medium">Record and track raw material procurement from vendors.</p>
+                        <p className="text-slate-500 text-base font-medium">Record and track raw material procurement from vendors.</p>
                     </div>
                     <button
                         onClick={() => setShowTable(!showTable)}
@@ -243,7 +243,7 @@ const RawMaterialPurchaseEntry = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                             <div className="space-y-2">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Calendar size={12} /> Purchase Date
+                                    <Calendar size={12} className="text-primary-500"/> Purchase Date
                                 </label>
                                 <input
                                     type="date"
@@ -257,7 +257,7 @@ const RawMaterialPurchaseEntry = () => {
 
                             <div className="space-y-2">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Package size={12} /> Material Name
+                                    <Package size={12} className="text-primary-500"/> Material Name
                                 </label>
                                 <div className="relative">
                                     <select
@@ -280,7 +280,7 @@ const RawMaterialPurchaseEntry = () => {
 
                             <div className="space-y-2">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Truck size={12} /> Vendor Name
+                                    <Truck size={12} className="text-primary-500"/> Vendor Name
                                 </label>
                                 <div className="relative">
                                     <select
@@ -303,7 +303,7 @@ const RawMaterialPurchaseEntry = () => {
 
                             <div className="space-y-2">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Hash size={12} /> Bill Number
+                                    <Hash size={12} className="text-primary-500" /> Bill Number
                                 </label>
                                 <input
                                     type="text"
@@ -317,7 +317,7 @@ const RawMaterialPurchaseEntry = () => {
 
                             <div className="space-y-2">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Hash size={12} /> Purchase Quantity
+                                    <Hash size={12} className="text-primary-500" /> Purchase Quantity
                                 </label>
                                 <input
                                     type="number"
@@ -332,7 +332,7 @@ const RawMaterialPurchaseEntry = () => {
 
                             <div className="space-y-2">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <IndianRupee size={12} /> Purchase Rate
+                                    <IndianRupee size={12} className="text-primary-500" /> Purchase Rate
                                 </label>
                                 <div className="relative">
                                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
@@ -350,7 +350,7 @@ const RawMaterialPurchaseEntry = () => {
 
                             <div className="space-y-2">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Percent size={12} /> GST
+                                    <Percent size={12} className="text-primary-500"/> GST
                                 </label>
                                 <input
                                     type="number"
@@ -363,7 +363,7 @@ const RawMaterialPurchaseEntry = () => {
 
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-emerald-600 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <IndianRupee size={12} /> GST Amount
+                                    <IndianRupee size={12} className="text-emerald-500"/> GST Amount
                                 </label>
                                 <div className="relative">
                                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-400 font-bold">₹</span>

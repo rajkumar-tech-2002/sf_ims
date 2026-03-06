@@ -63,7 +63,7 @@ const LogDetails = () => {
             label: 'Timestamp',
             render: (value) => (
                 <div className="flex items-center gap-2">
-                    <Calendar size={12} className="text-slate-400" />
+                    <Calendar size={12} className="text-primary-500" />
                     <span className="text-[10px] font-bold text-slate-500 uppercase">
                         {new Date(value).toLocaleString()}
                     </span>
@@ -77,7 +77,7 @@ const LogDetails = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
                 <div>
                     <h1 className="section-title text-2xl font-bold text-slate-800">Audit Logs</h1>
-                    <p className="text-slate-500 text-base mt-2 font-medium">Real-time monitoring of system access and activity.</p>
+                    <p className="text-slate-500 text-base font-medium">Real-time monitoring of system access and activity.</p>
                 </div>
                 <div className="p-4 bg-primary-50 rounded-2xl border border-primary-100 flex items-center gap-4">
                     <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white">

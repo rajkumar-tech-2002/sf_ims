@@ -14,11 +14,13 @@ import {
     IndianRupee,
     Layers,
     Percent,
-    AlertTriangle
+    AlertTriangle,
+    Printer
 } from 'lucide-react';
 import api from '../utils/api';
 import DataTable from '../components/DataTable';
 import { useToast } from '../context/ToastContext';
+import RawMaterialStockReportPrint from '../components/RawMaterialStockReportPrint';
 
 const RawMaterialStockEntry = () => {
     const { showToast, confirmToast } = useToast();
@@ -135,17 +137,27 @@ const RawMaterialStockEntry = () => {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <h1 className="section-title text-2xl font-bold text-slate-800">Raw Material Registry</h1>
-                        <p className="text-slate-500 text-base mt-2 font-medium">Manage and monitor your raw material inventory levels.</p>
+                        <p className="text-slate-500 text-base font-medium">Manage and monitor your raw material inventory levels.</p>
                     </div>
-                    <button
-                        onClick={() => setShowTable(!showTable)}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all duration-300 shadow-sm border
-                        ${showTable
-                                ? 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
-                                : 'bg-white text-primary-600 border-primary-100 hover:border-primary-300 hover:bg-primary-50'}`}
-                    >
-                        {showTable ? <><ChevronUp size={20} /> Hide Registry</> : <><ChevronDown size={20} /> Show Registry</>}
-                    </button>
+                    <div className="flex items-center gap-3">
+                        <button
+                            onClick={() => setShowTable(!showTable)}
+                            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all duration-300 shadow-sm border
+                            ${showTable
+                                    ? 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
+                                    : 'bg-white text-primary-600 border-primary-100 hover:border-primary-300 hover:bg-primary-50'}`}
+                        >
+                            {showTable ? <><ChevronUp size={20} /> Hide Registry</> : <><ChevronDown size={20} /> Show Registry</>}
+                        </button>
+                        {showTable && (
+                            <button
+                                onClick={() => window.print()}
+                                className="flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20"
+                            >
+                                <Printer size={20} /> Print Report
+                            </button>
+                        )}
+                    </div>
                 </div>
 
                 {/* Entry Form */}
@@ -168,7 +180,7 @@ const RawMaterialStockEntry = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             <div className="space-y-1.5">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Hash size={12} /> HSN Code</label>
+                                    <Hash size={12} className="text-primary-500" /> HSN Code</label>
                                 <input
                                     type="text"
                                     name="hsn_code"
@@ -180,7 +192,7 @@ const RawMaterialStockEntry = () => {
                             </div>
                             <div className="space-y-1.5">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Hash size={12} /> Product Code</label>
+                                    <Hash size={12} className="text-primary-500" /> Product Code</label>
                                 <input
                                     type="text"
                                     name="product_code"
@@ -192,7 +204,7 @@ const RawMaterialStockEntry = () => {
                             </div>
                             <div className="space-y-1.5 lg:col-span-2">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Tag size={12} /> Product Name</label>
+                                    <Tag size={12} className="text-primary-500" /> Product Name</label>
                                 <input
                                     type="text"
                                     required
@@ -205,7 +217,7 @@ const RawMaterialStockEntry = () => {
                             </div>
                             <div className="space-y-1.5 lg:col-span-4">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Package size={12} /> Detail / Description</label>
+                                    <Package size={12} className="text-primary-500" /> Detail / Description</label>
                                 <textarea
                                     name="detail"
                                     rows="2"
@@ -217,7 +229,7 @@ const RawMaterialStockEntry = () => {
                             </div>
                             <div className="space-y-1.5">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Hash size={12} /> Opening Quantity</label>
+                                    <Hash size={12} className="text-primary-500" /> Opening Quantity</label>
                                 <input
                                     type="number"
                                     required
@@ -229,7 +241,7 @@ const RawMaterialStockEntry = () => {
                             </div>
                             <div className="space-y-1.5">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <IndianRupee size={12} /> Price Rate</label>
+                                    <IndianRupee size={12} className="text-primary-500" /> Price Rate</label>
                                 <div className="relative">
                                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
                                     <input
@@ -244,7 +256,7 @@ const RawMaterialStockEntry = () => {
                             </div>
                             <div className="space-y-1.5">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Layers size={12} /> Scale / Unit</label>
+                                    <Layers size={12} className="text-primary-500" /> Scale / Unit</label>
                                 <div className="relative">
                                     <select
                                         name="scale"
@@ -265,7 +277,7 @@ const RawMaterialStockEntry = () => {
                             </div>
                             <div className="space-y-1.5">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Percent size={12} /> GST</label>
+                                    <Percent size={12} className="text-primary-500" /> GST</label>
                                 <input
                                     type="number"
                                     step="0.01"
@@ -277,7 +289,7 @@ const RawMaterialStockEntry = () => {
                             </div>
                             <div className="space-y-1.5 lg:col-span-2">
                                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <AlertTriangle size={12} /> ReOrder Level</label>
+                                    <AlertTriangle size={12} className="text-primary-500" /> ReOrder Level</label>
                                 <input
                                     type="number"
                                     name="reorder_level"
@@ -379,6 +391,9 @@ const RawMaterialStockEntry = () => {
                     </div>
                 )}
             </div>
+
+            {/* Print Component */}
+            <RawMaterialStockReportPrint data={stocks} />
         </div>
     );
 };

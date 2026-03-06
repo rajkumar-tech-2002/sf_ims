@@ -436,23 +436,23 @@ const Quotation = () => {
     );
 
     return (
-        <div className="p-6 lg:p-10 bg-slate-50 min-h-screen">
-            <div className="max-w-7xl mx-auto space-y-8">
+        <div className="page-container bg-slate-50/50 min-h-screen">
+            <div className="max-w-7xl mx-auto space-y-10">
                 {/* Header Area */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <div>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+                    <div className="space-y-1">
                         <h1 className="section-title text-2xl font-bold text-slate-800">Billing Quotation</h1>
-                        <p className="text-slate-500 text-base mt-2 font-medium">Create and manage professional quotations for your customers.</p>
+                        <p className="text-slate-500 text-base font-medium">Create and manage professional quotations for your customers with absolute precision.</p>
                     </div>
                     <div className="flex items-center gap-4">
                         <button
                             onClick={() => setShowTable(!showTable)}
-                            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all duration-300 shadow-sm border
+                            className={`flex items-center gap-2 px-8 py-3.5 rounded-[1.25rem] font-black transition-all duration-300 shadow-sm border uppercase text-xs tracking-widest
                             ${showTable
                                     ? 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
-                                    : 'bg-white text-primary-600 border-primary-100 hover:border-primary-300 hover:bg-primary-50'}`}
+                                    : 'bg-white text-primary-600 border-primary-200 hover:border-primary-400 hover:bg-primary-50 hover:shadow-md'}`}
                         >
-                            {showTable ? <><ChevronUp size={20} /> Hide Registry</> : <><ChevronDown size={20} /> View Registry</>}
+                            {showTable ? <><ChevronUp size={18} /> Hide Registry</> : <><ChevronDown size={18} /> View Registry</>}
                         </button>
                     </div>
                 </div>
@@ -515,157 +515,174 @@ const Quotation = () => {
                     </div>
                 )}
 
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
                     {/* Left: Customer & Items */}
-                    <div className="lg:col-span-3 space-y-6">
+                    <div className="lg:col-span-3 space-y-8">
 
-                        {/* Customer Section */}
-                        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                            <div className="flex items-center gap-3 mb-4">
-                                <User className="text-primary-500" size={20} />
-                                <h3 className="text-lg font-bold text-slate-800">Customer Details</h3>
+                        <div className="bg-white rounded-[2rem] shadow-premium border border-slate-200 overflow-hidden">
+                            <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center gap-4">
+                                <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+                                    <User size={20} />
+                                </div>
+                                <h2 className="text-lg font-bold text-slate-900">Customer Details</h2>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                                <div>
-                                    <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest flex items-center gap-1.5"><Calendar size={12} /> Quotation Date</label>
-                                    <input
-                                        type="date"
-                                        className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold"
-                                        value={quotationDate}
-                                        onChange={(e) => setQuotationDate(e.target.value)}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest flex items-center gap-1.5"><Hash size={12} /> Quotation No</label>
-                                    <input
-                                        type="text"
-                                        readOnly
-                                        className="w-full px-4 py-2 bg-slate-100 border border-slate-200 rounded-xl text-sm font-bold text-primary-600"
-                                        value={quotationNo}
-                                    />
-                                </div>
-                                <div className="md:col-span-2 relative">
-                                    <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest flex items-center gap-1.5"><User size={12} /> Customer Name</label>
-                                    <div className="relative">
+                            <div className="p-8">
+                                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                    <div className="space-y-3">
+                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <Calendar size={14} className="text-primary-500" /> Quotation Date
+                                        </label>
+                                        <input
+                                            type="date"
+                                            className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800"
+                                            value={quotationDate}
+                                            onChange={(e) => setQuotationDate(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="space-y-3">
+                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <Hash size={14} className="text-primary-500" /> Reference No
+                                        </label>
                                         <input
                                             type="text"
-                                            className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold"
-                                            placeholder="Search or enter customer name"
-                                            value={customer.name}
-                                            onChange={handleCustomerNameChange}
-                                            onFocus={() => {
-                                                if (customer.name.trim()) setShowSuggestions(true);
-                                            }}
+                                            readOnly
+                                            className="w-full px-5 py-3.5 bg-primary-50/50 border border-primary-100 rounded-2xl text-sm font-black text-primary-700 select-none shadow-sm"
+                                            value={quotationNo}
                                         />
-                                        {showSuggestions && filteredSuggestions.length > 0 && (
-                                            <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-xl shadow-xl max-h-60 overflow-y-auto">
-                                                {filteredSuggestions.map((cust) => (
-                                                    <button
-                                                        key={cust.id}
-                                                        type="button"
-                                                        className="w-full px-4 py-3 text-left hover:bg-slate-50 border-b border-slate-50 last:border-0 transition-colors"
-                                                        onClick={() => handleSelectCustomer(cust)}
-                                                    >
-                                                        <div className="flex justify-between items-center">
-                                                            <div>
-                                                                <p className="text-sm font-bold text-slate-800">{cust.customer_name}</p>
-                                                                <p className="text-[10px] font-bold text-primary-600 tracking-wider font-mono">{cust.customer_id}</p>
-                                                            </div>
-                                                            <div className="text-right">
-                                                                <p className="text-[10px] font-bold text-slate-400">{cust.customer_mobile}</p>
-                                                                <p className="text-[10px] font-bold text-slate-400">{cust.state || 'N/A'}</p>
-                                                            </div>
-                                                        </div>
-                                                    </button>
-                                                ))}
-                                            </div>
-                                        )}
-                                        {/* Click outside to close */}
-                                        {showSuggestions && (
-                                            <div
-                                                className="fixed inset-0 z-40"
-                                                onClick={() => setShowSuggestions(false)}
-                                            />
-                                        )}
                                     </div>
-                                </div>
+                                    <div className="md:col-span-2 relative space-y-3">
+                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <User size={14} className="text-primary-500" /> Client Name
+                                        </label>
+                                        <div className="relative">
+                                            <input
+                                                type="text"
+                                                className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 placeholder:font-normal"
+                                                placeholder="Search or enter customer name"
+                                                value={customer.name}
+                                                onChange={handleCustomerNameChange}
+                                                onFocus={() => {
+                                                    if (customer.name.trim()) setShowSuggestions(true);
+                                                }}
+                                            />
+                                            {showSuggestions && filteredSuggestions.length > 0 && (
+                                                <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-xl shadow-xl max-h-60 overflow-y-auto">
+                                                    {filteredSuggestions.map((cust) => (
+                                                        <button
+                                                            key={cust.id}
+                                                            type="button"
+                                                            className="w-full px-4 py-3 text-left hover:bg-slate-50 border-b border-slate-50 last:border-0 transition-colors"
+                                                            onClick={() => handleSelectCustomer(cust)}
+                                                        >
+                                                            <div className="flex justify-between items-center">
+                                                                <div>
+                                                                    <p className="text-sm font-bold text-slate-800">{cust.customer_name}</p>
+                                                                    <p className="text-[10px] font-bold text-primary-600 tracking-wider font-mono">{cust.customer_id}</p>
+                                                                </div>
+                                                                <div className="text-right">
+                                                                    <p className="text-[10px] font-bold text-slate-400">{cust.customer_mobile}</p>
+                                                                    <p className="text-[10px] font-bold text-slate-400">{cust.state || 'N/A'}</p>
+                                                                </div>
+                                                            </div>
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            )}
+                                            {/* Click outside to close */}
+                                            {showSuggestions && (
+                                                <div
+                                                    className="fixed inset-0 z-40"
+                                                    onClick={() => setShowSuggestions(false)}
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
 
-                                <div>
-                                    <label className="block text-xs font-bold text-slate-500 mb-2 uppercase flex items-center gap-1.5 tracking-widest">
-                                        <Phone size={12} /> Mobile Number</label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold"
-                                        placeholder="Primary mobile"
-                                        value={customer.mobile}
-                                        onChange={(e) => setCustomer({ ...customer, mobile: e.target.value })}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-slate-500 mb-2 uppercase flex items-center gap-1.5 tracking-widest">
-                                        <Phone size={12} /> Landline / Contact</label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold"
-                                        value={customer.contact}
-                                        onChange={(e) => setCustomer({ ...customer, contact: e.target.value })}
-                                        placeholder="Optional"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-slate-500 mb-2 uppercase flex items-center gap-1.5 tracking-widest">
-                                        <Hash size={12} /> GST Number</label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold"
-                                        value={customer.gstNo}
-                                        onChange={(e) => setCustomer({ ...customer, gstNo: e.target.value })}
-                                        placeholder="GSTIN"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-slate-500 mb-2 uppercase flex items-center gap-1.5 tracking-widest">
-                                        <MapPin size={12} /> State</label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold"
-                                        value={customer.state}
-                                        onChange={(e) => setCustomer({ ...customer, state: e.target.value })}
-                                        placeholder="State"
-                                    />
-                                </div>
+                                    <div className="space-y-3">
+                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <Phone size={14} className="text-primary-500" /> Primary Contact
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800"
+                                            placeholder="Mobile"
+                                            value={customer.mobile}
+                                            onChange={(e) => setCustomer({ ...customer, mobile: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="space-y-3">
+                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <MapPin size={14} className="text-primary-500" /> Secondary Contact
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800"
+                                            value={customer.contact}
+                                            onChange={(e) => setCustomer({ ...customer, contact: e.target.value })}
+                                            placeholder="Optional"
+                                        />
+                                    </div>
+                                    <div className="space-y-3">
+                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <FileText size={14} className="text-primary-500" /> Tax Identifier (GST)
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 uppercase"
+                                            value={customer.gstNo}
+                                            onChange={(e) => setCustomer({ ...customer, gstNo: e.target.value })}
+                                            placeholder="GSTIN"
+                                        />
+                                    </div>
+                                    <div className="space-y-3">
+                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <MapPin size={14} className="text-primary-500" /> Regional Domain
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800"
+                                            value={customer.state}
+                                            onChange={(e) => setCustomer({ ...customer, state: e.target.value })}
+                                            placeholder="State"
+                                        />
+                                    </div>
 
-                                <div>
-                                    <label className="block text-xs font-bold text-slate-500 mb-2 uppercase flex items-center gap-1.5 tracking-widest">
-                                        <Hash size={12} /> State Code</label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold"
-                                        value={customer.stateCode}
-                                        onChange={(e) => setCustomer({ ...customer, stateCode: e.target.value })}
-                                        placeholder="Code"
-                                    />
-                                </div>
-                                <div className="md:col-span-3">
-                                    <label className="block text-xs font-bold text-slate-500 mb-2 uppercase flex items-center gap-1.5 tracking-widest">
-                                        <MapPin size={12} /> Address</label>
-                                    <textarea
-                                        rows="1"
-                                        className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold"
-                                        placeholder="Full address"
-                                        value={customer.address}
-                                        onChange={(e) => setCustomer({ ...customer, address: e.target.value })}
-                                    ></textarea>
+                                    <div className="space-y-3">
+                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <Hash size={14} className="text-primary-500" /> Zone Code
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800"
+                                            value={customer.stateCode}
+                                            onChange={(e) => setCustomer({ ...customer, stateCode: e.target.value })}
+                                            placeholder="Code"
+                                        />
+                                    </div>
+                                    <div className="md:col-span-3 space-y-3">
+                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <MapPin size={14} className="text-primary-500" /> Geographic Location
+                                        </label>
+                                        <textarea
+                                            rows="1"
+                                            className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
+                                            placeholder="Full address"
+                                            value={customer.address}
+                                            onChange={(e) => setCustomer({ ...customer, address: e.target.value })}
+                                        ></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Items Grid */}
-                        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-                            <div className="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-                                <h3 className="font-bold text-slate-800 flex items-center gap-2">
-                                    <Plus className="text-primary-500" size={18} /> Product Items
-                                </h3>
+                        <div className="bg-white rounded-[2rem] shadow-premium border border-slate-200 overflow-hidden">
+                            <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+                                        <Plus size={20} />
+                                    </div>
+                                    <h2 className="text-lg font-bold text-slate-900">Product Items</h2>
+                                </div>
                                 <div className="flex items-center gap-4">
                                     <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-slate-200">
                                         <span className="text-xs font-bold text-slate-500">GST MODE:</span>
@@ -699,7 +716,7 @@ const Quotation = () => {
                                 </div>
                             </div>
 
-                            <div className="overflow-x-auto pb-4 custom-scrollbar bg-white rounded-2xl border border-slate-200 shadow-premium p-0">
+                            <div className="overflow-x-auto pb-4 pt-4 custom-scrollbar bg-white 0 shadow-premium p-0">
                                 <table className="w-full text-left border-collapse min-w-[1600px]">
                                     <thead>
                                         <tr>
@@ -852,12 +869,14 @@ const Quotation = () => {
                     </div>
 
                     {/* Right: Calculations & Actions */}
-                    <div className="space-y-6">
+                    <div className="lg:col-span-1 space-y-6 lg:sticky lg:top-24">
                         {/* Summary Card */}
-                        <div className="bg-slate-900 rounded-2xl shadow-xl p-6 text-white space-y-6">
-                            <div className="flex items-center gap-2 pb-4 border-b border-slate-800">
-                                <Calculator className="text-primary-400" size={20} />
-                                <h3 className="font-bold tracking-wider text-sm">Summary</h3>
+                        <div className="bg-slate-900 rounded-[2rem] shadow-premium p-8 text-white space-y-8">
+                            <div className="flex items-center gap-4 pb-6 border-b border-slate-800">
+                                <div className="w-10 h-10 bg-primary-500/10 rounded-xl flex items-center justify-center text-primary-400">
+                                    <Calculator size={20} />
+                                </div>
+                                <h3 className="font-bold tracking-wider text-sm uppercase">Summary</h3>
                             </div>
 
                             <div className="space-y-4">
@@ -902,25 +921,19 @@ const Quotation = () => {
                                 </button>
                             </div>
                         </div>
-
-                        {/* Recent Hint */}
-                        <div className="bg-white rounded-2xl p-6 border border-slate-200">
-                            <p className="text-xs text-slate-500 leading-relaxed">
-                                <strong className="text-slate-800">Note:</strong> Totals are calculated in real-time. Round off is applied to the grand total to the nearest rupee.
-                            </p>
-                        </div>
                     </div>
                 </div>
+
+                {/* Print Component */}
+                <QuotationPrint
+                    quotationDate={quotationDate}
+                    quotationNo={quotationNo}
+                    customer={customer}
+                    items={items}
+                    totals={totals}
+                    gstMode={gstMode}
+                />
             </div>
-            {/* Print Component */}
-            <QuotationPrint
-                quotationDate={quotationDate}
-                quotationNo={quotationNo}
-                customer={customer}
-                items={items}
-                totals={totals}
-                gstMode={gstMode}
-            />
         </div>
     );
 };

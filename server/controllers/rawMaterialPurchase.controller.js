@@ -31,8 +31,22 @@ const deletePurchase = async (req, res) => {
     }
 };
 
+const getReport = async (req, res) => {
+    try {
+        const { fromDate, toDate } = req.query;
+        if (!fromDate || !toDate) {
+            return res.status(400).json({ message: 'From Date and To Date are required' });
+        }
+        const reportData = await RawMaterialPurchase.findByDateRange(fromDate, toDate);
+        res.status(200).json(reportData);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     createPurchase,
     getPurchases,
-    deletePurchase
+    deletePurchase,
+    getReport
 };

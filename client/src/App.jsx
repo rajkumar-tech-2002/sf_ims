@@ -19,6 +19,11 @@ import RawMaterialPurchaseEntry from './pages/RawMaterialPurchaseEntry';
 import Quotation from './pages/Quotation';
 import Invoice from './pages/Invoice';
 import StockReturn from './pages/StockReturn';
+import BillReport from './pages/BillReport';
+import PurchaseReport from './pages/PurchaseReport';
+import DailyReport from './pages/DailyReport';
+import ReturnReport from './pages/ReturnReport';
+import RawMaterialPurchaseReport from './pages/RawMaterialPurchaseReport';
 import NotFound from './pages/NotFound';
 import MainLayout from './layouts/MainLayout';
 import { AuthProvider } from './context/AuthContext';
@@ -45,6 +50,11 @@ function App() {
                                 <Route path="/user-creation" element={<UserCreation />} />
                                 <Route path="/log-details" element={<LogDetails />} />
                                 <Route path="/reports" element={<Reports />} />
+                                <Route path="/bill-report" element={<BillReport />} />
+                                <Route path="/purchase-report" element={<PurchaseReport />} />
+                                <Route path="/daily-report" element={<DailyReport />} />
+                                <Route path="/return-report" element={<ReturnReport />} />
+                                <Route path="/raw-material-purchase-report" element={<RawMaterialPurchaseReport />} />
                                 <Route path="/profile" element={<Profile />} />
                                 <Route path="/help" element={<HelpCenter />} />
                                 <Route path="/vendor" element={<Vendor />} />

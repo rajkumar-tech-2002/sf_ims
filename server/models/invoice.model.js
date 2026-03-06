@@ -133,6 +133,58 @@ const Invoice = {
             ...master[0],
             items
         };
+    },
+
+    getUniqueProducts: async () => {
+        const [rows] = await db.execute('SELECT DISTINCT product_name FROM invoice_items ORDER BY product_name ASC');
+        return rows.map(r => r.product_name);
+    },
+
+    getDescriptionsByProduct: async (productName) => {
+        const [rows] = await db.execute('SELECT DISTINCT description FROM invoice_items WHERE product_name = ? ORDER BY description ASC', [productName]);
+        return rows.map(r => r.description);
+    },
+
+    getFilteredReport: async (filters) => {
+        const { fromDate, toDate, productName, description } = filters;
+        let query = `
+            SELECT 
+                im.invoice_date, 
+                im.invoice_no, 
+                im.customer_name, 
+                ii.product_name, 
+                ii.description, 
+                ii.gst_percent, 
+                ii.taxable_amount,
+                (ii.cgst_amount + ii.sgst_amount + ii.igst_amount) as gst_amount,
+                ii.total_amount as grand_total
+            FROM invoice_master im
+            JOIN invoice_items ii ON im.id = ii.invoice_id
+            WHERE 1=1
+        `;
+        const values = [];
+
+        if (fromDate) {
+            query += ' AND im.invoice_date >= ?';
+            values.push(fromDate);
+        }
+        if (toDate) {
+            query += ' AND im.invoice_date <= ?';
+            values.push(toDate);
+        }
+        if (productName && productName !== 'All') {
+            query += ' AND ii.product_name = ?';
+            values.push(productName);
+        }
+        if (description && description !== 'All') {
+            query += ' AND ii.description = ?';
+            values.push(description);
+        }
+
+        query += ' ORDER BY im.invoice_date ASC, im.invoice_no ASC';
+
+        const [rows] = await db.execute(query, values);
+        return rows;
     }
 };
 

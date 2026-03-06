@@ -7,6 +7,7 @@ router.use(authMiddleware);
 
 router.post('/', purchaseController.createPurchase);
 router.get('/', purchaseController.getPurchases);
+router.get('/report', purchaseController.getReport);
 router.delete('/:id', purchaseController.deletePurchase);
 
 module.exports = router;

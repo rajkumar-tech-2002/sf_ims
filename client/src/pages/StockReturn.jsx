@@ -274,28 +274,28 @@ const StockReturn = () => {
     ];
 
     return (
-        <div className="p-6 lg:p-10 bg-slate-50 min-h-screen">
-            <div className="max-w-7xl mx-auto space-y-8">
+        <div className="page-container bg-slate-50 min-h-screen">
+            <div className="max-w-7xl mx-auto space-y-10">
                 {/* Header Area */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <div>
-                        <h1 className="section-title text-2xl font-bold text-slate-800">Stock Return</h1>
-                        <p className="text-slate-500 text-base mt-2 font-medium">Process customer returns and restock items automatically.</p>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+                    <div className="space-y-1">
+                        <h1 className="section-title text-2xl font-bold text-slate-800">Stock Return Port</h1>
+                        <p className="text-slate-500 text-base font-medium">Process customer returns and restock items with absolute inventory precision.</p>
                     </div>
                     <div className="flex items-center gap-4">
                         <button
                             onClick={() => setShowHistory(!showHistory)}
-                            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all duration-300 shadow-sm border
+                            className={`flex items-center gap-2 px-8 py-3.5 rounded-[1.25rem] font-black transition-all duration-300 shadow-sm border uppercase text-xs tracking-widest
                             ${showHistory
                                     ? 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
-                                    : 'bg-white text-primary-600 border-primary-100 hover:bg-primary-50 hover:shadow-lg hover:shadow-primary-500/10'}`}
+                                    : 'bg-white text-primary-600 border-primary-200 hover:border-primary-400 hover:bg-primary-50 hover:shadow-md'}`}
                         >
-                            {showHistory ? <><ChevronUp size={20} /> Hide Registry</> : <><History size={20} /> Show Detail</>}
+                            {showHistory ? <><ChevronUp size={18} /> Hide Registry</> : <><History size={18} /> Show Detail</>}
                         </button>
                     </div>
                 </div>
 
-                {/* Entry Section */}
+                {/* Main Content Toggle */}
                 {!showHistory ? (
                     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -305,160 +305,169 @@ const StockReturn = () => {
                                     <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
                                         <RotateCcw size={20} />
                                     </div>
-                                    <h2 className="text-lg font-black text-slate-800 tracking-widest">Process Return</h2>
+                                    <h2 className="text-lg font-bold text-slate-900">Process Return Entry</h2>
                                 </div>
 
-                                <div className="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-                                    <div className="space-y-2">
-                                        <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest flex items-center gap-1.5"><Calendar size={12} /> Return Date</label>
-                                        <input
-                                            type="date"
-                                            value={returnDate}
-                                            onChange={(e) => setReturnDate(e.target.value)}
-                                            className="input-field font-bold"
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest flex items-center gap-1.5"><FileText size={12} /> Bill Number</label>
-                                        <div className="relative group">
+                                <div className="p-8">
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                                        <div className="space-y-3">
+                                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                                <Calendar size={14} className="text-primary-500" /> Return Date
+                                            </label>
+                                            <input
+                                                type="date"
+                                                value={returnDate}
+                                                onChange={(e) => setReturnDate(e.target.value)}
+                                                className="input-field font-bold"
+                                            />
+                                        </div>
+                                        <div className="space-y-3">
+                                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                                <FileText size={14} className="text-primary-500" /> Bill Reference
+                                            </label>
+                                            <div className="relative group">
+                                                <input
+                                                    type="text"
+                                                    placeholder="INV-0001"
+                                                    value={billNo}
+                                                    onChange={(e) => {
+                                                        const val = e.target.value.toUpperCase();
+                                                        setBillNo(val);
+                                                        if (val.trim()) {
+                                                            const filtered = invoiceList.filter(inv =>
+                                                                inv.invoice_no.toUpperCase().includes(val) ||
+                                                                inv.customer_name.toUpperCase().includes(val)
+                                                            ).slice(0, 5);
+                                                            setBillSuggestions(filtered);
+                                                            const rect = e.target.getBoundingClientRect();
+                                                            setDropdownPos({ top: rect.bottom + 4, left: rect.left });
+                                                            setShowBillSuggestions(true);
+                                                        } else {
+                                                            setShowBillSuggestions(false);
+                                                        }
+                                                    }}
+                                                    onBlur={() => setTimeout(() => setShowBillSuggestions(false), 200)}
+                                                    className="input-field font-black uppercase text-primary-600 pr-12"
+                                                />
+                                                <button
+                                                    onClick={() => handleSearchBill()}
+                                                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 hover:bg-primary-50 text-primary-600 rounded-lg transition-all"
+                                                >
+                                                    <Search size={18} />
+                                                </button>
+
+                                                {showBillSuggestions && billSuggestions.length > 0 && (
+                                                    <div
+                                                        style={{
+                                                            position: 'fixed',
+                                                            top: dropdownPos.top,
+                                                            left: dropdownPos.left,
+                                                            width: '300px',
+                                                            zIndex: 9999
+                                                        }}
+                                                        className="bg-white border border-slate-200 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+                                                    >
+                                                        {billSuggestions.map((inv) => (
+                                                            <button
+                                                                key={inv.id}
+                                                                onMouseDown={() => handleSearchBill(inv.invoice_no)}
+                                                                className="w-full px-4 py-3 text-left hover:bg-primary-50 border-b border-slate-50 last:border-0 transition-colors group"
+                                                            >
+                                                                <div className="flex justify-between items-start">
+                                                                    <div>
+                                                                        <p className="text-xs font-black text-primary-600 font-mono tracking-tighter uppercase">{inv.invoice_no}</p>
+                                                                        <p className="text-[10px] font-bold text-slate-800 uppercase mt-0.5">{inv.customer_name}</p>
+                                                                    </div>
+                                                                    <span className="text-[10px] font-black text-slate-400 group-hover:text-primary-500">{new Date(inv.invoice_date).toLocaleDateString()}</span>
+                                                                </div>
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className="space-y-3">
+                                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                                <Hash size={14} className="text-primary-500" /> Return ID
+                                            </label>
                                             <input
                                                 type="text"
-                                                placeholder="INV-0001"
-                                                value={billNo}
-                                                onChange={(e) => {
-                                                    const val = e.target.value.toUpperCase();
-                                                    setBillNo(val);
-                                                    if (val.trim()) {
-                                                        const filtered = invoiceList.filter(inv =>
-                                                            inv.invoice_no.toUpperCase().includes(val) ||
-                                                            inv.customer_name.toUpperCase().includes(val)
-                                                        ).slice(0, 5);
-                                                        setBillSuggestions(filtered);
-                                                        const rect = e.target.getBoundingClientRect();
-                                                        setDropdownPos({ top: rect.bottom + 4, left: rect.left });
-                                                        setShowBillSuggestions(true);
-                                                    } else {
-                                                        setShowBillSuggestions(false);
-                                                    }
-                                                }}
-                                                onBlur={() => setTimeout(() => setShowBillSuggestions(false), 200)}
-                                                className="input-field font-black uppercase text-primary-600 pr-12"
+                                                value={returnNo}
+                                                readOnly
+                                                className="input-field font-black text-primary-700 bg-primary-50/30 border-primary-100 cursor-not-allowed"
                                             />
-                                            <button
-                                                onClick={() => handleSearchBill()}
-                                                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 hover:bg-primary-50 text-primary-600 rounded-lg transition-all"
-                                            >
-                                                <Search size={18} />
-                                            </button>
-
-                                            {showBillSuggestions && billSuggestions.length > 0 && (
-                                                <div
-                                                    style={{
-                                                        position: 'fixed',
-                                                        top: dropdownPos.top,
-                                                        left: dropdownPos.left,
-                                                        width: '300px',
-                                                        zIndex: 9999
-                                                    }}
-                                                    className="bg-white border border-slate-200 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200"
-                                                >
-                                                    {billSuggestions.map((inv) => (
-                                                        <button
-                                                            key={inv.id}
-                                                            onMouseDown={() => handleSearchBill(inv.invoice_no)}
-                                                            className="w-full px-4 py-3 text-left hover:bg-primary-50 border-b border-slate-50 last:border-0 transition-colors group"
-                                                        >
-                                                            <div className="flex justify-between items-start">
-                                                                <div>
-                                                                    <p className="text-xs font-black text-primary-600 font-mono tracking-tighter uppercase">{inv.invoice_no}</p>
-                                                                    <p className="text-[10px] font-bold text-slate-800 uppercase mt-0.5">{inv.customer_name}</p>
-                                                                </div>
-                                                                <span className="text-[10px] font-black text-slate-400 group-hover:text-primary-500">{new Date(inv.invoice_date).toLocaleDateString()}</span>
-                                                            </div>
-                                                        </button>
-                                                    ))}
-                                                </div>
-                                            )}
                                         </div>
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest flex items-center gap-1.5"><Hash size={12} /> Return No</label>
-                                        <input
-                                            type="text"
-                                            value={returnNo}
-                                            readOnly
-                                            className="input-field font-black text-primary-700 bg-primary-50/30 border-primary-100 cursor-not-allowed"
+
+                                    <div className="pb-4">
+                                        <DataTable
+                                            columns={returnColumns}
+                                            data={items}
+                                            loading={loading}
+                                            emptyMessage="Scan or Enter Bill Number to Load Items"
+                                            pagination={{ itemsPerPage: 10 }}
                                         />
                                     </div>
-                                </div>
-
-                                <div className="px-4 pb-4">
-                                    <DataTable
-                                        columns={returnColumns}
-                                        data={items}
-                                        loading={loading}
-                                        emptyMessage="Scan or Enter Bill Number to Load Items"
-                                        pagination={{ itemsPerPage: 10 }}
-                                    />
                                 </div>
                             </div>
 
                             {/* Customer & Totals Sidebar */}
                             <div className="space-y-8">
                                 {/* Customer Card */}
-                                <div className="card space-y-6 bg-white/80 backdrop-blur-sm">
-                                    <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
-                                        <div className="w-8 h-8 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center">
-                                            <User size={16} />
+                                <div className="card !p-0 bg-white/80 backdrop-blur-sm overflow-hidden border border-slate-100">
+                                    <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center gap-4">
+                                        <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+                                            <User size={20} />
                                         </div>
-                                        <h2 className="text-lg font-black text-slate-800 tracking-widest">Bill Customer</h2>
+                                        <h2 className="text-lg font-bold text-slate-900 uppercase tracking-widest">Bill Customer</h2>
                                     </div>
-
-                                    <div className="space-y-4">
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400">
-                                                <Hash size={18} />
+                                    <div className="p-8 space-y-6">
+                                        <div className="space-y-4">
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400">
+                                                    <Hash size={18} />
+                                                </div>
+                                                <div>
+                                                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Customer ID</p>
+                                                    <p className="text-sm font-black text-slate-900 italic">{customer.id || '---'}</p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Customer ID</p>
-                                                <p className="text-sm font-black text-slate-900 italic">{customer.id || '---'}</p>
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400">
+                                                    <User size={18} />
+                                                </div>
+                                                <div className="flex-1">
+                                                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Name</p>
+                                                    <p className="text-sm font-black text-slate-900 uppercase truncate">{customer.name || '---'}</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400">
+                                                    <Phone size={18} />
+                                                </div>
+                                                <div>
+                                                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Mobile</p>
+                                                    <p className="text-sm font-black text-slate-900 tracking-tighter">{customer.mobile || '---'}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400">
-                                                <User size={18} />
+
+                                        <label className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100 cursor-pointer group hover:bg-white hover:border-primary-200 transition-all">
+                                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${customer.isCredit ? 'bg-primary-600 text-white shadow-lg' : 'bg-white text-slate-400 border border-slate-100'}`}>
+                                                <CreditCard size={18} />
                                             </div>
                                             <div className="flex-1">
-                                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Name</p>
-                                                <p className="text-sm font-black text-slate-900 uppercase truncate">{customer.name || '---'}</p>
+                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Payment Style</p>
+                                                <p className="text-sm font-black text-slate-900 tracking-tighter">Adjust as Credit</p>
                                             </div>
-                                        </div>
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400">
-                                                <Phone size={18} />
-                                            </div>
-                                            <div>
-                                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Mobile</p>
-                                                <p className="text-sm font-black text-slate-900 tracking-tighter">{customer.mobile || '---'}</p>
-                                            </div>
-                                        </div>
+                                            <input
+                                                type="checkbox"
+                                                checked={customer.isCredit}
+                                                onChange={(e) => setCustomer(prev => ({ ...prev, isCredit: e.target.checked }))}
+                                                className="w-5 h-5 rounded-lg border-slate-300 text-primary-600 focus:ring-primary-500/20"
+                                            />
+                                        </label>
                                     </div>
-
-                                    <label className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100 cursor-pointer group hover:bg-white hover:border-primary-200 transition-all">
-                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${customer.isCredit ? 'bg-primary-600 text-white shadow-lg' : 'bg-white text-slate-400 border border-slate-100'}`}>
-                                            <CreditCard size={18} />
-                                        </div>
-                                        <div className="flex-1">
-                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Payment Style</p>
-                                            <p className="text-sm font-black text-slate-900 tracking-tighter">Adjust as Credit</p>
-                                        </div>
-                                        <input
-                                            type="checkbox"
-                                            checked={customer.isCredit}
-                                            onChange={(e) => setCustomer(prev => ({ ...prev, isCredit: e.target.checked }))}
-                                            className="w-5 h-5 rounded-lg border-slate-300 text-primary-600 focus:ring-primary-500/20"
-                                        />
-                                    </label>
                                 </div>
 
                                 {/* Net Refundable Display */}

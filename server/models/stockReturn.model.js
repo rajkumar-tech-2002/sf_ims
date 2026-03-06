@@ -77,6 +77,24 @@ const StockReturn = {
     findAll: async () => {
         const [rows] = await db.execute('SELECT * FROM stock_return_master ORDER BY created_at DESC');
         return rows;
+    },
+
+    getReport: async (fromDate, toDate) => {
+        const query = `
+            SELECT 
+                srm.return_no, 
+                srm.return_date, 
+                sri.product_code, 
+                sri.product_name, 
+                sri.return_qty as qty, 
+                sri.amount as return_amount
+            FROM stock_return_master srm
+            JOIN stock_return_items sri ON srm.id = sri.return_id
+            WHERE DATE(srm.return_date) BETWEEN ? AND ?
+            ORDER BY srm.return_date DESC, srm.created_at DESC
+        `;
+        const [rows] = await db.execute(query, [fromDate, toDate]);
+        return rows;
     }
 };
 

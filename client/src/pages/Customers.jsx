@@ -13,11 +13,13 @@ import {
     Phone,
     Smartphone,
     Hash,
-    Briefcase
+    Briefcase,
+    Printer
 } from 'lucide-react';
 import api from '../utils/api';
 import DataTable from '../components/DataTable';
 import { useToast } from '../context/ToastContext';
+import CustomerReportPrint from '../components/CustomerReportPrint';
 
 const Customers = () => {
     const { showToast, confirmToast } = useToast();
@@ -109,6 +111,14 @@ const Customers = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    const handlePrint = () => {
+        if (filteredCustomers.length === 0) {
+            showToast('warning', 'No customer records to print');
+            return;
+        }
+        window.print();
+    };
+
     const handleDelete = (id) => {
         confirmToast('Delete this customer permanently?', async () => {
             try {
@@ -143,23 +153,31 @@ const Customers = () => {
     );
 
     return (
-        <div className="p-6 lg:p-10 bg-slate-50 min-h-screen">
-            <div className="max-w-7xl mx-auto space-y-8">
-                {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h2 className="section-title text-2xl font-bold text-slate-800">Customer Details</h2>
-                        <p className="text-slate-500 text-base mt-2 font-medium">Manage your customer relationships and contact details.</p>
+        <div className="page-container bg-slate-50 min-h-screen">
+            <div className="max-w-7xl mx-auto space-y-10">
+                {/* Header Area */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+                    <div className="space-y-1">
+                        <h1 className="section-title text-2xl font-bold text-slate-800">Customer Registry</h1>
+                        <p className="text-slate-500 text-base font-medium">Manage your customer relationships and contact details with absolute precision.</p>
                     </div>
                     <button
                         onClick={() => setShowTable(!showTable)}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all duration-300 shadow-sm border
+                        className={`flex items-center gap-2 px-8 py-3.5 rounded-[1.25rem] font-black transition-all duration-300 shadow-sm border uppercase text-xs tracking-widest
                         ${showTable
                                 ? 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
-                                : 'bg-white text-primary-600 border-primary-100 hover:border-primary-300 hover:bg-primary-50'}`}
+                                : 'bg-white text-primary-600 border-primary-200 hover:border-primary-400 hover:bg-primary-50 hover:shadow-md'}`}
                     >
-                        {showTable ? <><ChevronUp size={20} /> Hide Registry</> : <><ChevronDown size={20} /> Show Detail</>}
+                        {showTable ? <><ChevronUp size={18} /> Hide Registry</> : <><ChevronDown size={18} /> Show Detail</>}
                     </button>
+                    {showTable && (
+                        <button
+                            onClick={handlePrint}
+                            className="flex items-center gap-2 px-8 py-3.5 rounded-[1.25rem] font-black transition-all duration-300 shadow-sm border uppercase text-xs tracking-widest bg-emerald-600 text-white border-emerald-500 hover:bg-emerald-700 hover:shadow-md"
+                        >
+                            <Printer size={18} /> Print Report
+                        </button>
+                    )}
                 </div>
 
                 {/* Entry Form */}
@@ -181,9 +199,9 @@ const Customers = () => {
                     <form onSubmit={handleSubmit} className="p-8 space-y-8">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             {/* Customer ID */}
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Hash size={12} /> Customer ID
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Hash size={14} className="text-primary-500" /> Reference ID
                                 </label>
                                 <input
                                     type="text"
@@ -197,9 +215,9 @@ const Customers = () => {
                             </div>
 
                             {/* Customer Name */}
-                            <div className="space-y-1.5 lg:col-span-2">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Users size={12} /> Customer Name
+                            <div className="space-y-3 lg:col-span-2">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Users size={14} className="text-primary-500" /> Client Identity
                                 </label>
                                 <input
                                     type="text"
@@ -213,14 +231,14 @@ const Customers = () => {
                             </div>
 
                             {/* GST NO */}
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Briefcase size={12} /> GST NO
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Briefcase size={14} className="text-primary-500" /> Fiscal Identifier
                                 </label>
                                 <input
                                     type="text"
                                     name="gst_no"
-                                    className="input-field"
+                                    className="input-field uppercase"
                                     placeholder="GSTIN Number"
                                     value={formData.gst_no}
                                     onChange={handleInputChange}
@@ -228,9 +246,9 @@ const Customers = () => {
                             </div>
 
                             {/* Address */}
-                            <div className="space-y-1.5 lg:col-span-4">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <MapPin size={12} /> Address
+                            <div className="space-y-3 lg:col-span-4">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <MapPin size={14} className="text-primary-500" /> Logistics Address
                                 </label>
                                 <textarea
                                     name="customer_address"
@@ -243,9 +261,9 @@ const Customers = () => {
                             </div>
 
                             {/* Contact Person */}
-                            <div className="space-y-1.5 lg:col-span-2">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Phone size={12} /> Contact Person
+                            <div className="space-y-3 lg:col-span-2">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Phone size={14} className="text-primary-500" /> Liaison Officer
                                 </label>
                                 <input
                                     type="text"
@@ -259,9 +277,9 @@ const Customers = () => {
                             </div>
 
                             {/* Mobile */}
-                            <div className="space-y-1.5 lg:col-span-2">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Smartphone size={12} /> Mobile Number
+                            <div className="space-y-3 lg:col-span-2">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Smartphone size={14} className="text-primary-500" /> Primary Mobile
                                 </label>
                                 <input
                                     type="text"
@@ -276,9 +294,9 @@ const Customers = () => {
                             </div>
 
                             {/* State */}
-                            <div className="space-y-1.5 lg:col-span-3">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <MapPin size={12} /> State
+                            <div className="space-y-3 lg:col-span-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <MapPin size={14} className="text-primary-500" /> Regional Domain
                                 </label>
                                 <input
                                     type="text"
@@ -291,9 +309,9 @@ const Customers = () => {
                             </div>
 
                             {/* State Code */}
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Hash size={12} /> State Code
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Hash size={14} className="text-primary-500" /> Zone Code
                                 </label>
                                 <input
                                     type="text"
@@ -331,7 +349,7 @@ const Customers = () => {
                                 {
                                     key: 'customer_id',
                                     label: 'ID',
-                                    render: (value) => <span className="text-xs font-bold text-primary-600">{value}</span>
+                                    render: (value) => <span className="text-xs font-bold text-slate-400">{value}</span>
                                 },
                                 {
                                     key: 'customer_name',
@@ -339,7 +357,7 @@ const Customers = () => {
                                     render: (value, row) => (
                                         <div className="flex flex-col">
                                             <span className="font-bold text-slate-900 uppercase truncate max-w-[150px]">{value}</span>
-                                            <span className="text-[10px] font-bold text-slate-400">GST: {row.gst_no || 'NA'}</span>
+                                            <span className="text-[10px] font-bold text-primary-500">GST: {row.gst_no || 'NA'}</span>
                                         </div>
                                     )
                                 },
@@ -349,11 +367,11 @@ const Customers = () => {
                                     render: (value, row) => (
                                         <div className="flex flex-col">
                                             <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
-                                                <Smartphone size={10} className="text-slate-400" /> {value}
+                                                <Smartphone size={10} className="text-primary-500" /> {value}
                                             </div>
                                             {row.customer_contact && (
                                                 <div className="flex items-center gap-1.5 text-[10px] text-slate-400">
-                                                    <Users size={10} strokeWidth={3} /> {row.customer_contact}
+                                                    <Users size={10} strokeWidth={3} className="text-primary-500" /> {row.customer_contact}
                                                 </div>
                                             )}
                                         </div>
@@ -401,6 +419,9 @@ const Customers = () => {
                     </div>
                 )}
             </div>
+
+            {/* System Generated Print Matrix */}
+            <CustomerReportPrint data={filteredCustomers} />
         </div>
     );
 };

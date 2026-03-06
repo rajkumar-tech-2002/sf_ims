@@ -50,9 +50,24 @@ const deletePurchase = async (req, res) => {
     }
 };
 
+const getPurchaseReport = async (req, res) => {
+    try {
+        const { fromDate, toDate } = req.query;
+        if (!fromDate || !toDate) {
+            return res.status(400).json({ message: 'From Date and To Date are required' });
+        }
+        const reportData = await Purchase.findByDateRange(fromDate, toDate);
+        res.json(reportData);
+    } catch (err) {
+        console.error('Error fetching purchase report:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
 module.exports = {
     createPurchase,
     getAllPurchases,
     updatePurchase,
-    deletePurchase
+    deletePurchase,
+    getPurchaseReport
 };

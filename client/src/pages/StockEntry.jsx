@@ -17,11 +17,13 @@ import {
     IndianRupee,
     Layers,
     Percent,
-    AlertTriangle
+    AlertTriangle,
+    Printer
 } from 'lucide-react';
 import api from '../utils/api';
 import DataTable from '../components/DataTable';
 import { useToast } from '../context/ToastContext';
+import StockReportPrint from '../components/StockReportPrint';
 
 const StockEntry = () => {
     const { showToast, confirmToast } = useToast();
@@ -126,6 +128,14 @@ const StockEntry = () => {
         });
     };
 
+    const handlePrint = () => {
+        if (filteredStocks.length === 0) {
+            showToast('warning', 'No stock records to print');
+            return;
+        }
+        window.print();
+    };
+
     const resetForm = () => {
         setFormData({
             hsn_code: '',
@@ -167,23 +177,31 @@ const StockEntry = () => {
     );
 
     return (
-        <div className="p-6 lg:p-10 bg-slate-50 min-h-screen">
-            <div className="max-w-7xl mx-auto space-y-8">
+        <div className="page-container bg-slate-50/50 min-h-screen">
+            <div className="max-w-7xl mx-auto space-y-10">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+                    <div className="space-y-1">
                         <h1 className="section-title text-2xl font-bold text-slate-800">Stock Registry</h1>
-                        <p className="text-slate-500 text-base mt-2 font-medium">Manage and monitor your warehouse inventory levels.</p>
+                        <p className="text-slate-500 text-base font-medium">Manage and monitor your warehouse inventory levels with enterprise precision.</p>
                     </div>
                     <button
                         onClick={() => setShowTable(!showTable)}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all duration-300 shadow-sm border
+                        className={`flex items-center gap-2 px-8 py-3.5 rounded-[1.25rem] font-black transition-all duration-300 shadow-sm border uppercase text-xs tracking-widest
                         ${showTable
                                 ? 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
-                                : 'bg-white text-primary-600 border-primary-100 hover:border-primary-300 hover:bg-primary-50'}`}
+                                : 'bg-white text-primary-600 border-primary-200 hover:border-primary-400 hover:bg-primary-50 hover:shadow-md'}`}
                     >
-                        {showTable ? <><ChevronUp size={20} /> Hide Registry</> : <><ChevronDown size={20} /> Show Detail</>}
+                        {showTable ? <><ChevronUp size={18} /> Hide Registry</> : <><ChevronDown size={18} /> Show Detail</>}
                     </button>
+                    {showTable && (
+                        <button
+                            onClick={handlePrint}
+                            className="flex items-center gap-2 px-8 py-3.5 rounded-[1.25rem] font-black transition-all duration-300 shadow-sm border uppercase text-xs tracking-widest bg-emerald-600 text-white border-emerald-500 hover:bg-emerald-700 hover:shadow-md"
+                        >
+                            <Printer size={18} /> Print Report
+                        </button>
+                    )}
                 </div>
 
                 {/* Entry Form */}
@@ -202,88 +220,95 @@ const StockEntry = () => {
                         )}
                     </div>
 
-                    <form onSubmit={handleSubmit} className="p-8 space-y-8">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Hash size={12} /> HSN Code</label>
+                    <form onSubmit={handleSubmit} className="p-10 space-y-10">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Hash size={14} className="text-primary-500" /> HSN Code
+                                </label>
                                 <input
                                     type="text"
                                     name="hsn_code"
-                                    className="input-field"
+                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
                                     value={formData.hsn_code}
                                     onChange={handleInputChange}
                                     placeholder="Enter HSN"
                                 />
                             </div>
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Hash size={12} /> Product Code</label>
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Hash size={14} className="text-primary-500" /> Product Code
+                                </label>
                                 <input
                                     type="text"
                                     name="product_code"
-                                    className="input-field"
+                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
                                     value={formData.product_code}
                                     onChange={handleInputChange}
                                     placeholder="SKU-001"
                                 />
                             </div>
-                            <div className="space-y-1.5 lg:col-span-2">
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Tag size={12} /> Product Name</label>
+                            <div className="space-y-3 lg:col-span-2">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Tag size={14} className="text-primary-500" /> Brand / Name
+                                </label>
                                 <input
                                     type="text"
                                     required
                                     name="product_name"
-                                    className="input-field"
+                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
                                     value={formData.product_name}
                                     onChange={handleInputChange}
-                                    placeholder={'5" JACQUARD'}
+                                    placeholder={'e.g. 5" JACQUARD Premium'}
                                 />
                             </div>
-                            <div className="space-y-1.5 lg:col-span-4">
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Package size={12} /> Detail / Description</label>
+                            <div className="space-y-3 lg:col-span-4">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Package size={14} className="text-primary-500" /> Technical Description
+                                </label>
                                 <textarea
                                     name="detail"
                                     rows="2"
-                                    className="input-field py-3 min-h-[80px]"
+                                    className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all min-h-[100px]"
                                     value={formData.detail}
                                     onChange={handleInputChange}
-                                    placeholder="Additional product details..."
+                                    placeholder="Specify material, batch info or additional details..."
                                 />
                             </div>
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Hash size={12} /> Quantity</label>
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Hash size={14} className="text-primary-500" /> Current Stock
+                                </label>
                                 <input
                                     type="number"
                                     required
                                     name="qty"
-                                    className="input-field"
+                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
                                     value={formData.qty}
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <IndianRupee size={12} /> Sale Price</label>
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <IndianRupee size={14} className="text-primary-500" /> Unit Sale Price
+                                </label>
                                 <div className="relative">
-                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
+                                    <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 font-black text-sm">₹</span>
                                     <input
                                         type="number"
                                         required
                                         name="sale_price"
-                                        className="input-field pl-8"
+                                        className="w-full pl-10 pr-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
                                         value={formData.sale_price}
                                         onChange={handleInputChange}
                                     />
                                 </div>
                             </div>
-                            <div className="space-y-1.5">
+                            <div className="space-y-3">
                                 <div className="flex items-center justify-between ml-1">
-                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                                        <Layers size={12} /> Scale / Unit</label>
+                                    <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] flex items-center gap-2">
+                                        <Layers size={14} className="text-primary-500" /> Measurement Unit
+                                    </label>
                                     <button
                                         type="button"
                                         onClick={() => setIsAddingUnit(!isAddingUnit)}
@@ -322,7 +347,7 @@ const StockEntry = () => {
                                     <div className="relative">
                                         <select
                                             name="scale"
-                                            className="input-field appearance-none bg-white font-bold text-slate-700 uppercase"
+                                            className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-black text-slate-700 uppercase appearance-none cursor-pointer transition-all"
                                             value={formData.scale}
                                             onChange={handleInputChange}
                                         >
@@ -331,50 +356,53 @@ const StockEntry = () => {
                                                 <option key={unit.id} value={unit.unit_name}>{unit.unit_name}</option>
                                             ))}
                                         </select>
-                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                                        <div className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
                                             <ChevronDown size={18} />
                                         </div>
                                     </div>
                                 )}
                             </div>
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Percent size={12} /> GST</label>
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Percent size={14} className="text-primary-500" /> GST Rate
+                                </label>
                                 <input
                                     type="number"
                                     step="0.01"
                                     name="gst"
-                                    className="input-field"
+                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
                                     value={formData.gst}
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Percent size={12} /> Discount</label>
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <Percent size={14} className="text-primary-500" /> Max Discount
+                                </label>
                                 <input
                                     type="number"
                                     step="0.01"
                                     name="discount_percent"
-                                    className="input-field"
+                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
                                     value={formData.discount_percent}
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <AlertTriangle size={12} /> ReOrder Level</label>
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <AlertTriangle size={14} className="text-rose-500" /> Alert Threshold
+                                </label>
                                 <input
                                     type="number"
                                     name="reorder_level"
-                                    className="input-field"
+                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
                                     value={formData.reorder_level}
                                     onChange={handleInputChange}
                                 />
                             </div>
                             <div className="lg:col-span-2 flex items-end">
-                                <button type="submit" className="w-full btn btn-primary py-4 text-base flex items-center justify-center gap-2 shadow-lg shadow-primary-500/20">
-                                    {isEditing ? <><Save size={20} /> Update Record</> : <><Plus size={20} /> Submit Entry</>}
+                                <button type="submit" className="w-full btn btn-primary py-4 text-base flex items-center justify-center gap-3 shadow-xl shadow-primary-500/25 rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300">
+                                    {isEditing ? <><Save size={20} strokeWidth={2.5} /> Update Stock Record</> : <><Plus size={20} strokeWidth={2.5} /> Confirm & Add Stock</>}
                                 </button>
                             </div>
                         </div>
@@ -470,6 +498,9 @@ const StockEntry = () => {
                     </div>
                 )}
             </div>
+
+            {/* System Generated Print Matrix */}
+            <StockReportPrint data={filteredStocks} />
         </div>
     );
 };

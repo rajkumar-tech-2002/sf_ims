@@ -37,9 +37,39 @@ const getInvoiceByNo = async (req, res) => {
     }
 };
 
+const getUniqueProducts = async (req, res) => {
+    try {
+        const products = await Invoice.getUniqueProducts();
+        res.json(products);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const getDescriptionsByProduct = async (req, res) => {
+    try {
+        const descriptions = await Invoice.getDescriptionsByProduct(req.params.productName);
+        res.json(descriptions);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const getFilteredReport = async (req, res) => {
+    try {
+        const report = await Invoice.getFilteredReport(req.query);
+        res.json(report);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     getNextInvoiceNo,
     createInvoice,
     getAllInvoices,
-    getInvoiceByNo
+    getInvoiceByNo,
+    getUniqueProducts,
+    getDescriptionsByProduct,
+    getFilteredReport
 };

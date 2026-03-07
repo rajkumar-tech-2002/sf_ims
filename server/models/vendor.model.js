@@ -4,10 +4,11 @@ const Vendor = {
     create: async (data) => {
         const query = `
             INSERT INTO vendor_master 
-            (vendor_name, vendor_gmail, vendor_phone, vendor_address)
-            VALUES (?, ?, ?, ?)
+            (company_name, vendor_name, vendor_gmail, vendor_phone, vendor_address)
+            VALUES (?, ?, ?, ?, ?)
         `;
         const values = [
+            data.company_name || null,
             data.vendor_name,
             data.vendor_gmail || null,
             data.vendor_phone,
@@ -30,10 +31,11 @@ const Vendor = {
     update: async (id, data) => {
         const query = `
             UPDATE vendor_master SET 
-            vendor_name = ?, vendor_gmail = ?, vendor_phone = ?, vendor_address = ?
+            company_name = ?, vendor_name = ?, vendor_gmail = ?, vendor_phone = ?, vendor_address = ?
             WHERE id = ?
         `;
         const values = [
+            data.company_name || null,
             data.vendor_name,
             data.vendor_gmail || null,
             data.vendor_phone,

@@ -1,30 +1,34 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
-import LoginPage from './pages/LoginPage';
-import Dashboard from './pages/Dashboard';
-import Inventory from './pages/Inventory';
-import Reports from './pages/Reports';
-import Profile from './pages/Profile';
-import StockEntry from './pages/StockEntry';
-import UserCreation from './pages/UserCreation';
-import PurchaseEntry from './pages/PurchaseEntry';
-import LogDetails from './pages/LogDetails';
-import HelpCenter from './pages/HelpCenter';
-import Vendor from './pages/Vendor';
-import Enquiry from './pages/Enquiry';
-import Customers from './pages/Customers';
-import RawMaterialStockEntry from './pages/RawMaterialStockEntry';
-import RawMaterialPurchaseEntry from './pages/RawMaterialPurchaseEntry';
-import Quotation from './pages/Quotation';
-import Invoice from './pages/Invoice';
-import StockReturn from './pages/StockReturn';
-import BillReport from './pages/BillReport';
-import PurchaseReport from './pages/PurchaseReport';
-import DailyReport from './pages/DailyReport';
-import ReturnReport from './pages/ReturnReport';
-import RawMaterialPurchaseReport from './pages/RawMaterialPurchaseReport';
-import NotFound from './pages/NotFound';
+import LandingPage from './pages/main-pages/LandingPage';
+import LoginPage from './pages/main-pages/LoginPage';
+import Dashboard from './pages/main-pages/Dashboard';
+import Inventory from './pages/master/Inventory';
+import Reports from './pages/billing-report/Reports';
+import Profile from './pages/main-pages/Profile';
+import StockEntry from './pages/master/StockEntry';
+import UserCreation from './pages/file/UserCreation';
+import PurchaseEntry from './pages/master/PurchaseEntry';
+import LogDetails from './pages/file/LogDetails';
+import HelpCenter from './pages/file/HelpCenter';
+import Vendor from './pages/master/Vendor';
+import Enquiry from './pages/master/Enquiry';
+import Customers from './pages/master/Customers';
+import RawMaterialStockEntry from './pages/master/RawMaterialStockEntry';
+import RawMaterialPurchaseEntry from './pages/master/RawMaterialPurchaseEntry';
+import Quotation from './pages/billing/Quotation';
+import Invoice from './pages/billing/Invoice';
+import StockReturn from './pages/return-billing/StockReturn';
+import CreditCollection from './pages/billing-report/CreditCollection';
+import IncomeExpense from './pages/income-expense/IncomeExpense';
+import Transactions from './pages/income-expense/Transactions';
+import Assets from './pages/income-expense/Assets';
+import BillReport from './pages/billing-report/BillReport';
+import PurchaseReport from './pages/billing-report/PurchaseReport';
+import DailyReport from './pages/billing-report/DailyReport';
+import ReturnReport from './pages/billing-report/ReturnReport';
+import RawMaterialPurchaseReport from './pages/billing-report/RawMaterialPurchaseReport';
+import NotFound from './pages/main-pages/NotFound';
 import MainLayout from './layouts/MainLayout';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
@@ -65,6 +69,10 @@ function App() {
                                 <Route path="/quotation" element={<Quotation />} />
                                 <Route path="/invoice" element={<Invoice />} />
                                 <Route path="/stock-return" element={<StockReturn />} />
+                                <Route path="/credit-collection" element={<CreditCollection />} />
+                                <Route path="/income-expense" element={<IncomeExpense />} />
+                                <Route path="/transactions" element={<Transactions />} />
+                                <Route path="/assets" element={<Assets />} />
                             </Route>
                         </Route>
 

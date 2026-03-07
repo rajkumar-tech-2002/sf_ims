@@ -51,8 +51,8 @@ const Invoice = {
             // 2. Insert into invoice_master
             const masterQuery = `
                 INSERT INTO invoice_master 
-                (invoice_no, invoice_date, customer_id, customer_name, gst_no, address, mobile_no, contact_number, state, state_code, subtotal, gst_total, round_off, grand_total, gst_mode)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                (invoice_no, invoice_date, customer_id, customer_name, gst_no, address, mobile_no, contact_number, state, state_code, subtotal, gst_total, round_off, grand_total, gst_mode, credit)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             `;
             const masterValues = [
                 data.invoice_no,
@@ -69,7 +69,8 @@ const Invoice = {
                 data.gst_total,
                 data.round_off,
                 data.grand_total,
-                data.gst_mode
+                data.gst_mode,
+                data.credit || 'no'
             ];
             const [masterResult] = await connection.execute(masterQuery, masterValues);
             const invoiceId = masterResult.insertId;

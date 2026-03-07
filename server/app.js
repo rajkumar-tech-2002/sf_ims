@@ -19,6 +19,10 @@ const scaleUnitRoutes = require('./routes/scaleUnit.routes');
 const invoiceRoutes = require('./routes/invoice.routes');
 const stockReturnRoutes = require('./routes/stockReturn.routes');
 const reportRoutes = require('./routes/report.routes');
+const creditCollectionRoutes = require('./routes/creditCollection.routes');
+const incomeExpenseRoutes = require('./routes/incomeExpense.routes');
+const transactionRoutes = require('./routes/transaction.routes');
+const assetRoutes = require('./routes/assets.routes');
 
 const app = express();
 
@@ -47,6 +51,10 @@ app.use('/api/scale-units', scaleUnitRoutes);
 app.use('/api/invoices', invoiceRoutes);
 app.use('/api/stock-returns', stockReturnRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api/credit-collections', creditCollectionRoutes);
+app.use('/api/income-expenses', incomeExpenseRoutes);
+app.use('/api/transactions', transactionRoutes);
+app.use('/api/assets', assetRoutes);
 
 // Basic error handler
 app.use((err, req, res, next) => {

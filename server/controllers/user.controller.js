@@ -11,7 +11,7 @@ const getAllUsers = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-    const { user_name, user_role, qualification, department, user_id, password, contact, remark, status } = req.body;
+    const { user_name, user_role, qualification, department, user_id, password, contact, remark, status, permissions } = req.body;
 
     try {
         // Check if user already exists
@@ -30,7 +30,8 @@ const createUser = async (req, res) => {
             password, // Save as plain text for now or hash
             contact,
             remark,
-            status: status || 'Active'
+            status: status || 'Active',
+            permissions: permissions || {}
         });
 
         res.status(201).json({ message: 'User created successfully', id: newUserId });
@@ -54,4 +55,28 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = { getAllUsers, createUser, deleteUser };
+const updatePermissions = async (req, res) => {
+    try {
+        const success = await User.updatePermissions(req.params.id, req.body.permissions);
+        if (success) {
+            res.json({ message: 'Permissions updated successfully' });
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+const getRoles = async (req, res) => {
+    try {
+        const roles = await User.getDistinctRoles();
+        res.json(roles);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+module.exports = { getAllUsers, createUser, deleteUser, updatePermissions, getRoles };

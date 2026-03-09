@@ -31,7 +31,8 @@ const login = async (req, res) => {
             id: user.id,
             user_id: user.user_id,
             user_role: user.user_role,
-            user_name: user.user_name
+            user_name: user.user_name,
+            permissions: typeof user.permissions === 'string' ? JSON.parse(user.permissions) : (user.permissions || {})
         };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
@@ -49,7 +50,8 @@ const login = async (req, res) => {
                 id: user.id,
                 user_name: user.user_name,
                 user_role: user.user_role,
-                user_id: user.user_id
+                user_id: user.user_id,
+                permissions: typeof user.permissions === 'string' ? JSON.parse(user.permissions) : (user.permissions || {})
             }
         });
     } catch (err) {
@@ -74,7 +76,8 @@ const getMe = async (req, res) => {
                 id: user.id,
                 user_name: user.user_name,
                 user_role: user.user_role,
-                user_id: user.user_id
+                user_id: user.user_id,
+                permissions: typeof user.permissions === 'string' ? JSON.parse(user.permissions) : (user.permissions || {})
             }
         });
     } catch (err) {

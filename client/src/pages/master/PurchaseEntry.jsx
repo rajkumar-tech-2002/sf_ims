@@ -20,9 +20,12 @@ import {
 import api from '../../utils/api';
 import DataTable from '../../components/DataTable';
 import { useToast } from '../../context/ToastContext';
+import { usePermissions } from '../../hooks/usePermissions';
 
 const PurchaseEntry = () => {
     const { showToast, confirmToast } = useToast();
+    const { canEdit } = usePermissions();
+    const moduleId = 'purchase-entry';
     const [purchases, setPurchases] = useState([]);
     const [stocks, setStocks] = useState([]);
     const [vendors, setVendors] = useState([]);
@@ -364,10 +367,21 @@ const PurchaseEntry = () => {
                         </div>
 
                         <div className="lg:col-span-4 flex justify-end pt-4">
-                            <button type="submit" className="w-full md:w-1/3 btn btn-primary py-4 text-base flex items-center justify-center gap-3 shadow-xl shadow-primary-500/25 rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300">
+                            <button
+                                type="submit"
+                                disabled={!canEdit(moduleId)}
+                                className={`w-full md:w-1/3 btn btn-primary py-4 text-base flex items-center justify-center gap-3 shadow-xl rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${!canEdit(moduleId) ? 'opacity-50 grayscale cursor-not-allowed shadow-none' : 'shadow-primary-500/25'}`}
+                            >
                                 {isEditing ? <><Save size={24} strokeWidth={2.5} /> Update Purchase Record</> : <><Plus size={24} strokeWidth={2.5} /> Confirm Purchase Entry</>}
                             </button>
                         </div>
+                        {!canEdit(moduleId) && (
+                            <div className="lg:col-span-4 text-center">
+                                <p className="text-xs font-black text-rose-500 uppercase tracking-widest bg-rose-50 py-2 rounded-xl border border-rose-100 mt-2">
+                                    Restricted: View Only Mode
+                                </p>
+                            </div>
+                        )}
                     </form>
                 </div>
 
@@ -438,15 +452,19 @@ const PurchaseEntry = () => {
                                     <button
                                         onClick={() => handleEdit(purchase)}
                                         className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                                        title={canEdit(moduleId) ? "Edit Record" : "View Details"}
                                     >
                                         <Edit2 size={18} />
                                     </button>
-                                    <button
-                                        onClick={() => handleDelete(purchase.id)}
-                                        className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
-                                    >
-                                        <Trash2 size={18} />
-                                    </button>
+                                    {canEdit(moduleId) && (
+                                        <button
+                                            onClick={() => handleDelete(purchase.id)}
+                                            className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
+                                            title="Delete Record"
+                                        >
+                                            <Trash2 size={18} />
+                                        </button>
+                                    )}
                                 </div>
                             )}
                             emptyMessage="No purchase entries found"

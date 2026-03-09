@@ -25,6 +25,7 @@ import {
 import api from '../../utils/api';
 import DataTable from '../../components/DataTable';
 import { useToast } from '../../context/ToastContext';
+import { usePermissions } from '../../hooks/usePermissions';
 import InvoicePrint from '../../components/reports/InvoicePrint';
 
 const AutoResizeInput = ({ value, onChange, placeholder, type = 'text', prefix, suffix, className = '', ...props }) => {
@@ -62,6 +63,8 @@ const AutoResizeInput = ({ value, onChange, placeholder, type = 'text', prefix, 
 
 const Invoice = () => {
     const { showToast, confirmToast } = useToast();
+    const { canEdit, isViewOnly } = usePermissions();
+    const moduleId = 'invoice';
     const [loading, setLoading] = useState(false);
     const [invoices, setInvoices] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -624,8 +627,8 @@ const Invoice = () => {
                                             )}
                                             <button
                                                 onClick={handleImportQuotation}
-                                                disabled={loading}
-                                                className="w-full py-2.5 bg-primary-600 text-white rounded-xl font-bold text-sm hover:bg-primary-700 transition-all disabled:opacity-50 shadow-lg shadow-primary-500/20 flex items-center justify-center gap-2"
+                                                disabled={loading || !canEdit(moduleId)}
+                                                className={`w-full py-2.5 bg-primary-600 text-white rounded-xl font-bold text-sm hover:bg-primary-700 transition-all disabled:opacity-50 shadow-lg flex items-center justify-center gap-2 ${!canEdit(moduleId) ? 'shadow-none grayscale cursor-not-allowed' : 'shadow-primary-500/20'}`}
                                             >
                                                 <Download size={16} />
                                                 Fetch Quotation
@@ -1011,15 +1014,15 @@ const Invoice = () => {
                                     </button>
                                     <button
                                         onClick={handleSave}
-                                        disabled={loading}
-                                        className="flex-1 md:flex-none px-12 py-5 bg-primary-600 text-white rounded-[24px] font-black text-sm uppercase tracking-[0.15em] hover:bg-primary-700 transition-all shadow-xl shadow-primary-500/30 flex items-center justify-center gap-3 disabled:opacity-50"
+                                        disabled={loading || !canEdit(moduleId)}
+                                        className={`flex-1 md:flex-none px-12 py-5 bg-primary-600 text-white rounded-[24px] font-black text-sm uppercase tracking-[0.15em] hover:bg-primary-700 transition-all shadow-xl flex items-center justify-center gap-3 disabled:opacity-50 ${!canEdit(moduleId) ? 'shadow-none grayscale cursor-not-allowed' : 'shadow-primary-500/30'}`}
                                     >
                                         {loading ? (
                                             <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
                                         ) : (
                                             <>
                                                 <Save size={20} />
-                                                SAVE & PRINT INVOICE
+                                                {canEdit(moduleId) ? 'SAVE & PRINT INVOICE' : 'VIEW ONLY MODE'}
                                             </>
                                         )}
                                     </button>

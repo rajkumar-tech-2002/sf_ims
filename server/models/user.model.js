@@ -12,18 +12,18 @@ const User = {
     },
 
     getAll: async () => {
-        const [rows] = await pool.execute('SELECT id, user_name, user_role, qualification, department, user_id, contact, remark, status, created_at, updated_at FROM users');
-        return rows;
+        const [rows] = await pool.execute('SELECT id, user_name, user_role, qualification, department, user_id, contact, remark, status, permissions, created_at, updated_at FROM users');
+        return rows.map(r => ({ ...r, permissions: typeof r.permissions === 'string' ? JSON.parse(r.permissions) : r.permissions }));
     },
 
     create: async (userData) => {
         const {
             user_name, user_role, qualification, department,
-            user_id, password, contact, remark, status
+            user_id, password, contact, remark, status, permissions
         } = userData;
 
         const [result] = await pool.execute(
-            'INSERT INTO users (user_name, user_role, qualification, department, user_id, password, contact, remark, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            'INSERT INTO users (user_name, user_role, qualification, department, user_id, password, contact, remark, status, permissions) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [
                 user_name ?? null,
                 user_role ?? null,
@@ -33,10 +33,19 @@ const User = {
                 password ?? null,
                 contact ?? null,
                 remark ?? null,
-                status ?? null
+                status ?? null,
+                permissions ? JSON.stringify(permissions) : null
             ]
         );
         return result.insertId;
+    },
+
+    updatePermissions: async (id, permissions) => {
+        const [result] = await pool.execute(
+            'UPDATE users SET permissions = ? WHERE id = ?',
+            [JSON.stringify(permissions), id]
+        );
+        return result.affectedRows > 0;
     },
 
     getDistinctRoles: async () => {

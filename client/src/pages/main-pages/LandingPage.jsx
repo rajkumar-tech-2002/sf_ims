@@ -8,8 +8,13 @@ import {
     Package,
     ArrowRight,
     Search,
-    RefreshCw
+    RefreshCw,
+    Globe,
+    Cpu,
+    Activity,
+    TrendingUp
 } from 'lucide-react';
+import HeroImage from '../../assets/ims_hero.png';
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -25,10 +30,10 @@ const LandingPage = () => {
                         </div>
                         <span className="text-2xl font-bold tracking-tight text-slate-900">StockWise</span>
                     </div>
-                    <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-                        <a href="#features" className="hover:text-primary-600 transition-colors">Features</a>
-                        <a href="#solutions" className="hover:text-primary-600 transition-colors">Solutions</a>
-                        <a href="#contact" className="hover:text-primary-600 transition-colors">Contact</a>
+                    <div className="hidden md:flex items-center gap-10 text-sm font-bold tracking-widest text-slate-500 uppercase">
+                        <a href="#features" className="hover:text-primary-600 transition-all hover:scale-105">Capabilities</a>
+                        <a href="#solutions" className="hover:text-primary-600 transition-all hover:scale-105">Ecosystem</a>
+                        <a href="#contact" className="hover:text-primary-600 transition-all hover:scale-105">Support</a>
                     </div>
                     <button
                         onClick={() => navigate('/login')}
@@ -64,26 +69,6 @@ const LandingPage = () => {
                             Watch Demo
                         </button>
                     </div>
-
-                    {/* Visual Element / Mockup Placeholder */}
-                    <div className="mt-20 relative px-4 max-w-5xl mx-auto">
-                        <div className="absolute inset-0 bg-primary-500/10 blur-[120px] rounded-full" />
-                        <div className="relative card p-4 md:p-6 bg-white shadow-2xl skew-y-1 hover:skew-y-0 transition-transform duration-700">
-                            <div className="bg-slate-50 rounded-xl overflow-hidden aspect-[16/9] border border-slate-200 flex flex-col">
-                                <div className="h-10 bg-white border-b border-slate-200 flex items-center px-4 gap-2">
-                                    <div className="flex gap-1.5">
-                                        <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
-                                        <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
-                                        <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
-                                    </div>
-                                    <div className="flex-1 max-w-md mx-auto h-6 bg-slate-100 rounded-md" />
-                                </div>
-                                <div className="flex-1 p-8 flex items-center justify-center italic text-slate-300">
-                                    [ Interactive Dashboard Preview ]
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </section>
 
@@ -97,21 +82,21 @@ const LandingPage = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                         <FeatureCard
-                            icon={<Search className="text-primary-600" />}
-                            title="Instant Discovery"
-                            desc="Locate any item across multiple warehouses with sub-second search latency."
+                            icon={<Cpu className="text-primary-600" />}
+                            title="Cognitive Engine"
+                            desc="Proprietary algorithms that optimize stock levels across multi-tenant infrastructures."
                         />
                         <FeatureCard
-                            icon={<RefreshCw className="text-emerald-600" />}
-                            title="Real-time Sync"
-                            desc="Always-on data reconciliation keeps your stock levels accurate to the millisecond."
+                            icon={<Globe className="text-emerald-600" />}
+                            title="Global Presence"
+                            desc="Synchronize supply chains across continents with atomic-grade consistency."
                         />
                         <FeatureCard
-                            icon={<BarChart3 className="text-purple-600" />}
-                            title="Predictive Insights"
-                            desc="AI-driven reports help you anticipate shortages before they affect your bottom line."
+                            icon={<Activity className="text-purple-600" />}
+                            title="Vitality Metrics"
+                            desc="Harness deep telemetry to understand every pulse of your warehouse operations."
                         />
                     </div>
                 </div>

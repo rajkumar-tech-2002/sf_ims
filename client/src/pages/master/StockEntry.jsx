@@ -23,10 +23,13 @@ import {
 import api from '../../utils/api';
 import DataTable from '../../components/DataTable';
 import { useToast } from '../../context/ToastContext';
+import { usePermissions } from '../../hooks/usePermissions';
 import StockReportPrint from '../../components/reports/StockReportPrint';
 
 const StockEntry = () => {
     const { showToast, confirmToast } = useToast();
+    const { canEdit, isViewOnly } = usePermissions();
+    const moduleId = 'stock-entry';
     const [stocks, setStocks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -401,9 +404,18 @@ const StockEntry = () => {
                                 />
                             </div>
                             <div className="lg:col-span-2 flex items-end">
-                                <button type="submit" className="w-full btn btn-primary py-4 text-base flex items-center justify-center gap-3 shadow-xl shadow-primary-500/25 rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300">
+                                <button
+                                    type="submit"
+                                    disabled={!canEdit(moduleId)}
+                                    className={`w-full btn btn-primary py-4 text-base flex items-center justify-center gap-3 shadow-xl rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${!canEdit(moduleId) ? 'opacity-50 cursor-not-allowed grayscale' : 'shadow-primary-500/25'}`}
+                                >
                                     {isEditing ? <><Save size={20} strokeWidth={2.5} /> Update Stock Record</> : <><Plus size={20} strokeWidth={2.5} /> Confirm & Add Stock</>}
                                 </button>
+                                {!canEdit(moduleId) && (
+                                    <p className="text-[10px] font-bold text-rose-500 mt-2 text-center w-full uppercase tracking-tighter">
+                                        You don't have permission to save or update records.
+                                    </p>
+                                )}
                             </div>
                         </div>
                     </form>
@@ -482,15 +494,19 @@ const StockEntry = () => {
                                     <button
                                         onClick={() => handleEdit(stock)}
                                         className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                                        title={canEdit(moduleId) ? "Edit Record" : "View Details"}
                                     >
                                         <Edit2 size={18} />
                                     </button>
-                                    <button
-                                        onClick={() => handleDelete(stock.id)}
-                                        className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
-                                    >
-                                        <Trash2 size={18} />
-                                    </button>
+                                    {canEdit(moduleId) && (
+                                        <button
+                                            onClick={() => handleDelete(stock.id)}
+                                            className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
+                                            title="Delete Record"
+                                        >
+                                            <Trash2 size={18} />
+                                        </button>
+                                    )}
                                 </div>
                             )}
                             emptyMessage="No stock records found"

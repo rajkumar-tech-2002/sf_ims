@@ -33,12 +33,16 @@ const IncomeExpense = {
         const [categories] = await db.execute('SELECT DISTINCT category_name FROM income_expense WHERE category_name != ""');
         const [persons] = await db.execute('SELECT DISTINCT person_name FROM income_expense WHERE person_name != ""');
         const [authorizations] = await db.execute('SELECT DISTINCT authorization_name FROM income_expense WHERE authorization_name != ""');
+        const [bills] = await db.execute('SELECT DISTINCT bill_no FROM income_expense WHERE bill_no != ""');
+        const [details] = await db.execute('SELECT DISTINCT details FROM income_expense WHERE details != ""');
 
         return {
             groups: groups.map(r => r.group_name),
             categories: categories.map(r => r.category_name),
             persons: persons.map(r => r.person_name),
-            authorizations: authorizations.map(r => r.authorization_name)
+            authorizations: authorizations.map(r => r.authorization_name),
+            bills: bills.map(r => r.bill_no),
+            details: details.map(r => r.details)
         };
     },
 
@@ -70,6 +74,16 @@ const IncomeExpense = {
     delete: async (id) => {
         const [result] = await db.execute('DELETE FROM income_expense WHERE id = ?', [id]);
         return result.affectedRows > 0;
+    },
+
+    getReport: async (fromDate, toDate) => {
+        const query = `
+            SELECT * FROM income_expense 
+            WHERE income_expense_date BETWEEN ? AND ?
+            ORDER BY income_expense_date ASC, id ASC
+        `;
+        const [rows] = await db.execute(query, [fromDate, toDate]);
+        return rows;
     }
 };
 

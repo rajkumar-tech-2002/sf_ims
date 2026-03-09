@@ -18,9 +18,12 @@ import {
 import api from '../../utils/api';
 import DataTable from '../../components/DataTable';
 import { useToast } from '../../context/ToastContext';
+import { usePermissions } from '../../hooks/usePermissions';
 
 const CreditCollection = () => {
     const { showToast, confirmToast } = useToast();
+    const { canEdit } = usePermissions();
+    const moduleId = 'credit-collection';
     const [loading, setLoading] = useState(false);
     const [collections, setCollections] = useState([]);
     const [creditInvoices, setCreditInvoices] = useState([]);
@@ -263,10 +266,15 @@ const CreditCollection = () => {
                             <div className="md:col-span-3 lg:col-span-6 flex justify-end pt-2">
                                 <button
                                     type="submit"
-                                    disabled={loading}
-                                    className="px-10 py-3 bg-primary-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-primary-700 transition-all shadow-lg shadow-primary-500/20 flex items-center gap-2 disabled:opacity-50"
+                                    disabled={loading || !canEdit(moduleId)}
+                                    className={`px-10 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all shadow-lg flex items-center gap-2 disabled:opacity-50 ${!canEdit(moduleId) ? 'shadow-none grayscale cursor-not-allowed' : 'shadow-primary-500/20 bg-primary-600 text-white hover:bg-primary-700'}`}
                                 >
-                                    {loading ? 'SUBMITTING...' : <><Save size={16} /> SUBMIT</>}
+                                    {loading ? 'SUBMITTING...' : (
+                                        <>
+                                            <Save size={16} />
+                                            {canEdit(moduleId) ? 'SUBMIT' : 'VIEW ONLY MODE'}
+                                        </>
+                                    )}
                                 </button>
                             </div>
                         </form>

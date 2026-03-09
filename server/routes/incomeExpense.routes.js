@@ -6,6 +6,7 @@ router.post('/', IncomeExpenseController.createEntry);
 router.get('/', IncomeExpenseController.getEntries);
 router.get('/distinct', IncomeExpenseController.getDistinctFields);
 router.put('/:id', IncomeExpenseController.updateEntry);
+router.get('/report', IncomeExpenseController.getReport);
 router.delete('/:id', IncomeExpenseController.deleteEntry);
 
 module.exports = router;

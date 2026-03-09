@@ -18,9 +18,12 @@ import {
 import api from '../../utils/api';
 import DataTable from '../../components/DataTable';
 import { useToast } from '../../context/ToastContext';
+import { usePermissions } from '../../hooks/usePermissions';
 
 const Enquiry = () => {
     const { showToast, confirmToast } = useToast();
+    const { canEdit } = usePermissions();
+    const moduleId = 'enquiry';
     const [enquiries, setEnquiries] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -271,8 +274,22 @@ const Enquiry = () => {
                             </div>
 
                             <div className="lg:col-span-4 flex justify-end pt-4">
-                                <button type="submit" className="w-full md:w-1/3 btn btn-primary py-4 text-base flex items-center justify-center gap-2 shadow-lg shadow-primary-500/20">
-                                    {isEditing ? <><Save size={20} /> Update Record</> : <><Plus size={20} /> Submit</>}
+                                <button
+                                    type="submit"
+                                    disabled={!canEdit(moduleId)}
+                                    className={`w-full md:w-1/3 btn btn-primary py-4 text-base flex items-center justify-center gap-2 shadow-lg rounded-2xl transition-all duration-300 ${!canEdit(moduleId) ? 'opacity-50 grayscale cursor-not-allowed shadow-none' : 'shadow-primary-500/20 bg-primary-600 text-white'}`}
+                                >
+                                    {isEditing ? (
+                                        <>
+                                            <Save size={20} />
+                                            {!canEdit(moduleId) ? 'VIEW ONLY MODE' : 'Update Record'}
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Plus size={20} />
+                                            {!canEdit(moduleId) ? 'VIEW ONLY MODE' : 'Submit'}
+                                        </>
+                                    )}
                                 </button>
                             </div>
                         </div>
@@ -344,15 +361,19 @@ const Enquiry = () => {
                                     <button
                                         onClick={() => handleEdit(enquiry)}
                                         className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                                        title={canEdit(moduleId) ? "Edit" : "View Details"}
                                     >
                                         <Edit2 size={18} />
                                     </button>
-                                    <button
-                                        onClick={() => handleDelete(enquiry.id)}
-                                        className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
-                                    >
-                                        <Trash2 size={18} />
-                                    </button>
+                                    {canEdit(moduleId) && (
+                                        <button
+                                            onClick={() => handleDelete(enquiry.id)}
+                                            className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
+                                            title="Delete"
+                                        >
+                                            <Trash2 size={18} />
+                                        </button>
+                                    )}
                                 </div>
                             )}
                             emptyMessage="No enquiry records found"

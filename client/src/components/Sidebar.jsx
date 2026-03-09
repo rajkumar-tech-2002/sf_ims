@@ -44,61 +44,62 @@ const Sidebar = () => {
             title: 'Dashboard',
             icon: <LayoutDashboard size={20} />,
             path: '/dashboard',
-            roles: ['admin', 'manager', 'staff']
+            roles: ['admin'],
+            moduleId: 'dashboard'
         },
         {
             title: 'File',
             icon: <FileText size={20} />,
-            roles: ['admin', 'manager'],
+            roles: ['admin'],
             children: [
-                { title: 'User Creation', icon: <UserPlus size={18} />, path: '/user-creation', roles: ['admin'] },
-                { title: 'Log Details', icon: <History size={18} />, path: '/log-details', roles: ['admin'] },
-                { title: 'Help', icon: <HelpCircle size={18} />, path: '/help', roles: ['admin', 'manager'] },
+                { title: 'User Creation', icon: <UserPlus size={18} />, path: '/user-creation', roles: ['admin'], moduleId: 'user-creation' },
+                { title: 'Log Details', icon: <History size={18} />, path: '/log-details', roles: ['admin'], moduleId: 'log-details' },
+                { title: 'Help', icon: <HelpCircle size={18} />, path: '/help', roles: ['admin'] },
             ]
         },
         {
             title: 'Master Data',
             icon: <Database size={20} />,
-            roles: ['admin', 'manager'],
+            roles: ['admin'],
             children: [
-                { title: 'Stock Entry', icon: <Package size={18} />, path: '/stock-entry', roles: ['admin', 'manager'] },
-                { title: 'Vendor', icon: <Truck size={18} />, path: '/vendor', roles: ['admin', 'manager'] },
-                { title: 'Purchase Entry', icon: <ShoppingCart size={18} />, path: '/purchase-entry', roles: ['admin', 'manager'] },
-                { title: 'Enquiry Detail', icon: <FileSearch size={18} />, path: '/enquiry', roles: ['admin', 'manager'] },
-                { title: 'Customer Details', icon: <Users size={18} />, path: '/customers', roles: ['admin', 'manager'] },
-                { title: 'Raw Material Stock', icon: <HardDrive size={18} />, path: '/raw-material-stock', roles: ['admin', 'manager'] },
-                { title: 'Raw Material Purchase', icon: <ShoppingCart size={18} />, path: '/raw-material-purchase', roles: ['admin', 'manager'] },
+                { title: 'Stock Entry', icon: <Package size={18} />, path: '/stock-entry', roles: ['admin'], moduleId: 'stock-entry' },
+                { title: 'Vendor', icon: <Truck size={18} />, path: '/vendor', roles: ['admin'], moduleId: 'vendor' },
+                { title: 'Purchase Entry', icon: <ShoppingCart size={18} />, path: '/purchase-entry', roles: ['admin'], moduleId: 'purchase-entry' },
+                { title: 'Enquiry Detail', icon: <FileSearch size={18} />, path: '/enquiry', roles: ['admin'], moduleId: 'enquiry' },
+                { title: 'Customer Details', icon: <Users size={18} />, path: '/customers', roles: ['admin'], moduleId: 'customers' },
+                { title: 'Raw Material Stock', icon: <HardDrive size={18} />, path: '/raw-material-stock', roles: ['admin'], moduleId: 'raw-material-stock' },
+                { title: 'Raw Material Purchase', icon: <ShoppingCart size={18} />, path: '/raw-material-purchase', roles: ['admin'], moduleId: 'raw-material-purchase' },
             ]
         },
         {
             title: 'Billing',
             icon: <Receipt size={20} />,
-            roles: ['admin', 'manager', 'staff'],
+            roles: ['admin'],
             children: [
-                { title: 'Invoice', icon: <FileText size={18} />, path: '/invoice', roles: ['admin', 'manager', 'staff'] },
-                { title: 'Quotation', icon: <FileText size={18} />, path: '/quotation', roles: ['admin', 'manager', 'staff'] },
+                { title: 'Invoice', icon: <FileText size={18} />, path: '/invoice', roles: ['admin'], moduleId: 'invoice' },
+                { title: 'Quotation', icon: <FileText size={18} />, path: '/quotation', roles: ['admin'], moduleId: 'quotation' },
             ]
         },
         {
             title: 'Return Billing',
             icon: <History size={20} />,
-            roles: ['admin', 'manager', 'staff'],
+            roles: ['admin'],
             children: [
-                { title: 'Stock Return', icon: <Package size={18} />, path: '/stock-return', roles: ['admin', 'manager', 'staff'] },
+                { title: 'Stock Return', icon: <Package size={18} />, path: '/stock-return', roles: ['admin'], moduleId: 'stock-return' },
             ]
         },
         {
             title: 'Billing Report',
             icon: <BarChart3 size={20} />,
-            roles: ['admin', 'manager'],
+            roles: ['admin'],
             children: [
-                { title: 'Bill Report', icon: <FileSearch size={18} />, path: '/bill-report', roles: ['admin', 'manager'] },
-                { title: 'Purchase Report', icon: <ShoppingCart size={18} />, path: '/purchase-report', roles: ['admin', 'manager'] },
-                { title: 'Daily Report', icon: <BarChart3 size={18} />, path: '/daily-report', roles: ['admin', 'manager'] },
-                { title: 'Return Report', icon: <RefreshCw size={18} />, path: '/return-report', roles: ['admin', 'manager'] },
-                { title: 'RM Purchase Report', icon: <ShoppingCart size={18} />, path: '/raw-material-purchase-report', roles: ['admin', 'manager'] },
-                { title: 'Credit Collection', icon: <Wallet size={18} />, path: '/credit-collection', roles: ['admin', 'manager'] },
-                { title: 'Customer Report', icon: <Users size={18} />, path: '/customer-report', roles: ['admin', 'manager'] },
+                { title: 'Bill Report', icon: <FileSearch size={18} />, path: '/bill-report', roles: ['admin'], moduleId: 'bill-report' },
+                { title: 'Purchase Report', icon: <ShoppingCart size={18} />, path: '/purchase-report', roles: ['admin'], moduleId: 'purchase-report' },
+                { title: 'Daily Report', icon: <BarChart3 size={18} />, path: '/daily-report', roles: ['admin'], moduleId: 'daily-report' },
+                { title: 'Return Report', icon: <RefreshCw size={18} />, path: '/return-report', roles: ['admin'], moduleId: 'return-report' },
+                { title: 'RM Purchase Report', icon: <ShoppingCart size={18} />, path: '/raw-material-purchase-report', roles: ['admin'], moduleId: 'raw-material-purchase-report' },
+                { title: 'Credit Collection', icon: <Wallet size={18} />, path: '/credit-collection', roles: ['admin'], moduleId: 'credit-collection' },
+                { title: 'Customer Report', icon: <Users size={18} />, path: '/customer-report', roles: ['admin'], moduleId: 'customer-report' },
             ]
         },
         {
@@ -106,10 +107,9 @@ const Sidebar = () => {
             icon: <TrendingUp size={20} />,
             roles: ['admin'],
             children: [
-                { title: 'Income / Expense', icon: <TrendingUp size={18} />, path: '/income-expense', roles: ['admin'] },
-                { title: 'Vendor Detail', icon: <Truck size={18} />, path: '/vendors', roles: ['admin'] },
-                { title: 'Transaction', icon: <Wallet size={18} />, path: '/transactions', roles: ['admin'] },
-                { title: 'Asset', icon: <Briefcase size={18} />, path: '/assets', roles: ['admin'] },
+                { title: 'Income / Expense', icon: <TrendingUp size={18} />, path: '/income-expense', roles: ['admin'], moduleId: 'income-expense' },
+                { title: 'Transaction', icon: <Wallet size={18} />, path: '/transactions', roles: ['admin'], moduleId: 'transactions' },
+                { title: 'Asset', icon: <Briefcase size={18} />, path: '/assets', roles: ['admin'], moduleId: 'assets' },
             ]
         },
         {
@@ -117,24 +117,35 @@ const Sidebar = () => {
             icon: <BookOpen size={20} />,
             roles: ['admin'],
             children: [
-                { title: 'Cash Book', icon: <BookOpen size={18} />, path: '/cash-book', roles: ['admin'] },
-                { title: 'Vendor Report', icon: <Truck size={18} />, path: '/vendor-report', roles: ['admin'] },
-                { title: 'Asset Report', icon: <Briefcase size={18} />, path: '/asset-report', roles: ['admin'] },
+                { title: 'Income & Expense', icon: <BarChart3 size={18} />, path: '/income-expense-report', roles: ['admin'], moduleId: 'income-expense-report' },
+                { title: 'Cash Book', icon: <BookOpen size={18} />, path: '/cash-book', roles: ['admin'], moduleId: 'cash-book' },
             ]
         }
     ];
 
     const userRole = (user?.user_role || user?.role || 'staff').toLowerCase();
+    const userPermissions = user?.permissions || {};
+
+    const checkAccess = (item) => {
+        if (userRole === 'admin') return true;
+
+        // If it has a moduleId, check permissions specifically
+        if (item.moduleId) {
+            const perm = userPermissions[item.moduleId];
+            if (perm === 'none') return false;
+            if (perm === 'view' || perm === 'edit') return true;
+        }
+
+        // Fallback to role-based access
+        return item.roles && item.roles.map(r => r.toLowerCase()).includes(userRole);
+    };
 
     const filteredMenu = menuConfig.filter(group => {
-        if (group.roles && !group.roles.includes(userRole) && userRole !== 'admin') return false;
         if (group.children) {
-            group.children = group.children.filter(child =>
-                userRole === 'admin' || (child.roles && child.roles.includes(userRole))
-            );
+            group.children = group.children.filter(child => checkAccess(child));
             return group.children.length > 0;
         }
-        return true;
+        return checkAccess(group);
     });
 
     const toggleGroup = (title) => {

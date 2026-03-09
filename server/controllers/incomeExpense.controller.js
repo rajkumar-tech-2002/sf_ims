@@ -60,6 +60,20 @@ const IncomeExpenseController = {
             console.error('Error in deleteEntry:', error);
             res.status(500).json({ message: 'Internal Server Error' });
         }
+    },
+
+    getReport: async (req, res) => {
+        try {
+            const { fromDate, toDate } = req.query;
+            if (!fromDate || !toDate) {
+                return res.status(400).json({ message: 'From Date and To Date are required' });
+            }
+            const reportData = await IncomeExpense.getReport(fromDate, toDate);
+            res.status(200).json(reportData);
+        } catch (error) {
+            console.error('Error in getReport:', error);
+            res.status(500).json({ message: 'Internal Server Error' });
+        }
     }
 };
 

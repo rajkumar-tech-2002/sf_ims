@@ -17,9 +17,12 @@ import {
 import api from '../../utils/api';
 import DataTable from '../../components/DataTable';
 import { useToast } from '../../context/ToastContext';
+import { usePermissions } from '../../hooks/usePermissions';
 
 const Vendor = () => {
     const { showToast, confirmToast } = useToast();
+    const { canEdit, isAdmin } = usePermissions();
+    const moduleId = 'vendor';
     const [vendors, setVendors] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -222,9 +225,18 @@ const Vendor = () => {
                                 />
                             </div>
                             <div className="flex items-end">
-                                <button type="submit" className="w-full btn btn-primary py-4 text-base flex items-center justify-center gap-2 shadow-lg shadow-primary-500/20">
+                                <button
+                                    type="submit"
+                                    disabled={!canEdit(moduleId)}
+                                    className={`w-full btn btn-primary py-4 text-base flex items-center justify-center gap-2 shadow-lg transition-all ${!canEdit(moduleId) ? 'opacity-50 cursor-not-allowed grayscale shadow-none' : 'shadow-primary-500/20 hover:scale-[1.01]'}`}
+                                >
                                     {isEditing ? <><Save size={20} /> Update Record</> : <><Plus size={20} /> Submit Entry</>}
                                 </button>
+                                {!canEdit(moduleId) && (
+                                    <p className="text-[10px] font-bold text-rose-500 mt-2 text-center w-full uppercase tracking-tighter italic">
+                                        View Only Access Enabled
+                                    </p>
+                                )}
                             </div>
                         </div>
                     </form>
@@ -306,15 +318,19 @@ const Vendor = () => {
                                     <button
                                         onClick={() => handleEdit(vendor)}
                                         className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                                        title={canEdit(moduleId) ? "Edit Record" : "View Details"}
                                     >
                                         <Edit2 size={18} />
                                     </button>
-                                    <button
-                                        onClick={() => handleDelete(vendor.id)}
-                                        className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
-                                    >
-                                        <Trash2 size={18} />
-                                    </button>
+                                    {canEdit(moduleId) && (
+                                        <button
+                                            onClick={() => handleDelete(vendor.id)}
+                                            className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
+                                            title="Delete Record"
+                                        >
+                                            <Trash2 size={18} />
+                                        </button>
+                                    )}
                                 </div>
                             )}
                             emptyMessage="No vendor records found"

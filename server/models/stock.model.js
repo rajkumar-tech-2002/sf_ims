@@ -102,6 +102,58 @@ const Stock = {
         `;
         const [rows] = await db.execute(query, [fromDate, toDate, fromDate, toDate]);
         return rows;
+    },
+
+    getCashBookReport: async (fromDate, toDate, type) => {
+        let query = '';
+        let params = [];
+
+        if (type === 'Cash') {
+            query = `
+                (
+                    SELECT 
+                        invoice_date as trans_date, 
+                        customer_name as type_name, 
+                        'INVOICE' as source,
+                        subtotal as income, 
+                        0 as expense
+                    FROM invoice_master
+                    WHERE DATE(invoice_date) BETWEEN ? AND ?
+                )
+                UNION ALL
+                (
+                    SELECT 
+                        income_expense_date as trans_date, 
+                        details as type_name, 
+                        'IE' as source,
+                        income, 
+                        expense
+                    FROM income_expense
+                    WHERE (DATE(income_expense_date) BETWEEN ? AND ?)
+                    AND income_expense_type = 'Cash'
+                )
+                ORDER BY trans_date ASC
+            `;
+            params = [fromDate, toDate, fromDate, toDate];
+        } else {
+            // Cheque only from income_expense
+            query = `
+                SELECT 
+                    income_expense_date as trans_date, 
+                    details as type_name, 
+                    'IE' as source,
+                    income, 
+                    expense
+                FROM income_expense
+                WHERE (DATE(income_expense_date) BETWEEN ? AND ?)
+                AND income_expense_type = 'Cheque'
+                ORDER BY trans_date ASC
+            `;
+            params = [fromDate, toDate];
+        }
+
+        const [rows] = await db.execute(query, params);
+        return rows;
     }
 };
 

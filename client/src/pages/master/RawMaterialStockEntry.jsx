@@ -20,10 +20,13 @@ import {
 import api from '../../utils/api';
 import DataTable from '../../components/DataTable';
 import { useToast } from '../../context/ToastContext';
+import { usePermissions } from '../../hooks/usePermissions';
 import RawMaterialStockReportPrint from '../../components/reports/RawMaterialStockReportPrint';
 
 const RawMaterialStockEntry = () => {
     const { showToast, confirmToast } = useToast();
+    const { canEdit } = usePermissions();
+    const moduleId = 'raw-material-stock';
     const [stocks, setStocks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -299,8 +302,22 @@ const RawMaterialStockEntry = () => {
                                 />
                             </div>
                             <div className="lg:col-span-2 flex items-end">
-                                <button type="submit" className="w-full btn btn-primary py-4 text-base flex items-center justify-center gap-2 shadow-lg shadow-primary-500/20">
-                                    {isEditing ? <><Save size={20} /> Update Record</> : <><Plus size={20} /> Submit Entry</>}
+                                <button
+                                    type="submit"
+                                    disabled={!canEdit(moduleId)}
+                                    className={`w-full btn btn-primary py-4 text-base flex items-center justify-center gap-2 shadow-lg rounded-2xl transition-all duration-300 ${!canEdit(moduleId) ? 'opacity-50 grayscale cursor-not-allowed shadow-none' : 'shadow-primary-500/20 bg-primary-600 text-white'}`}
+                                >
+                                    {isEditing ? (
+                                        <>
+                                            <Save size={20} />
+                                            {!canEdit(moduleId) ? 'VIEW ONLY MODE' : 'Update Record'}
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Plus size={20} />
+                                            {!canEdit(moduleId) ? 'VIEW ONLY MODE' : 'Submit Entry'}
+                                        </>
+                                    )}
                                 </button>
                             </div>
                         </div>
@@ -375,15 +392,19 @@ const RawMaterialStockEntry = () => {
                                     <button
                                         onClick={() => handleEdit(stock)}
                                         className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                                        title={canEdit(moduleId) ? "Edit" : "View Details"}
                                     >
                                         <Edit2 size={18} />
                                     </button>
-                                    <button
-                                        onClick={() => handleDelete(stock.id)}
-                                        className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
-                                    >
-                                        <Trash2 size={18} />
-                                    </button>
+                                    {canEdit(moduleId) && (
+                                        <button
+                                            onClick={() => handleDelete(stock.id)}
+                                            className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
+                                            title="Delete"
+                                        >
+                                            <Trash2 size={18} />
+                                        </button>
+                                    )}
                                 </div>
                             )}
                             emptyMessage="No raw material records found"

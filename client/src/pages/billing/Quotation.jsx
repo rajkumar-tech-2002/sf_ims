@@ -19,6 +19,7 @@ import {
 import api from '../../utils/api';
 import DataTable from '../../components/DataTable';
 import { useToast } from '../../context/ToastContext';
+import { usePermissions } from '../../hooks/usePermissions';
 import QuotationPrint from '../../components/reports/QuotationPrint';
 import {
     Edit2,
@@ -62,6 +63,8 @@ const AutoResizeInput = ({ value, onChange, placeholder, type = 'text', prefix, 
 
 const Quotation = () => {
     const { showToast, confirmToast } = useToast();
+    const { canEdit } = usePermissions();
+    const moduleId = 'quotation';
     const [loading, setLoading] = useState(false);
     const [quotations, setQuotations] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -908,10 +911,15 @@ const Quotation = () => {
                             <div className="space-y-3 pt-4">
                                 <button
                                     onClick={handleSave}
-                                    disabled={loading}
-                                    className="w-full py-4 bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-500 hover:to-blue-500 text-white rounded-xl font-black tracking-widest text-sm transition-all shadow-lg shadow-primary-500/20 flex items-center justify-center gap-3 disabled:opacity-50"
+                                    disabled={loading || !canEdit(moduleId)}
+                                    className={`w-full py-4 bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-500 hover:to-blue-500 text-white rounded-xl font-black tracking-widest text-sm transition-all shadow-lg flex items-center justify-center gap-3 disabled:opacity-50 ${!canEdit(moduleId) ? 'shadow-none grayscale cursor-not-allowed' : 'shadow-primary-500/20'}`}
                                 >
-                                    {loading ? 'Processing...' : <><Printer size={20} /> Save & Print Quotation</>}
+                                    {loading ? 'Processing...' : (
+                                        <>
+                                            <Printer size={20} />
+                                            {canEdit(moduleId) ? 'Save & Print Quotation' : 'View Only Mode'}
+                                        </>
+                                    )}
                                 </button>
                                 <button
                                     onClick={handleReset}

@@ -21,9 +21,12 @@ import {
 import api from '../../utils/api';
 import { useToast } from '../../context/ToastContext';
 import DataTable from '../../components/DataTable';
+import { usePermissions } from '../../hooks/usePermissions';
 
 const StockReturn = () => {
     const { showToast, confirmToast } = useToast();
+    const { canEdit } = usePermissions();
+    const moduleId = 'stock-returns';
     const [loading, setLoading] = useState(false);
     const [returnNo, setReturnNo] = useState('');
     const [returnDate, setReturnDate] = useState(new Date().toISOString().split('T')[0]);
@@ -493,11 +496,13 @@ const StockReturn = () => {
                                 <div className="grid grid-cols-2 gap-4">
                                     <button
                                         onClick={handleSave}
-                                        disabled={loading || items.length === 0}
-                                        className="col-span-2 btn btn-primary py-5 text-base flex items-center justify-center gap-3 shadow-2xl active:scale-[0.98] tracking-[0.2em] font-black group"
+                                        disabled={loading || items.length === 0 || !canEdit(moduleId)}
+                                        className={`col-span-2 btn btn-primary py-5 text-base flex items-center justify-center gap-3 shadow-2xl active:scale-[0.98] tracking-[0.2em] font-black group ${!canEdit(moduleId) ? 'opacity-50 grayscale cursor-not-allowed shadow-none' : ''}`}
                                     >
                                         {loading ? (
                                             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                        ) : !canEdit(moduleId) ? (
+                                            'VIEW ONLY MODE'
                                         ) : (
                                             <><Save size={20} className="group-hover:scale-110 transition-transform" /> Confirm & Return</>
                                         )}

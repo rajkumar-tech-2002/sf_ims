@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/main-pages/LandingPage';
 import LoginPage from './pages/main-pages/LoginPage';
 import Dashboard from './pages/main-pages/Dashboard';
-import Inventory from './pages/master/Inventory';
 import Reports from './pages/billing-report/Reports';
 import Profile from './pages/main-pages/Profile';
 import StockEntry from './pages/master/StockEntry';
@@ -28,6 +27,8 @@ import PurchaseReport from './pages/billing-report/PurchaseReport';
 import DailyReport from './pages/billing-report/DailyReport';
 import ReturnReport from './pages/billing-report/ReturnReport';
 import RawMaterialPurchaseReport from './pages/billing-report/RawMaterialPurchaseReport';
+import IncomeExpenseReport from './pages/reports/IncomeExpenseReport';
+import CashBook from './pages/reports/CashBook';
 import NotFound from './pages/main-pages/NotFound';
 import MainLayout from './layouts/MainLayout';
 import { AuthProvider } from './context/AuthContext';
@@ -48,7 +49,6 @@ function App() {
                         <Route element={<PrivateRoute />}>
                             <Route element={<MainLayout />}>
                                 <Route path="/dashboard" element={<Dashboard />} />
-                                <Route path="/inventory" element={<Inventory />} />
                                 <Route path="/stock-entry" element={<StockEntry />} />
                                 <Route path="/purchase-entry" element={<PurchaseEntry />} />
                                 <Route path="/user-creation" element={<UserCreation />} />
@@ -59,6 +59,8 @@ function App() {
                                 <Route path="/daily-report" element={<DailyReport />} />
                                 <Route path="/return-report" element={<ReturnReport />} />
                                 <Route path="/raw-material-purchase-report" element={<RawMaterialPurchaseReport />} />
+                                <Route path="/income-expense-report" element={<IncomeExpenseReport />} />
+                                <Route path="/cash-book" element={<CashBook />} />
                                 <Route path="/profile" element={<Profile />} />
                                 <Route path="/help" element={<HelpCenter />} />
                                 <Route path="/vendor" element={<Vendor />} />

@@ -9,7 +9,10 @@ const getDashboardStats = async (req, res) => {
         res.json({
             summary,
             activities,
-            trend
+            trend,
+            topProducts: await Dashboard.getTopProducts(),
+            categories: await Dashboard.getCategoryDistribution(),
+            stockStatus: await Dashboard.getStockStatus()
         });
     } catch (error) {
         console.error('Dashboard error:', error);

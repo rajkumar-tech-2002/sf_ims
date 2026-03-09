@@ -20,6 +20,7 @@ import {
 import api from '../../utils/api';
 import DataTable from '../../components/DataTable';
 import { useToast } from '../../context/ToastContext';
+import { usePermissions } from '../../hooks/usePermissions';
 
 const DropdownWithAdd = ({ label, field, options, icon: Icon, formData, setFormData, addingModes, setAddingModes }) => {
     const isAdding = addingModes[field];
@@ -72,6 +73,8 @@ const DropdownWithAdd = ({ label, field, options, icon: Icon, formData, setFormD
 
 const Transactions = () => {
     const { showToast, confirmToast } = useToast();
+    const { canEdit } = usePermissions();
+    const moduleId = 'transactions';
     const [loading, setLoading] = useState(false);
     const [transactions, setTransactions] = useState([]);
     const [vendors, setVendors] = useState([]);
@@ -391,10 +394,15 @@ const Transactions = () => {
                             <div className="lg:col-span-4 flex justify-end pt-4 gap-3">
                                 <button
                                     onClick={handleSave}
-                                    disabled={loading}
-                                    className="w-full md:w-1/3 bg-primary-600 text-white btn btn-primary py-4 text-base flex items-center justify-center gap-3 shadow-xl shadow-primary-500/25 rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                                    disabled={loading || !canEdit(moduleId)}
+                                    className={`w-full md:w-1/3 btn btn-primary py-4 text-base flex items-center justify-center gap-3 shadow-xl rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ${!canEdit(moduleId) ? 'opacity-50 grayscale cursor-not-allowed shadow-none' : 'shadow-primary-500/25 bg-primary-600 text-white'}`}
                                 >
-                                    {loading ? 'Processing...' : <><Save size={18} /> {isEditing ? 'Update Transaction' : 'Confirm & Save'}</>}
+                                    {loading ? 'Processing...' : (
+                                        <>
+                                            <Save size={18} />
+                                            {!canEdit(moduleId) ? 'VIEW ONLY MODE' : (isEditing ? 'Update Transaction' : 'Confirm & Save')}
+                                        </>
+                                    )}
                                 </button>
                                 <button
                                     type="button"
@@ -428,17 +436,19 @@ const Transactions = () => {
                                         <button
                                             onClick={() => handleEdit(row)}
                                             className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
-                                            title="Edit"
+                                            title={canEdit(moduleId) ? "Edit" : "View Details"}
                                         >
                                             <Edit2 size={18} />
                                         </button>
-                                        <button
-                                            onClick={() => handleDelete(row.id)}
-                                            className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
-                                            title="Delete"
-                                        >
-                                            <Trash2 size={18} />
-                                        </button>
+                                        {canEdit(moduleId) && (
+                                            <button
+                                                onClick={() => handleDelete(row.id)}
+                                                className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
+                                                title="Delete"
+                                            >
+                                                <Trash2 size={18} />
+                                            </button>
+                                        )}
                                     </div>
                                 )}
                             />

@@ -6,6 +6,23 @@ require('dotenv').config();
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const stockRoutes = require('./routes/stock.routes');
+const logRoutes = require('./routes/log.routes');
+const vendorRoutes = require('./routes/vendor.routes');
+const purchaseRoutes = require('./routes/purchase.routes');
+const enquiryRoutes = require('./routes/enquiry.routes');
+const dashboardRoutes = require('./routes/dashboard.routes');
+const customerRoutes = require('./routes/customer.routes');
+const rawMaterialStockRoutes = require('./routes/rawMaterialStock.routes');
+const rawMaterialPurchaseRoutes = require('./routes/rawMaterialPurchase.routes');
+const quotationRoutes = require('./routes/quotation.routes');
+const scaleUnitRoutes = require('./routes/scaleUnit.routes');
+const invoiceRoutes = require('./routes/invoice.routes');
+const stockReturnRoutes = require('./routes/stockReturn.routes');
+const reportRoutes = require('./routes/report.routes');
+const creditCollectionRoutes = require('./routes/creditCollection.routes');
+const incomeExpenseRoutes = require('./routes/incomeExpense.routes');
+const transactionRoutes = require('./routes/transaction.routes');
+const assetRoutes = require('./routes/assets.routes');
 
 const app = express();
 
@@ -21,6 +38,23 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/stocks', stockRoutes);
+app.use('/api/logs', logRoutes);
+app.use('/api/vendors', vendorRoutes);
+app.use('/api/purchases', purchaseRoutes);
+app.use('/api/enquiries', enquiryRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/customers', customerRoutes);
+app.use('/api/raw-material-stocks', rawMaterialStockRoutes);
+app.use('/api/raw-material-purchases', rawMaterialPurchaseRoutes);
+app.use('/api/quotations', quotationRoutes);
+app.use('/api/scale-units', scaleUnitRoutes);
+app.use('/api/invoices', invoiceRoutes);
+app.use('/api/stock-returns', stockReturnRoutes);
+app.use('/api/reports', reportRoutes);
+app.use('/api/credit-collections', creditCollectionRoutes);
+app.use('/api/income-expenses', incomeExpenseRoutes);
+app.use('/api/transactions', transactionRoutes);
+app.use('/api/assets', assetRoutes);
 
 // Basic error handler
 app.use((err, req, res, next) => {

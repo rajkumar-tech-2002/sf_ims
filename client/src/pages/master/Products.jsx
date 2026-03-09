@@ -26,16 +26,16 @@ const Products = () => {
 
     return (
         <div className="page-container">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div>
-                    <h1 className="section-title">Product Catalog</h1>
-                    <p className="text-slate-500 text-base mt-2">Manage your global inventory specifications and pricing.</p>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-10">
+                <div className="space-y-1">
+                    <h1 className="section-title text-4xl font-extrabold text-slate-900 tracking-tight">Product Catalog</h1>
+                    <p className="text-slate-500 text-base font-medium">Manage your global inventory specifications and pricing with absolute precision.</p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <button className="btn btn-secondary gap-2">
-                        <Filter size={18} /> Category
+                    <button className="btn btn-secondary px-8 py-3.5 rounded-[1.25rem] font-black uppercase text-xs tracking-widest gap-2">
+                        <Filter size={16} /> Category
                     </button>
-                    <button className="btn btn-primary gap-2">
+                    <button className="btn btn-primary px-8 py-3.5 rounded-[1.25rem] font-black uppercase text-xs tracking-widest gap-2 shadow-lg shadow-primary-500/20">
                         <Plus size={20} /> New Product
                     </button>
                 </div>
@@ -140,13 +140,13 @@ const Products = () => {
 };
 
 const MetricCard = ({ label, value, icon, color }) => (
-    <div className="card flex items-center gap-6 p-6 border-none shadow-sm hover:shadow-md">
-        <div className={`p-4 rounded-2xl ${color}`}>
+    <div className="card flex items-center gap-6 p-8 border-none shadow-premium hover:shadow-xl transition-all duration-300">
+        <div className={`p-5 rounded-2xl ${color} shadow-sm`}>
             {icon}
         </div>
         <div>
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{label}</p>
-            <p className="text-2xl font-black text-slate-900 mt-0.5 tracking-tight">{value}</p>
+            <p className="text-[11px] font-black text-slate-600 uppercase tracking-[0.2em]">{label}</p>
+            <p className="text-3xl font-black text-slate-900 mt-1.5 tracking-tighter">{value}</p>
         </div>
     </div>
 );

@@ -7,6 +7,7 @@ router.use(authMiddleware);
 
 router.post('/', stockController.createStock);
 router.get('/', stockController.getAllStocks);
+router.get('/notifications', stockController.getLowStock);
 router.put('/:id', stockController.updateStock);
 router.delete('/:id', stockController.deleteStock);
 

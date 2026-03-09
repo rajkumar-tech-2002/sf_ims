@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
+const LogDetail = require('../models/log.model');
 
 const login = async (req, res) => {
     const { user_id, password, user_role } = req.body;
@@ -18,6 +19,13 @@ const login = async (req, res) => {
             console.log('Password or role mismatch');
             return res.status(401).json({ message: 'Invalid user ID, password, or role' });
         }
+
+        // Record log detail
+        await LogDetail.create({
+            username: user.user_name,
+            role: user.user_role,
+            action: `User ${user.user_name} logged in successfully`
+        });
 
         const payload = {
             id: user.id,

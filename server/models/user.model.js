@@ -17,10 +17,24 @@ const User = {
     },
 
     create: async (userData) => {
-        const { user_name, user_role, qualification, department, user_id, password, contact, remark, status } = userData;
+        const {
+            user_name, user_role, qualification, department,
+            user_id, password, contact, remark, status
+        } = userData;
+
         const [result] = await pool.execute(
             'INSERT INTO users (user_name, user_role, qualification, department, user_id, password, contact, remark, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [user_name, user_role, qualification, department, user_id, password, contact, remark, status]
+            [
+                user_name ?? null,
+                user_role ?? null,
+                qualification ?? null,
+                department ?? null,
+                user_id ?? null,
+                password ?? null,
+                contact ?? null,
+                remark ?? null,
+                status ?? null
+            ]
         );
         return result.insertId;
     },
@@ -28,6 +42,11 @@ const User = {
     getDistinctRoles: async () => {
         const [rows] = await pool.execute('SELECT DISTINCT user_role FROM users');
         return rows.map(row => row.user_role);
+    },
+
+    delete: async (id) => {
+        const [result] = await pool.execute('DELETE FROM users WHERE id = ?', [id]);
+        return result.affectedRows > 0;
     }
 };
 

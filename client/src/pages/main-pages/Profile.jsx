@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import {
     User,
     Mail,
@@ -10,7 +10,9 @@ import {
     CheckCircle2,
     Settings,
     Smartphone,
-    Globe
+    Globe,
+    ChevronDown,
+    Hash
 } from 'lucide-react';
 
 const Profile = () => {
@@ -26,7 +28,7 @@ const Profile = () => {
     return (
         <div className="page-container">
             <div className="mb-12">
-                <h1 className="section-title">Account Settings</h1>
+                <h1 className="section-title text-2xl font-bold text-slate-800">Account Settings</h1>
                 <p className="text-slate-500 text-base mt-2">Manage your professional identity and session security.</p>
             </div>
 
@@ -56,20 +58,20 @@ const Profile = () => {
                         <div className="flex flex-col md:flex-row items-center gap-10 relative z-10">
                             <div className="relative group">
                                 <div className="w-32 h-32 bg-primary-50 rounded-3xl flex items-center justify-center text-primary-600 text-4xl font-black shadow-inner">
-                                    {user?.name?.[0].toUpperCase()}
+                                    {user?.user_name?.[0].toUpperCase()}
                                 </div>
                                 <button className="absolute -bottom-2 -right-2 p-3 bg-slate-900 text-white rounded-xl shadow-xl hover:scale-110 transition-transform">
                                     <Camera size={18} />
                                 </button>
                             </div>
                             <div className="text-center md:text-left">
-                                <h2 className="text-3xl font-black text-slate-900 capitalize leading-none">{user?.name}</h2>
+                                <h2 className="text-3xl font-black text-slate-900 capitalize leading-none">{user?.user_name}</h2>
                                 <p className="text-slate-400 font-bold mt-3 flex items-center justify-center md:justify-start gap-2">
-                                    <Mail size={16} /> {user?.email}
+                                    <Smartphone size={16} /> ID: {user?.user_id}
                                 </p>
                                 <div className="mt-6 flex flex-wrap justify-center md:justify-start gap-3">
                                     <span className="px-4 py-1.5 bg-primary-600 text-white text-[10px] font-black uppercase tracking-widest rounded-lg shadow-lg shadow-primary-500/20">
-                                        {user?.role} Access
+                                        {user?.user_role} Access
                                     </span>
                                     <span className="px-4 py-1.5 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase tracking-widest rounded-lg border border-emerald-100">
                                         Active Account
@@ -85,26 +87,33 @@ const Profile = () => {
                             <div className="space-y-10 animate-fade-in">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div className="space-y-2">
-                                        <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Full Name</label>
-                                        <input type="text" className="input-field py-4" defaultValue={user?.name} />
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                            <User size={12} /> Full Name</label>
+                                        <input type="text" className="input-field py-4" defaultValue={user?.user_name} />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Work Email</label>
-                                        <input type="email" className="input-field py-4" defaultValue={user?.email} disabled />
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                            <Hash size={12} /> Login User ID</label>
+                                        <input type="text" className="input-field py-4" defaultValue={user?.user_id} disabled />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Primary Language</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                            <Globe size={12} /> Primary Language</label>
                                         <div className="relative">
                                             <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
-                                            <select className="input-field pl-12 py-4">
+                                            <select className="input-field pl-12 py-4 appearance-none bg-white w-full">
                                                 <option>English (United States)</option>
                                                 <option>Spanish (International)</option>
                                                 <option>German (Europe)</option>
                                             </select>
+                                            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                                                <ChevronDown size={18} />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Device Auth</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                            <Smartphone size={12} /> Device Auth</label>
                                         <div className="relative">
                                             <Smartphone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
                                             <input type="text" className="input-field pl-12 py-4" defaultValue="iPhone 15 Pro Max" disabled />
@@ -131,16 +140,19 @@ const Profile = () => {
                                 </div>
                                 <div className="space-y-6">
                                     <div className="space-y-2">
-                                        <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Current Password</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                            <Lock size={12} /> Current Password</label>
                                         <input type="password" placeholder="••••••••" className="input-field py-4" />
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                         <div className="space-y-2">
-                                            <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">New Password</label>
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                                <Lock size={12} /> New Password</label>
                                             <input type="password" placeholder="••••••••" className="input-field py-4" />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Confirm Identity</label>
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                                <Lock size={12} /> Confirm Identity</label>
                                             <input type="password" placeholder="••••••••" className="input-field py-4" />
                                         </div>
                                     </div>

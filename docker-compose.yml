@@ -1,0 +1,45 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: ims-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-Rajkumar@2002}
+      MYSQL_DATABASE: ${DB_NAME:-ims}
+      MYSQL_USER: ${DB_USER:-raju}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-Rajkumar@2002}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # Uncomment the next line if you have initial SQL scripts in server/database
+      # - ./server/database:/docker-entrypoint-initdb.d
+
+  server:
+    build: ./server
+    container_name: ims-server
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=${DB_USER:-raju}
+      - DB_PASSWORD=${DB_PASSWORD:-Rajkumar@2002}
+      - DB_NAME=${DB_NAME:-ims}
+      - JWT_SECRET=${JWT_SECRET:-your_super_secret_jwt_key_12345}
+      - COOKIE_SECRET=${COOKIE_SECRET:-your_cookie_secret_key_67890}
+      - FRONTEND_URL=http://localhost:5173
+    depends_on:
+      - mysql
+
+  client:
+    build: ./client
+    container_name: ims-client
+    restart: always
+    ports:
+      - "5173:80"
+    depends_on:
+      - server
+
+volumes:
+  mysql_data:

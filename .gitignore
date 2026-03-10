@@ -74,3 +74,6 @@ build/
 *.njsproj
 *.sln
 *.sw?
+
+# K3s Secrets
+k3s/secrets.yaml

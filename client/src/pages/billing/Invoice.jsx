@@ -153,7 +153,7 @@ const Invoice = () => {
     const fetchInvoices = async () => {
         setLoading(true);
         try {
-            const response = await api.get('/invoices');
+            const response = await api.get('/invoices/detailed');
             setInvoices(response.data);
         } catch (error) {
             showToast('error', 'Failed to fetch invoice records');
@@ -197,44 +197,44 @@ const Invoice = () => {
 
     useEffect(() => { fetchStockList(); }, []);
 
-    // Calculate item values
+    const calculateItem = useCallback((item, mode) => {
+        const qty = parseFloat(item.qty) || 0;
+        const price = parseFloat(item.price) || 0;
+        const discountPercent = parseFloat(item.discountPercent) || 0;
+        const gstPercent = parseFloat(item.gstPercent) || 0;
+
+        const amount = qty * price;
+        const discountAmount = (amount * discountPercent) / 100;
+        const taxableAmount = amount - discountAmount;
+
+        let cgstAmount = 0;
+        let sgstAmount = 0;
+        let igstAmount = 0;
+
+        if (mode === 'CGST_SGST') {
+            cgstAmount = (taxableAmount * (gstPercent / 2)) / 100;
+            sgstAmount = (taxableAmount * (gstPercent / 2)) / 100;
+        } else {
+            igstAmount = (taxableAmount * gstPercent) / 100;
+        }
+
+        const totalAmount = taxableAmount + cgstAmount + sgstAmount + igstAmount;
+
+        return {
+            ...item,
+            taxableAmount: taxableAmount.toFixed(2),
+            cgstAmount: cgstAmount.toFixed(2),
+            sgstAmount: sgstAmount.toFixed(2),
+            igstAmount: igstAmount.toFixed(2),
+            amount: amount.toFixed(2),
+            totalAmount: totalAmount.toFixed(2)
+        };
+    }, []);
+
+    // Calculate totals whenever items or mode change
     useEffect(() => {
-        const newItems = items.map(item => {
-            const qty = parseFloat(item.qty) || 0;
-            const price = parseFloat(item.price) || 0;
-            const discountPercent = parseFloat(item.discountPercent) || 0;
-            const gstPercent = parseFloat(item.gstPercent) || 0;
-
-            const amount = qty * price;
-            const discountAmount = (amount * discountPercent) / 100;
-            const taxableAmount = amount - discountAmount;
-
-            let cgstAmount = 0;
-            let sgstAmount = 0;
-            let igstAmount = 0;
-
-            if (gstMode === 'CGST_SGST') {
-                cgstAmount = (taxableAmount * (gstPercent / 2)) / 100;
-                sgstAmount = (taxableAmount * (gstPercent / 2)) / 100;
-            } else {
-                igstAmount = (taxableAmount * gstPercent) / 100;
-            }
-
-            const totalAmount = taxableAmount + cgstAmount + sgstAmount + igstAmount;
-
-            return {
-                ...item,
-                taxableAmount: taxableAmount.toFixed(2),
-                cgstAmount: cgstAmount.toFixed(2),
-                sgstAmount: sgstAmount.toFixed(2),
-                igstAmount: igstAmount.toFixed(2),
-                amount: amount.toFixed(2),
-                totalAmount: totalAmount.toFixed(2)
-            };
-        });
-
-        const subtotal = newItems.reduce((acc, curr) => acc + parseFloat(curr.taxableAmount), 0);
-        const gstTotal = newItems.reduce((acc, curr) => acc + (parseFloat(curr.cgstAmount) + parseFloat(curr.sgstAmount) + parseFloat(curr.igstAmount)), 0);
+        const subtotal = items.reduce((acc, curr) => acc + (parseFloat(curr.taxableAmount) || 0), 0);
+        const gstTotal = items.reduce((acc, curr) => acc + (parseFloat(curr.cgstAmount) || 0 + parseFloat(curr.sgstAmount) || 0 + parseFloat(curr.igstAmount) || 0), 0);
         const grandTotalRaw = subtotal + gstTotal;
         const grandTotal = Math.round(grandTotalRaw);
         const roundOff = (grandTotal - grandTotalRaw).toFixed(2);
@@ -245,7 +245,7 @@ const Invoice = () => {
             roundOff: parseFloat(roundOff),
             grandTotal: grandTotal
         });
-    }, [items, gstMode]);
+    }, [items]);
 
     const handleAddItem = () => {
         setItems([...items, {
@@ -277,28 +277,35 @@ const Invoice = () => {
     const fetchProductDetails = async (index, code) => {
         if (!code) return;
         try {
-            const response = await api.get(`/quotations/product/${code}`);
-            if (response.data) {
-                const newItems = [...items];
-                newItems[index] = {
-                    ...newItems[index],
-                    productName: response.data.product_name || '',
-                    hsnCode: response.data.hsn_code || '',
-                    price: response.data.sale_price || response.data.sales_price || 0,
-                    scale: response.data.scale || response.data.scale_unit || '',
-                    gstPercent: response.data.gst || response.data.gst_percent || 0
-                };
-                setItems(newItems);
+            const response = await api.get(`/stocks/code/${code}`);
+            const product = response.data;
+            if (product) {
+                setItems(prev => prev.map((item, i) =>
+                    i === index ? calculateItem({
+                        ...item,
+                        productCode: product.product_code,
+                        productName: product.product_name,
+                        hsnCode: product.hsn_code || '',
+                        description: product.detail || '',
+                        price: product.sale_price || 0,
+                        scale: product.scale || '',
+                        gstPercent: product.gst || 0
+                    }, gstMode) : item
+                ));
             }
         } catch (error) {
-            console.error('Product not found');
+            console.error('Error fetching product details:', error);
         }
     };
 
     const handleItemChange = (index, field, value) => {
-        setItems(prev => prev.map((item, i) =>
-            i === index ? { ...item, [field]: value ?? '' } : item
-        ));
+        setItems(prev => prev.map((item, i) => {
+            if (i === index) {
+                const updated = { ...item, [field]: value ?? '' };
+                return calculateItem(updated, gstMode);
+            }
+            return item;
+        }));
     };
 
     const handleCustomerNameChange = (e) => {
@@ -491,15 +498,28 @@ const Invoice = () => {
     };
 
     const filteredInvoices = invoices.filter(i =>
-        i.invoice_no.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        i.customer_name.toLowerCase().includes(searchTerm.toLowerCase())
+        (i.invoice_no || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (i.customer_name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (i.product_name || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const columns = [
-        { key: 'invoice_no', label: 'Invoice No' },
-        { key: 'invoice_date', label: 'Date', render: (val) => new Date(val).toLocaleDateString() },
-        { key: 'customer_name', label: 'Customer' },
-        { key: 'grand_total', label: 'Total Amount', render: (val) => `₹${val.toLocaleString()}` }
+        { key: 'invoice_no', label: 'Invoice No', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'invoice_date', label: 'Date', render: (val) => <span className="whitespace-nowrap font-bold text-slate-600">{new Date(val).toLocaleDateString()}</span> },
+        { key: 'customer_name', label: 'Customer', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'mobile_no', label: 'Mobile', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'gst_no', label: 'GST No', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'credit', label: 'Credit', render: (val) => <span className={`px-2 py-1 rounded text-[10px] font-black uppercase ${val === 'yes' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'}`}>{val || 'no'}</span> },
+        { key: 'grand_total', label: 'Grand Total', render: (val) => <span className="font-black text-primary-700">₹{parseFloat(val || 0).toLocaleString()}</span> },
+        { key: 'product_name', label: 'Product', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'description', label: 'Description', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'hsn_code', label: 'HSN', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'qty', label: 'Qty', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'price', label: 'Price', className: 'whitespace-nowrap font-bold text-slate-600', render: (val) => `₹${parseFloat(val || 0).toLocaleString()}` },
+        { key: 'discount_percent', label: 'Discount', className: 'whitespace-nowrap font-bold text-slate-600', render: (val) => `${val || 0}%` },
+        { key: 'taxable_amount', label: 'Taxable', className: 'whitespace-nowrap font-bold text-slate-600', render: (val) => `₹${parseFloat(val || 0).toLocaleString()}` },
+        { key: 'gst_percent', label: 'GST', className: 'whitespace-nowrap font-bold text-slate-600', render: (val) => `${val || 0}%` },
+        { key: 'item_total_amount', label: 'Item Total', className: 'whitespace-nowrap font-bold text-slate-600', render: (val) => <span className="font-black text-slate-900">₹{parseFloat(val || 0).toLocaleString()}</span> }
     ];
 
     if (loading && invoices.length === 0) {
@@ -676,13 +696,17 @@ const Invoice = () => {
                                         </div>
                                         <div className="space-y-3">
                                             <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                                <Percent size={14} className="text-primary-500" /> GST Configuration
+                                                <Percent size={14} className="text-primary-500" /> GST
                                             </label>
                                             <div className="relative">
                                                 <select
                                                     className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 appearance-none cursor-pointer"
                                                     value={gstMode}
-                                                    onChange={(e) => setGstMode(e.target.value)}
+                                                    onChange={(e) => {
+                                                        const newMode = e.target.value;
+                                                        setGstMode(newMode);
+                                                        setItems(prev => prev.map(item => calculateItem(item, newMode)));
+                                                    }}
                                                 >
                                                     <option value="CGST_SGST">CGST + SGST (Local)</option>
                                                     <option value="IGST">IGST (Inter-State)</option>
@@ -828,14 +852,14 @@ const Invoice = () => {
                                             onChange={(e) => setCustomer({ ...customer, stateCode: e.target.value })}
                                         />
                                     </div>
-                                    <div className="md:col-span-2 space-y-3">
+                                    <div className="space-y-3">
                                         <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                            <MapPin size={14} className="text-primary-500" /> Geographic Location
+                                            <MapPin size={14} className="text-primary-500" /> Location
                                         </label>
                                         <input
                                             type="text"
                                             className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800"
-                                            placeholder="Shipping/Billing address"
+                                            placeholder="Address"
                                             value={customer.address}
                                             onChange={(e) => setCustomer({ ...customer, address: e.target.value })}
                                         />
@@ -862,20 +886,20 @@ const Invoice = () => {
                             </div>
 
                             <div className="overflow-x-auto overflow-y-visible p-4 custom-scrollbar">
-                                <table className="w-full min-w-[1600px] border-separate border-spacing-y-3">
+                                <table className="w-full min-w-[1500px] border-collapse table-fixed">
                                     <thead>
-                                        <tr>
-                                            <th className="px-4 py-2 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-16">S.No</th>
-                                            <th className="px-4 py-2 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest w-48">Code</th>
-                                            <th className="px-4 py-2 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Product Info</th>
-                                            <th className="px-4 py-2 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-32">HSN</th>
-                                            <th className="px-4 py-2 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-40">Qty</th>
-                                            <th className="px-4 py-2 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest w-44">Price</th>
-                                            <th className="px-4 py-2 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-28">Disc%</th>
-                                            <th className="px-4 py-2 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest w-44">Taxable</th>
-                                            <th className="px-4 py-2 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-28">GST%</th>
-                                            <th className="px-4 py-2 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest w-44">Total</th>
-                                            <th className="px-4 py-2 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-16">Action</th>
+                                        <tr className="border-b border-slate-100">
+                                            <th className="px-2 py-3 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-[50px]">S.No</th>
+                                            <th className="px-2 py-3 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest w-[180px]">Code</th>
+                                            <th className="px-2 py-3 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest w-[300px]">Product Info</th>
+                                            <th className="px-2 py-3 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-[120px]">HSN</th>
+                                            <th className="px-2 py-3 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-[130px]">Qty</th>
+                                            <th className="px-2 py-3 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest w-[140px]">Price</th>
+                                            <th className="px-2 py-3 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-[100px]">Disc%</th>
+                                            <th className="px-2 py-3 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest w-[150px]">Taxable</th>
+                                            <th className="px-2 py-3 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-[100px]">GST%</th>
+                                            <th className="px-2 py-3 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest w-[150px]">Total</th>
+                                            <th className="px-2 py-3 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-[80px]">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -917,7 +941,16 @@ const Invoice = () => {
                                                                     className="w-full px-4 py-2.5 text-left hover:bg-primary-50 border-b border-slate-50 last:border-0 transition-colors"
                                                                     onMouseDown={() => {
                                                                         const ni = [...items];
-                                                                        ni[index] = { ...ni[index], productCode: prod.product_code || '', productName: prod.product_name || '', hsnCode: prod.hsn_code || '', price: prod.sale_price || 0, scale: prod.scale || '', gstPercent: prod.gst || 0 };
+                                                                        ni[index] = calculateItem({
+                                                                            ...ni[index],
+                                                                            productCode: prod.product_code || '',
+                                                                            productName: prod.product_name || '',
+                                                                            hsnCode: prod.hsn_code || '',
+                                                                            description: prod.detail || '',
+                                                                            price: prod.sale_price || 0,
+                                                                            scale: prod.scale || '',
+                                                                            gstPercent: prod.gst || 0
+                                                                        }, gstMode);
                                                                         setItems(ni);
                                                                         setProductSuggestions(p => ({ ...p, [index]: [] }));
                                                                         setActiveProductIndex(null);
@@ -941,6 +974,12 @@ const Invoice = () => {
                                                         onChange={(e) => handleItemChange(index, 'productName', e.target.value)}
                                                         placeholder="ENTER PRODUCT NAME"
                                                         className="w-full uppercase"
+                                                    />
+                                                    <AutoResizeInput
+                                                        value={item.description}
+                                                        onChange={(e) => handleItemChange(index, 'description', e.target.value)}
+                                                        placeholder="DESCRIPTION"
+                                                        className="w-full text-[10px] mt-1 text-slate-500 font-normal border-dashed"
                                                     />
                                                 </td>
                                                 <td className="px-4 py-2">

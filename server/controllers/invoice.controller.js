@@ -27,6 +27,15 @@ const getAllInvoices = async (req, res) => {
     }
 };
 
+const getAllInvoicesDetailed = async (req, res) => {
+    try {
+        const invoices = await Invoice.findAllDetailed();
+        res.json(invoices);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 const getInvoiceByNo = async (req, res) => {
     try {
         const invoice = await Invoice.getByNo(req.params.invoiceNo);
@@ -68,6 +77,7 @@ module.exports = {
     getNextInvoiceNo,
     createInvoice,
     getAllInvoices,
+    getAllInvoicesDetailed,
     getInvoiceByNo,
     getUniqueProducts,
     getDescriptionsByProduct,

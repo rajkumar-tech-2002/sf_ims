@@ -125,6 +125,28 @@ const Invoice = {
         return rows;
     },
 
+    findAllDetailed: async () => {
+        const query = `
+            SELECT 
+                im.*, 
+                ii.product_code, 
+                ii.product_name, 
+                ii.hsn_code, 
+                ii.description, 
+                ii.qty, 
+                ii.price, 
+                ii.discount_percent, 
+                ii.product_name, ii.hsn_code, ii.description, ii.qty, ii.price, ii.discount_percent, 
+                ii.taxable_amount, ii.gst_percent, ii.cgst_amount, ii.sgst_amount, ii.igst_amount,
+                ii.total_amount as item_total_amount
+            FROM invoice_master im
+            JOIN invoice_items ii ON im.id = ii.invoice_id
+            ORDER BY im.created_at DESC
+        `;
+        const [rows] = await db.execute(query);
+        return rows;
+    },
+
     getByNo: async (invoiceNo) => {
         const [master] = await db.execute('SELECT * FROM invoice_master WHERE invoice_no = ?', [invoiceNo]);
         if (master.length === 0) return null;

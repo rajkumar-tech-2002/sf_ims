@@ -34,7 +34,7 @@ import { useSidebar } from '../context/SidebarContext';
 
 const Sidebar = () => {
     const { user, logout } = useAuth();
-    const { isSidebarOpen, closeSidebar } = useSidebar();
+    const { isSidebarOpen, closeSidebar, searchQuery } = useSidebar();
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [openGroups, setOpenGroups] = useState({});
     const location = useLocation();
@@ -140,13 +140,35 @@ const Sidebar = () => {
         return item.roles && item.roles.map(r => r.toLowerCase()).includes(userRole);
     };
 
-    const filteredMenu = menuConfig.filter(group => {
-        if (group.children) {
-            group.children = group.children.filter(child => checkAccess(child));
-            return group.children.length > 0;
-        }
-        return checkAccess(group);
-    });
+    const filteredMenu = menuConfig
+        .map(group => {
+            // First apply access check to children if any
+            let allowedChildren = group.children ? group.children.filter(checkAccess) : null;
+
+            // Apply search query filter
+            const query = searchQuery.toLowerCase().trim();
+            if (query) {
+                const groupMatches = group.title.toLowerCase().includes(query);
+                const matchingChildren = allowedChildren ? allowedChildren.filter(child =>
+                    child.title.toLowerCase().includes(query)
+                ) : [];
+
+                // If group matches, show all its allowed children. If child matches, show the group and the matching children.
+                if (groupMatches) {
+                    return { ...group, children: allowedChildren };
+                } else if (matchingChildren.length > 0) {
+                    return { ...group, children: matchingChildren };
+                }
+                return null;
+            }
+
+            // No search query, just role filter
+            if (group.children) {
+                return allowedChildren.length > 0 ? { ...group, children: allowedChildren } : null;
+            }
+            return checkAccess(group) ? group : null;
+        })
+        .filter(Boolean);
 
     const toggleGroup = (title) => {
         setOpenGroups(prev => ({
@@ -155,15 +177,26 @@ const Sidebar = () => {
         }));
     };
 
-    // Auto-expand groups that contain the active route
+    // Auto-expand groups that contain the active route OR match search query
     useEffect(() => {
-        const activeGroup = filteredMenu.find(group =>
-            group.children?.some(child => location.pathname === child.path)
-        );
-        if (activeGroup) {
-            setOpenGroups(prev => ({ ...prev, [activeGroup.title]: true }));
+        const query = searchQuery.toLowerCase().trim();
+        if (query) {
+            const newOpenGroups = {};
+            filteredMenu.forEach(group => {
+                if (group.children) {
+                    newOpenGroups[group.title] = true;
+                }
+            });
+            setOpenGroups(newOpenGroups);
+        } else {
+            const activeGroup = filteredMenu.find(group =>
+                group.children?.some(child => location.pathname === child.path)
+            );
+            if (activeGroup) {
+                setOpenGroups(prev => ({ ...prev, [activeGroup.title]: true }));
+            }
         }
-    }, [location.pathname]);
+    }, [location.pathname, searchQuery]);
 
     return (
         <>

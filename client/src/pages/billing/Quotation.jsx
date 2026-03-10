@@ -533,7 +533,7 @@ const Quotation = () => {
                                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                                     <div className="space-y-3">
                                         <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                            <Calendar size={14} className="text-primary-500" /> Quotation Date
+                                            <Calendar size={14} className="text-primary-500" /> Date
                                         </label>
                                         <input
                                             type="date"
@@ -720,20 +720,20 @@ const Quotation = () => {
                             </div>
 
                             <div className="overflow-x-auto pb-4 pt-4 custom-scrollbar bg-white 0 shadow-premium p-0">
-                                <table className="w-full text-left border-collapse min-w-[1600px]">
+                                <table className="w-full text-left border-collapse min-w-[1500px] table-fixed">
                                     <thead>
-                                        <tr>
-                                            <th className="px-4 py-2 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-16">S.No</th>
-                                            <th className="px-4 py-2 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest w-48">Code</th>
-                                            <th className="px-4 py-2 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Product Info</th>
-                                            <th className="px-4 py-2 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-32">HSN</th>
-                                            <th className="px-4 py-2 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-40">Qty</th>
-                                            <th className="px-4 py-2 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest w-44">Price</th>
-                                            <th className="px-4 py-2 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-28">Disc%</th>
-                                            <th className="px-4 py-2 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest w-44">Taxable</th>
-                                            <th className="px-4 py-2 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-28">GST%</th>
-                                            <th className="px-4 py-2 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest w-44">Total</th>
-                                            <th className="px-4 py-2 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-16">Action</th>
+                                        <tr className="border-b border-slate-100">
+                                            <th className="px-2 py-3 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-[50px]">S.No</th>
+                                            <th className="px-2 py-3 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest w-[180px]">Code</th>
+                                            <th className="px-2 py-3 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest w-[300px]">Product Info</th>
+                                            <th className="px-2 py-3 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-[120px]">HSN</th>
+                                            <th className="px-2 py-3 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-[130px]">Qty</th>
+                                            <th className="px-2 py-3 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest w-[140px]">Price</th>
+                                            <th className="px-2 py-3 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-[100px]">Disc%</th>
+                                            <th className="px-2 py-3 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest w-[150px]">Taxable</th>
+                                            <th className="px-2 py-3 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-[100px]">GST%</th>
+                                            <th className="px-2 py-3 text-right text-[10px] font-black text-slate-400 uppercase tracking-widest w-[150px]">Total</th>
+                                            <th className="px-2 py-3 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest w-[80px]">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100">
@@ -775,7 +775,16 @@ const Quotation = () => {
                                                                     className="w-full px-4 py-2.5 text-left hover:bg-primary-50 border-b border-slate-50 last:border-0 transition-colors"
                                                                     onMouseDown={() => {
                                                                         const ni = [...items];
-                                                                        ni[index] = { ...ni[index], productCode: prod.product_code || '', productName: prod.product_name || '', hsnCode: prod.hsn_code || '', price: prod.sale_price || 0, scale: prod.scale || '', gstPercent: prod.gst || 0 };
+                                                                        ni[index] = {
+                                                                            ...ni[index],
+                                                                            productCode: prod.product_code || '',
+                                                                            productName: prod.product_name || '',
+                                                                            hsnCode: prod.hsn_code || '',
+                                                                            description: prod.detail || '',
+                                                                            price: prod.sale_price || 0,
+                                                                            scale: prod.scale || '',
+                                                                            gstPercent: prod.gst || 0
+                                                                        };
                                                                         setItems(ni);
                                                                         setProductSuggestions(p => ({ ...p, [index]: [] }));
                                                                         setActiveProductIndex(null);
@@ -799,6 +808,12 @@ const Quotation = () => {
                                                         onChange={(e) => handleItemChange(index, 'productName', e.target.value)}
                                                         placeholder="ENTER PRODUCT NAME"
                                                         className="w-full uppercase"
+                                                    />
+                                                    <AutoResizeInput
+                                                        value={item.description}
+                                                        onChange={(e) => handleItemChange(index, 'description', e.target.value)}
+                                                        placeholder="DESCRIPTION"
+                                                        className="w-full text-[10px] mt-1 text-slate-500 font-normal border-dashed"
                                                     />
                                                 </td>
                                                 <td className="px-4 py-2">

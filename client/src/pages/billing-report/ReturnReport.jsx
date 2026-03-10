@@ -120,7 +120,7 @@ const ReturnReport = () => {
             {/* Filter Section */}
             <div className="card !p-0 bg-white border-slate-200 shadow-premium overflow-hidden mb-10">
                 <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center gap-4">
-                    <div className="w-10 h-10 bg-rose-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+                    <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
                         <Filter size={20} />
                     </div>
                     <h2 className="text-lg font-bold text-slate-900">Configure Filter</h2>
@@ -129,7 +129,7 @@ const ReturnReport = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-end">
                         <div className="space-y-3">
                             <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                <Calendar size={14} className="text-rose-500" /> From Date
+                                <Calendar size={14} className="text-primary-500" /> From Date
                             </label>
                             <input
                                 type="date"
@@ -142,7 +142,7 @@ const ReturnReport = () => {
 
                         <div className="space-y-3">
                             <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                <Calendar size={14} className="text-rose-500" /> To Date
+                                <Calendar size={14} className="text-primary-500" /> To Date
                             </label>
                             <input
                                 type="date"

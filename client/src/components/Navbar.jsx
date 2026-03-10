@@ -7,7 +7,7 @@ import NotificationBell from './NotificationBell';
 
 const Navbar = () => {
     const { user, logout } = useAuth();
-    const { toggleSidebar } = useSidebar();
+    const { toggleSidebar, searchQuery, setSearchQuery } = useSidebar();
     const navigate = useNavigate();
     const [isProfileOpen, setIsProfileOpen] = useState(false);
 
@@ -26,6 +26,8 @@ const Navbar = () => {
                 <input
                     type="text"
                     placeholder="Search anything..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full bg-slate-50 border-none rounded-2xl py-2.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-primary-500/10 placeholder-slate-400 transition-all font-medium"
                 />
             </div>

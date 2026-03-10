@@ -29,6 +29,7 @@ import ReturnReport from './pages/billing-report/ReturnReport';
 import RawMaterialPurchaseReport from './pages/billing-report/RawMaterialPurchaseReport';
 import IncomeExpenseReport from './pages/reports/IncomeExpenseReport';
 import CashBook from './pages/reports/CashBook';
+import CreditCollectionReport from './pages/billing-report/CreditCollectionReport';
 import NotFound from './pages/main-pages/NotFound';
 import MainLayout from './layouts/MainLayout';
 import { AuthProvider } from './context/AuthContext';
@@ -75,6 +76,7 @@ function App() {
                                 <Route path="/income-expense" element={<IncomeExpense />} />
                                 <Route path="/transactions" element={<Transactions />} />
                                 <Route path="/assets" element={<Assets />} />
+                                <Route path="/credit-collection-report" element={<CreditCollectionReport />} />
                             </Route>
                         </Route>
 

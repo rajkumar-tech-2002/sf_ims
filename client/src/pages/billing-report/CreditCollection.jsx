@@ -28,9 +28,10 @@ const CreditCollection = () => {
     const [collections, setCollections] = useState([]);
     const [creditInvoices, setCreditInvoices] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [showTable, setShowTable] = useState(true);
+    const [showTable, setShowTable] = useState(false);
 
     const [formData, setFormData] = useState({
+        credit_id: '',
         credit_date: new Date().toISOString().split('T')[0],
         customer_name: '',
         customer_id: '',
@@ -57,9 +58,25 @@ const CreditCollection = () => {
         }
     };
 
+    const fetchNextCreditId = async () => {
+        try {
+            const response = await api.get('/credit-collections/last-id');
+            const lastId = response.data.lastId;
+            let nextId = 'CRE-001';
+            if (lastId) {
+                const number = parseInt(lastId.split('-')[1]) + 1;
+                nextId = `CRE-${String(number).padStart(3, '0')}`;
+            }
+            setFormData(prev => ({ ...prev, credit_id: nextId }));
+        } catch (error) {
+            console.error('Error fetching next credit ID', error);
+        }
+    };
+
     useEffect(() => {
         fetchCollections();
         fetchCreditInvoices();
+        fetchNextCreditId();
     }, []);
 
     const handleCustomerChange = (e) => {
@@ -105,6 +122,7 @@ const CreditCollection = () => {
                     await api.post('/credit-collections', formData);
                     showToast('success', 'Collection entry saved successfully');
                     setFormData({
+                        credit_id: '',
                         credit_date: new Date().toISOString().split('T')[0],
                         customer_name: '',
                         customer_id: '',
@@ -113,6 +131,7 @@ const CreditCollection = () => {
                         paid_amount: 0
                     });
                     fetchCollections();
+                    fetchNextCreditId();
                 } catch (error) {
                     showToast('error', error.response?.data?.message || 'Error saving collection');
                 } finally {
@@ -128,6 +147,7 @@ const CreditCollection = () => {
     );
 
     const columns = [
+        { key: 'credit_id', label: 'Credit ID' },
         { key: 'credit_date', label: 'Date', render: (val) => new Date(val).toLocaleDateString() },
         { key: 'customer_name', label: 'Customer' },
         { key: 'customer_id', label: 'ID' },
@@ -171,7 +191,21 @@ const CreditCollection = () => {
                         <h3 className="text-lg font-bold text-slate-900">New Collection Entry</h3>
                     </div>
                     <div className="p-8">
-                        <form onSubmit={handleSave} className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 items-end">
+                        <form onSubmit={handleSave} className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7 gap-6 items-end">
+                            <div className="space-y-2">
+                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest">Credit ID</label>
+                                <div className="relative">
+                                    <Hash className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                    <input
+                                        type="text"
+                                        readOnly
+                                        className="w-full pl-9 pr-4 py-2 bg-slate-100 border border-slate-200 rounded-xl text-sm font-bold text-slate-500"
+                                        placeholder="CRE-001"
+                                        value={formData.credit_id}
+                                    />
+                                </div>
+                            </div>
+
                             <div className="space-y-2">
                                 <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest">Date</label>
                                 <div className="relative">
@@ -263,7 +297,7 @@ const CreditCollection = () => {
                                 </div>
                             </div>
 
-                            <div className="md:col-span-3 lg:col-span-6 flex justify-end pt-2">
+                            <div className="md:col-span-3 lg:col-span-7 flex justify-end pt-2">
                                 <button
                                     type="submit"
                                     disabled={loading || !canEdit(moduleId)}

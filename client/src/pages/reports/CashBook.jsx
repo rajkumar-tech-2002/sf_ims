@@ -9,7 +9,8 @@ import {
     Wallet,
     X,
     ChevronDown,
-    ChevronUp
+    ChevronUp,
+    Plus
 } from 'lucide-react';
 import api from '../../utils/api';
 import DataTable from '../../components/DataTable';
@@ -169,59 +170,66 @@ const CashBook = () => {
             {/* Config & Filters */}
             <div className="card !p-0 bg-white border-slate-200 shadow-premium overflow-hidden mb-10 no-print">
                 <div className="p-8">
-                    <div className="flex flex-wrap items-center gap-8 justify-between">
-                        <div className="flex items-center gap-6 bg-slate-50 p-1.5 rounded-2xl border border-slate-200">
-                            <button
-                                onClick={() => setFilters(f => ({ ...f, type: 'Cheque' }))}
-                                className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${filters.type === 'Cheque' ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/20' : 'text-slate-500 hover:bg-slate-100'}`}
-                            >
-                                <div className={`w-2 h-2 rounded-full ${filters.type === 'Cheque' ? 'bg-white' : 'bg-slate-300'}`} />
-                                Cheque
-                            </button>
-                            <button
-                                onClick={() => setFilters(f => ({ ...f, type: 'Cash' }))}
-                                className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${filters.type === 'Cash' ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/20' : 'text-slate-500 hover:bg-slate-100'}`}
-                            >
-                                <div className={`w-2 h-2 rounded-full ${filters.type === 'Cash' ? 'bg-white' : 'bg-slate-300'}`} />
-                                by Cash
-                            </button>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-end">
+                        <div className="space-y-3">
+                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <Wallet size={14} className="text-primary-500" /> Payment Type
+                            </label>
+                            <div className="flex items-center bg-slate-50 p-1 rounded-xl border border-slate-200 h-[52px]">
+                                <button
+                                    onClick={() => setFilters(f => ({ ...f, type: 'Cheque' }))}
+                                    className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${filters.type === 'Cheque' ? 'bg-primary-600 text-white shadow-md shadow-primary-500/20' : 'text-slate-500 hover:bg-slate-100'}`}
+                                >
+                                    Cheque
+                                </button>
+                                <button
+                                    onClick={() => setFilters(f => ({ ...f, type: 'Cash' }))}
+                                    className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${filters.type === 'Cash' ? 'bg-primary-600 text-white shadow-md shadow-primary-500/20' : 'text-slate-500 hover:bg-slate-100'}`}
+                                >
+                                    Cash
+                                </button>
+                            </div>
                         </div>
 
-                        <div className="flex items-center gap-6 flex-1 min-w-[300px]">
-                            <div className="flex-1 space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">From Date</label>
-                                <div className="relative">
-                                    <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-primary-500" size={16} />
-                                    <input
-                                        type="date"
-                                        name="fromDate"
-                                        value={filters.fromDate}
-                                        onChange={handleFilterChange}
-                                        className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
-                                    />
-                                </div>
+                        <div className="space-y-3">
+                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <Calendar size={14} className="text-primary-500" /> From Date
+                            </label>
+                            <div className="relative">
+                                <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
+                                <input
+                                    type="date"
+                                    name="fromDate"
+                                    value={filters.fromDate}
+                                    onChange={handleFilterChange}
+                                    className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none h-[52px] text-sm font-bold text-slate-800 transition-all"
+                                />
                             </div>
-                            <div className="flex-1 space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">To Date</label>
-                                <div className="relative">
-                                    <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-primary-500" size={16} />
-                                    <input
-                                        type="date"
-                                        name="toDate"
-                                        value={filters.toDate}
-                                        onChange={handleFilterChange}
-                                        className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
-                                    />
-                                </div>
-                            </div>
-                            <button
-                                onClick={fetchReport}
-                                disabled={loading}
-                                className="mt-6 px-10 h-[48px] bg-primary-600 text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-primary-700 transition-all shadow-lg active:scale-95 flex items-center justify-center min-w-[160px]"
-                            >
-                                {loading ? <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : 'CASH BOOK'}
-                            </button>
                         </div>
+
+                        <div className="space-y-3">
+                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <Calendar size={14} className="text-primary-500" /> To Date
+                            </label>
+                            <div className="relative">
+                                <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
+                                <input
+                                    type="date"
+                                    name="toDate"
+                                    value={filters.toDate}
+                                    onChange={handleFilterChange}
+                                    className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none h-[52px] text-sm font-bold text-slate-800 transition-all"
+                                />
+                            </div>
+                        </div>
+
+                        <button
+                            onClick={fetchReport}
+                            disabled={loading}
+                            className="btn btn-primary h-[52px] w-full flex items-center gap-3 justify-center shadow-lg shadow-primary-500/25 transition-all hover:shadow-xl hover:-translate-y-0.5"
+                        >
+                            {loading ? <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : <><BarChart3 size={20} /> Generate Report</>}
+                        </button>
                     </div>
                 </div>
             </div>

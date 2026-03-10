@@ -5,5 +5,7 @@ const creditCollectionController = require('../controllers/creditCollection.cont
 router.post('/', creditCollectionController.createCollection);
 router.get('/', creditCollectionController.getAllCollections);
 router.get('/credit-invoices', creditCollectionController.getCreditInvoices);
+router.get('/last-id', creditCollectionController.getLastCreditId);
+router.get('/report/:customerId', creditCollectionController.getCustomerReport);
 
 module.exports = router;

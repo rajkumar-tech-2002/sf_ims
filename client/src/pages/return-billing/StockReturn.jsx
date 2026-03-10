@@ -293,7 +293,7 @@ const StockReturn = () => {
                                     ? 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
                                     : 'bg-white text-primary-600 border-primary-200 hover:border-primary-400 hover:bg-primary-50 hover:shadow-md'}`}
                         >
-                            {showHistory ? <><ChevronUp size={18} /> Hide Registry</> : <><History size={18} /> Show Detail</>}
+                            {showHistory ? <><ChevronUp size={18} /> Hide Registry</> : <><ChevronDown size={18} /> Show Detail</>}
                         </button>
                     </div>
                 </div>

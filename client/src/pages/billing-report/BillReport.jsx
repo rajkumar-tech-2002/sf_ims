@@ -156,7 +156,7 @@ const BillReport = () => {
                     <p className="text-slate-500 text-base font-medium">Enterprise-grade analytics for your completed sales cycles.</p>
                 </div>
                 <div className="flex items-center gap-4">
-                    <button onClick={handlePrint} className="btn btn-secondary h-12 gap-2 shadow-sm px-8 hover:shadow-md transition-all font-bold">
+                    <button onClick={handlePrint} className="flex items-center gap-3 px-8 py-3.5 bg-white border border-slate-200 text-slate-700 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm">
                         <Printer size={18} /> Print Report
                     </button>
                 </div>

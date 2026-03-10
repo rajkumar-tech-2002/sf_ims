@@ -99,7 +99,7 @@ const Sidebar = () => {
                 { title: 'Return Report', icon: <RefreshCw size={18} />, path: '/return-report', roles: ['admin'], moduleId: 'return-report' },
                 { title: 'RM Purchase Report', icon: <ShoppingCart size={18} />, path: '/raw-material-purchase-report', roles: ['admin'], moduleId: 'raw-material-purchase-report' },
                 { title: 'Credit Collection', icon: <Wallet size={18} />, path: '/credit-collection', roles: ['admin'], moduleId: 'credit-collection' },
-                { title: 'Customer Report', icon: <Users size={18} />, path: '/customer-report', roles: ['admin'], moduleId: 'customer-report' },
+                { title: 'Credit Collection Report', icon: <Wallet size={18} />, path: '/credit-collection-report', roles: ['admin'], moduleId: 'credit-collection-report' },
             ]
         },
         {

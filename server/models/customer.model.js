@@ -2,7 +2,15 @@ const pool = require('../config/db.config');
 
 const Customer = {
     getAll: async () => {
-        const [rows] = await pool.execute('SELECT * FROM customer_details ORDER BY created_at DESC');
+        const query = `
+            SELECT cd.*, 
+                   (SELECT credit_id FROM credit_collection 
+                    WHERE customer_id = cd.customer_id 
+                    ORDER BY created_at DESC LIMIT 1) as latest_credit_id
+            FROM customer_details cd 
+            ORDER BY cd.created_at DESC
+        `;
+        const [rows] = await pool.execute(query);
         return rows;
     },
 

@@ -735,6 +735,36 @@ const Invoice = () => {
                                                     if (customer.name.trim()) setShowSuggestions(true);
                                                 }}
                                             />
+                                            {showSuggestions && filteredSuggestions.length > 0 && (
+                                                <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-xl shadow-xl max-h-60 overflow-y-auto">
+                                                    {filteredSuggestions.map((cust) => (
+                                                        <button
+                                                            key={cust.id}
+                                                            type="button"
+                                                            className="w-full px-4 py-3 text-left hover:bg-slate-50 border-b border-slate-50 last:border-0 transition-colors"
+                                                            onClick={() => handleSelectCustomer(cust)}
+                                                        >
+                                                            <div className="flex justify-between items-center">
+                                                                <div>
+                                                                    <p className="text-sm font-bold text-slate-800">{cust.customer_name}</p>
+                                                                    <p className="text-[10px] font-bold text-primary-600 tracking-wider font-mono">{cust.customer_id}</p>
+                                                                </div>
+                                                                <div className="text-right">
+                                                                    <p className="text-[10px] font-bold text-slate-400">{cust.customer_mobile}</p>
+                                                                    <p className="text-[10px] font-bold text-slate-400">{cust.state || 'N/A'}</p>
+                                                                </div>
+                                                            </div>
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            )}
+                                            {/* Click outside to close */}
+                                            {showSuggestions && (
+                                                <div
+                                                    className="fixed inset-0 z-40"
+                                                    onClick={() => setShowSuggestions(false)}
+                                                />
+                                            )}
                                         </div>
                                     </div>
 

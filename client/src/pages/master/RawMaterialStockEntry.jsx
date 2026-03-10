@@ -145,17 +145,17 @@ const RawMaterialStockEntry = () => {
                     <div className="flex items-center gap-3">
                         <button
                             onClick={() => setShowTable(!showTable)}
-                            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all duration-300 shadow-sm border
-                            ${showTable
+                            className={`flex items-center gap-2 px-8 py-3.5 rounded-[1.25rem] font-black transition-all duration-300 shadow-sm border uppercase text-xs tracking-widest
+                                    ${showTable
                                     ? 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
-                                    : 'bg-white text-primary-600 border-primary-100 hover:border-primary-300 hover:bg-primary-50'}`}
+                                    : 'bg-white text-primary-600 border-primary-200 hover:border-primary-400 hover:bg-primary-50 hover:shadow-md'}`}
                         >
                             {showTable ? <><ChevronUp size={20} /> Hide Registry</> : <><ChevronDown size={20} /> Show Registry</>}
                         </button>
                         {showTable && (
                             <button
                                 onClick={() => window.print()}
-                                className="flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20"
+                                className="flex items-center gap-2 px-8 py-3.5 rounded-[1.25rem] font-black transition-all duration-300 shadow-sm border uppercase text-xs tracking-widest bg-emerald-600 text-white border-emerald-500 hover:bg-emerald-700 hover:shadow-md"
                             >
                                 <Printer size={20} /> Print Report
                             </button>

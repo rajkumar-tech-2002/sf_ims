@@ -27,8 +27,29 @@ const getCreditInvoices = async (req, res) => {
     }
 };
 
+const getLastCreditId = async (req, res) => {
+    try {
+        const lastId = await CreditCollection.getLastCreditId();
+        res.json({ lastId });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const getCustomerReport = async (req, res) => {
+    try {
+        const { customerId } = req.params;
+        const reportData = await CreditCollection.getCustomerReport(customerId);
+        res.json(reportData);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     createCollection,
     getAllCollections,
-    getCreditInvoices
+    getCreditInvoices,
+    getLastCreditId,
+    getCustomerReport
 };

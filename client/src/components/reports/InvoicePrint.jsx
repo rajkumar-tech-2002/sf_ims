@@ -99,28 +99,6 @@ const InvoicePrint = ({ invoiceDate, invoiceNo, customer, items, totals, gstMode
                     </div>
                 </div>
             </div>
-
-            {/* Terms & Conditions */}
-            <div className="mt-20">
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Terms & Conditions</p>
-                <div className="space-y-1.5">
-                    <p className="text-[10px] text-slate-500 leading-relaxed">• Goods once sold will not be taken back or exchanged.</p>
-                    <p className="text-[10px] text-slate-500 leading-relaxed">• Payment is due within 7 days of invoice date.</p>
-                    <p className="text-[10px] text-slate-500 leading-relaxed">• Please quote invoice number for all future correspondence.</p>
-                    <p className="text-[10px] text-slate-500 leading-relaxed">• All disputes are subject to local jurisdiction.</p>
-                </div>
-            </div>
-
-            <div className="mt-24 pt-12 border-t border-slate-100 flex justify-between items-end">
-                <div className="text-center">
-                    <div className="w-32 h-px bg-slate-900 mb-2 mx-auto"></div>
-                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Customer Signature</p>
-                </div>
-                <div className="text-center">
-                    <div className="w-32 h-px bg-slate-900 mb-2 mx-auto"></div>
-                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Authorized Signatory</p>
-                </div>
-            </div>
         </div>
     );
 };

@@ -88,7 +88,7 @@ const LoginPage = () => {
                 </div>
 
                 <div className="relative z-10 flex items-center gap-6 text-slate-500 text-sm font-medium">
-                    <span>© 2024 StockWise</span>
+                    <span>© 2026 StockWise System</span>
                     <span>Privacy Policy</span>
                     <span>Support</span>
                 </div>

@@ -65,9 +65,6 @@ const LandingPage = () => {
                         >
                             Get Started Free <ArrowRight size={20} className="ml-2" />
                         </button>
-                        <button className="btn btn-secondary px-10 py-4 text-base w-full sm:w-auto">
-                            Watch Demo
-                        </button>
                     </div>
                 </div>
             </section>
@@ -127,7 +124,7 @@ const LandingPage = () => {
                         <Package className="text-primary-600" size={24} />
                         <span className="text-xl font-bold text-slate-900">StockWise</span>
                     </div>
-                    <p className="text-slate-400 text-sm">© 2024 StockWise System. Designed for high performance.</p>
+                    <p className="text-slate-400 text-sm">© 2026 StockWise System. Designed for high performance.</p>
                     <div className="flex gap-6 text-sm font-medium text-slate-500">
                         <a href="#" className="hover:text-primary-600 transition-colors">Privacy</a>
                         <a href="#" className="hover:text-primary-600 transition-colors">Terms</a>

@@ -6,9 +6,17 @@ const Invoice = {
         if (rows.length === 0) return 'INV-0001';
 
         const lastNo = rows[0].invoice_no;
-        const match = lastNo.match(/INV-(\d+)/);
-        const nextNum = match ? parseInt(match[1]) + 1 : 1;
-        return `INV-${String(nextNum).padStart(4, '0')}`;
+        const match = lastNo.match(/^(.*?)(\d+)$/);
+        
+        if (match) {
+            const prefix = match[1];
+            const numStr = match[2];
+            const nextNum = parseInt(numStr) + 1;
+            return `${prefix}${String(nextNum).padStart(numStr.length, '0')}`;
+        }
+        
+        // Fallback if no digits at the end
+        return `${lastNo}-1`;
     },
 
     save: async (data) => {

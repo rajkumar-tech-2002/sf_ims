@@ -28,22 +28,17 @@ import {
     AlertCircle
 } from 'lucide-react';
 
-const AutoResizeInput = ({ value, onChange, placeholder, type = 'text', prefix, suffix, className = '', ...props }) => {
+const AutoResizeInput = ({ value, onChange, placeholder, type = 'text', className = '', ...props }) => {
     const getWidth = () => {
         // If className specifies a width (e.g. w-32), don't auto-resize
         if (className.includes('w-')) return undefined;
 
         const charCount = Math.max(value?.toString().length || 0, placeholder?.length || 1, 4);
-        return `calc(${charCount}ch + ${prefix ? '2.5rem' : '1.5rem'} + ${suffix ? '2rem' : '0.5rem'})`;
+        return `calc(${charCount}ch + 1.5rem)`;
     };
 
     return (
         <div className={`relative flex items-center bg-slate-50/80 border border-slate-200 rounded-xl transition-all hover:bg-white focus-within:ring-2 focus-within:ring-primary-500/20 focus-within:border-primary-500 group ${className}`} style={getWidth() ? { width: getWidth() } : {}}>
-            {prefix && (
-                <span className="pl-3 pr-2 text-slate-400 font-bold text-xs select-none">
-                    {prefix}
-                </span>
-            )}
             <input
                 type={type}
                 value={value}
@@ -52,11 +47,6 @@ const AutoResizeInput = ({ value, onChange, placeholder, type = 'text', prefix, 
                 className="w-full bg-transparent px-2 py-2.5 text-sm font-bold text-slate-700 outline-none placeholder:text-slate-300 transition-all placeholder:font-normal"
                 {...props}
             />
-            {suffix && (
-                <span className="pr-3 pl-1 text-slate-300 font-bold text-[10px] select-none uppercase tracking-tighter">
-                    {suffix}
-                </span>
-            )}
         </div>
     );
 };
@@ -829,7 +819,6 @@ const Quotation = () => {
                                                         type="number"
                                                         value={item.qty}
                                                         onChange={(e) => handleItemChange(index, 'qty', e.target.value)}
-                                                        suffix={item.scale || 'UNIT'}
                                                         className="w-full text-center"
                                                     />
                                                 </td>
@@ -838,7 +827,6 @@ const Quotation = () => {
                                                         type="number"
                                                         value={item.price}
                                                         onChange={(e) => handleItemChange(index, 'price', e.target.value)}
-                                                        prefix="₹"
                                                         className="w-full text-right font-black"
                                                     />
                                                 </td>
@@ -847,7 +835,6 @@ const Quotation = () => {
                                                         type="number"
                                                         value={item.discountPercent}
                                                         onChange={(e) => handleItemChange(index, 'discountPercent', e.target.value)}
-                                                        suffix="%"
                                                         className="w-full text-center"
                                                     />
                                                 </td>
@@ -861,7 +848,6 @@ const Quotation = () => {
                                                         type="number"
                                                         value={item.gstPercent}
                                                         onChange={(e) => handleItemChange(index, 'gstPercent', e.target.value)}
-                                                        suffix="%"
                                                         className="w-full text-center"
                                                     />
                                                 </td>

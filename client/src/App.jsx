@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/main-pages/LandingPage';
 import LoginPage from './pages/main-pages/LoginPage';
 import Dashboard from './pages/main-pages/Dashboard';
-import Reports from './pages/billing-report/Reports';
 import Profile from './pages/main-pages/Profile';
 import StockEntry from './pages/master/StockEntry';
 import UserCreation from './pages/file/UserCreation';
@@ -18,18 +17,18 @@ import RawMaterialPurchaseEntry from './pages/master/RawMaterialPurchaseEntry';
 import Quotation from './pages/billing/Quotation';
 import Invoice from './pages/billing/Invoice';
 import StockReturn from './pages/return-billing/StockReturn';
-import CreditCollection from './pages/billing-report/CreditCollection';
+import CreditCollection from './pages/billing/CreditCollection';
 import IncomeExpense from './pages/income-expense/IncomeExpense';
 import Transactions from './pages/income-expense/Transactions';
 import Assets from './pages/income-expense/Assets';
-import BillReport from './pages/billing-report/BillReport';
-import PurchaseReport from './pages/billing-report/PurchaseReport';
-import DailyReport from './pages/billing-report/DailyReport';
-import ReturnReport from './pages/billing-report/ReturnReport';
-import RawMaterialPurchaseReport from './pages/billing-report/RawMaterialPurchaseReport';
+import BillReport from './pages/reports/BillReport';
+import PurchaseReport from './pages/reports/PurchaseReport';
+import DailyReport from './pages/reports/DailyReport';
+import ReturnReport from './pages/reports/ReturnReport';
+import RawMaterialPurchaseReport from './pages/reports/RawMaterialPurchaseReport';
 import IncomeExpenseReport from './pages/reports/IncomeExpenseReport';
 import CashBook from './pages/reports/CashBook';
-import CreditCollectionReport from './pages/billing-report/CreditCollectionReport';
+import CreditCollectionReport from './pages/reports/CreditCollectionReport';
 import NotFound from './pages/main-pages/NotFound';
 import MainLayout from './layouts/MainLayout';
 import { AuthProvider } from './context/AuthContext';
@@ -54,7 +53,6 @@ function App() {
                                 <Route path="/purchase-entry" element={<PurchaseEntry />} />
                                 <Route path="/user-creation" element={<UserCreation />} />
                                 <Route path="/log-details" element={<LogDetails />} />
-                                <Route path="/reports" element={<Reports />} />
                                 <Route path="/bill-report" element={<BillReport />} />
                                 <Route path="/purchase-report" element={<PurchaseReport />} />
                                 <Route path="/daily-report" element={<DailyReport />} />

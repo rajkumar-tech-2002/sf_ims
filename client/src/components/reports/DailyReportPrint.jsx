@@ -33,12 +33,14 @@ const DailyReportPrint = ({ data, filters }) => {
                 <thead>
                     <tr className="bg-white">
                         <th className="border border-black p-2 text-[10px] text-rose-900 font-bold uppercase text-center w-10">SNO</th>
-                        <th className="border border-black p-2 text-[10px] text-rose-900 font-bold uppercase text-center w-24">CODE</th>
-                        <th className="border border-black p-2 text-[10px] text-rose-900 font-bold uppercase text-center w-48">NAME</th>
-                        <th className="border border-black p-2 text-[10px] text-rose-900 font-bold uppercase text-center w-64">DESCRIPTION</th>
-                        <th className="border border-black p-2 text-[10px] text-rose-900 font-bold uppercase text-center w-20">Current Stock</th>
-                        <th className="border border-black p-2 text-[10px] text-rose-900 font-bold uppercase text-center w-20">Purchase Qty</th>
-                        <th className="border border-black p-2 text-[10px] text-rose-900 font-bold uppercase text-center w-20">Sold Qty</th>
+                        <th className="border border-black p-2 text-[10px] text-rose-900 font-bold uppercase text-center w-24">Code</th>
+                        <th className="border border-black p-2 text-[10px] text-rose-900 font-bold uppercase text-center w-48">Name</th>
+                        <th className="border border-black p-2 text-[10px] text-rose-900 font-bold uppercase text-center w-56">Description</th>
+                        <th className="border border-black p-2 text-[10px] text-rose-900 font-bold uppercase text-center w-16">Stock</th>
+                        <th className="border border-black p-2 text-[10px] text-rose-900 font-bold uppercase text-center w-16">Purchase</th>
+                        <th className="border border-black p-2 text-[10px] text-rose-900 font-bold uppercase text-center w-16">Sold</th>
+                        <th className="border border-black p-2 text-[10px] text-rose-900 font-bold uppercase text-center w-16">Return</th>
+                        <th className="border border-black p-2 text-[10px] text-rose-900 font-bold uppercase text-center w-16">Net Sold</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,12 +52,14 @@ const DailyReportPrint = ({ data, filters }) => {
                             <td className="border border-black p-2 text-[10px] uppercase italic text-slate-600">{row.description || '---'}</td>
                             <td className="border border-black p-2 text-[10px] text-center font-bold bg-slate-50">{row.current_stock}</td>
                             <td className="border border-black p-2 text-[10px] text-center font-bold text-blue-700">{row.purchase_qty}</td>
+                            <td className="border border-black p-2 text-[10px] text-center font-bold text-slate-700">{row.original_sold_qty}</td>
+                            <td className="border border-black p-2 text-[10px] text-center font-bold text-amber-700">{row.return_qty}</td>
                             <td className="border border-black p-2 text-[10px] text-center font-bold text-rose-700">{row.sold_qty}</td>
                         </tr>
                     ))}
                     {data.length === 0 && (
                         <tr>
-                            <td colSpan="7" className="text-center py-10 text-slate-400 italic">No inventory movement recorded for the selected period</td>
+                            <td colSpan="9" className="text-center py-10 text-slate-400 italic">No inventory movement recorded for the selected period</td>
                         </tr>
                     )}
                 </tbody>

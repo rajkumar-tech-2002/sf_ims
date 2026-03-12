@@ -191,40 +191,40 @@ const CreditCollection = () => {
                         <h3 className="text-lg font-bold text-slate-900">New Collection Entry</h3>
                     </div>
                     <div className="p-8">
-                        <form onSubmit={handleSave} className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7 gap-6 items-end">
-                            <div className="space-y-2">
-                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest">Credit ID</label>
+                        <form onSubmit={handleSave} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-end">
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Credit ID</label>
                                 <div className="relative">
-                                    <Hash className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                    <Hash className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold" size={16} />
                                     <input
                                         type="text"
                                         readOnly
-                                        className="w-full pl-9 pr-4 py-2 bg-slate-100 border border-slate-200 rounded-xl text-sm font-bold text-slate-500"
+                                        className="w-full pl-11 pr-4 py-3 bg-slate-100 border border-slate-200 rounded-2xl text-sm font-bold text-slate-500 focus:outline-none"
                                         placeholder="CRE-001"
                                         value={formData.credit_id}
                                     />
                                 </div>
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest">Date</label>
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Date</label>
                                 <div className="relative">
-                                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                    <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                     <input
                                         type="date"
-                                        className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold"
+                                        className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold transition-all"
                                         value={formData.credit_date}
                                         onChange={(e) => setFormData({ ...formData, credit_date: e.target.value })}
                                     />
                                 </div>
                             </div>
 
-                            <div className="space-y-2 col-span-1">
-                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest">Name</label>
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Customer Name</label>
                                 <div className="relative">
-                                    <User className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                    <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                     <select
-                                        className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold appearance-none"
+                                        className="w-full pl-11 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold appearance-none transition-all cursor-pointer"
                                         value={formData.customer_name}
                                         onChange={handleCustomerChange}
                                     >
@@ -233,44 +233,44 @@ const CreditCollection = () => {
                                             <option key={name} value={name}>{name}</option>
                                         ))}
                                     </select>
-                                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
+                                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
                                 </div>
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest">ID</label>
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Customer ID</label>
                                 <div className="relative">
-                                    <Hash className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                    <Hash className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                     <input
                                         type="text"
                                         readOnly
-                                        className="w-full pl-9 pr-4 py-2 bg-slate-100 border border-slate-200 rounded-xl text-sm font-bold text-slate-500"
+                                        className="w-full pl-11 pr-4 py-3 bg-slate-100 border border-slate-200 rounded-2xl text-sm font-bold text-slate-500 focus:outline-none"
                                         placeholder="CUST-ID"
                                         value={formData.customer_id}
                                     />
                                 </div>
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest">Description</label>
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Description</label>
                                 <div className="relative">
-                                    <FileText className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                    <FileText className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                     <input
                                         type="text"
-                                        className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold"
-                                        placeholder="Description"
+                                        className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold transition-all"
+                                        placeholder="Add notes..."
                                         value={formData.description}
                                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                     />
                                 </div>
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest">Bill No</label>
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Bill Number</label>
                                 <div className="relative">
-                                    <Hash className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                    <Hash className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                     <select
-                                        className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold appearance-none"
+                                        className="w-full pl-11 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold appearance-none transition-all cursor-pointer"
                                         value={formData.bill_no}
                                         onChange={handleBillChange}
                                     >
@@ -279,17 +279,17 @@ const CreditCollection = () => {
                                             <option key={inv.invoice_no} value={inv.invoice_no}>{inv.invoice_no} (₹{inv.grand_total})</option>
                                         ))}
                                     </select>
-                                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
+                                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
                                 </div>
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest">Paid (Rs)</label>
+                            <div className="space-y-3">
+                                <label className="block text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Paid Amount (Rs)</label>
                                 <div className="relative">
-                                    <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+                                    <IndianRupee className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold" size={16} />
                                     <input
                                         type="number"
-                                        className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold"
+                                        className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-black transition-all"
                                         placeholder="0"
                                         value={formData.paid_amount}
                                         onChange={(e) => setFormData({ ...formData, paid_amount: parseFloat(e.target.value) || 0 })}
@@ -297,16 +297,16 @@ const CreditCollection = () => {
                                 </div>
                             </div>
 
-                            <div className="md:col-span-3 lg:col-span-7 flex justify-end pt-2">
+                            <div className="md:col-span-2 lg:col-span-4 flex justify-end pt-6">
                                 <button
                                     type="submit"
                                     disabled={loading || !canEdit(moduleId)}
-                                    className={`px-10 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all shadow-lg flex items-center gap-2 disabled:opacity-50 ${!canEdit(moduleId) ? 'shadow-none grayscale cursor-not-allowed' : 'shadow-primary-500/20 bg-primary-600 text-white hover:bg-primary-700'}`}
+                                    className={`px-12 py-4 rounded-[1.25rem] font-black text-xs uppercase tracking-[0.2em] transition-all shadow-xl flex items-center gap-3 disabled:opacity-50 ${!canEdit(moduleId) ? 'shadow-none grayscale cursor-not-allowed' : 'shadow-primary-500/25 bg-primary-600 text-white hover:bg-primary-700 hover:-translate-y-0.5 active:translate-y-0'}`}
                                 >
-                                    {loading ? 'SUBMITTING...' : (
+                                    {loading ? 'Submitting...' : (
                                         <>
-                                            <Save size={16} />
-                                            {canEdit(moduleId) ? 'SUBMIT' : 'VIEW ONLY MODE'}
+                                            <Save size={18} />
+                                            {canEdit(moduleId) ? 'Submit Entry' : 'View Only Mode'}
                                         </>
                                     )}
                                 </button>

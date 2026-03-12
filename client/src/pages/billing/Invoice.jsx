@@ -28,22 +28,17 @@ import { useToast } from '../../context/ToastContext';
 import { usePermissions } from '../../hooks/usePermissions';
 import InvoicePrint from '../../components/reports/InvoicePrint';
 
-const AutoResizeInput = ({ value, onChange, placeholder, type = 'text', prefix, suffix, className = '', ...props }) => {
+const AutoResizeInput = ({ value, onChange, placeholder, type = 'text', className = '', ...props }) => {
     const getWidth = () => {
         // If className specifies a width (e.g. w-32), don't auto-resize
         if (className.includes('w-')) return undefined;
 
         const charCount = Math.max(value?.toString().length || 0, placeholder?.length || 1, 4);
-        return `calc(${charCount}ch + ${prefix ? '2.5rem' : '1.5rem'} + ${suffix ? '2rem' : '0.5rem'})`;
+        return `calc(${charCount}ch + 1.5rem)`;
     };
 
     return (
         <div className={`relative flex items-center bg-slate-50/80 border border-slate-200 rounded-xl transition-all hover:bg-white focus-within:ring-2 focus-within:ring-primary-500/20 focus-within:border-primary-500 group ${className}`} style={getWidth() ? { width: getWidth() } : {}}>
-            {prefix && (
-                <span className="pl-3 pr-2 text-slate-400 font-bold text-xs select-none">
-                    {prefix}
-                </span>
-            )}
             <input
                 type={type}
                 value={value}
@@ -52,11 +47,6 @@ const AutoResizeInput = ({ value, onChange, placeholder, type = 'text', prefix, 
                 className="w-full bg-transparent px-2 py-2.5 text-sm font-bold text-slate-700 outline-none placeholder:text-slate-300 transition-all placeholder:font-normal"
                 {...props}
             />
-            {suffix && (
-                <span className="pr-3 pl-1 text-slate-300 font-bold text-[10px] select-none uppercase tracking-tighter">
-                    {suffix}
-                </span>
-            )}
         </div>
     );
 };
@@ -444,11 +434,10 @@ const Invoice = () => {
                     // Trigger Print
                     setTimeout(() => {
                         window.print();
+                        handleReset();
+                        fetchInvoices();
+                        fetchCustomerList();
                     }, 500);
-
-                    handleReset();
-                    fetchInvoices();
-                    fetchCustomerList();
                 } catch (error) {
                     showToast('error', error.response?.data?.message || 'Error saving invoice');
                 } finally {
@@ -457,6 +446,57 @@ const Invoice = () => {
             },
             'Save & Print'
         );
+    };
+
+    const handlePrintHistory = async (inv) => {
+        try {
+            setLoading(true);
+            const response = await api.get(`/invoices/${inv.invoice_no}`);
+            const data = response.data;
+
+            setInvoiceNo(data.invoice_no);
+            setInvoiceDate(data.invoice_date);
+            setCustomer({
+                id: data.customer_id,
+                name: data.customer_name,
+                gstNo: data.gst_no,
+                address: data.address,
+                mobile: data.mobile_no,
+                contact: data.customer_contact,
+                state: data.state,
+                stateCode: data.state_code
+            });
+            setGstMode(data.gst_mode || 'CGST_SGST');
+            
+            const formattedItems = data.items.map(item => ({
+                id: Date.now() + Math.random(),
+                productCode: item.product_code,
+                productName: item.product_name,
+                hsnCode: item.hsn_code,
+                description: item.description,
+                qty: item.qty,
+                price: item.price,
+                discountPercent: item.discount_percent,
+                taxableAmount: item.taxable_amount,
+                gstPercent: item.gst_percent,
+                cgstAmount: item.cgst_amount,
+                sgstAmount: item.sgst_amount,
+                igstAmount: item.igst_amount,
+                totalAmount: item.total_amount
+            }));
+            setItems(formattedItems);
+
+            // Small delay to ensure state updates components
+            setTimeout(() => {
+                window.print();
+                handleReset();
+            }, 500);
+
+        } catch (error) {
+            showToast('error', 'Failed to fetch invoice details');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleReset = () => {
@@ -571,7 +611,19 @@ const Invoice = () => {
                                     />
                                 </div>
                             </div>
-                            <DataTable columns={columns} data={filteredInvoices} />
+                            <DataTable 
+                                columns={columns} 
+                                data={filteredInvoices} 
+                                actions={(item) => (
+                                    <button
+                                        onClick={() => handlePrintHistory(item)}
+                                        className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-all"
+                                        title="Print Invoice"
+                                    >
+                                        <Printer size={18} />
+                                    </button>
+                                )}
+                            />
                         </div>
                     </div>
                 ) : (
@@ -995,7 +1047,6 @@ const Invoice = () => {
                                                         type="number"
                                                         value={item.qty}
                                                         onChange={(e) => handleItemChange(index, 'qty', e.target.value)}
-                                                        suffix={item.scale || 'UNIT'}
                                                         className="w-full text-center"
                                                     />
                                                 </td>
@@ -1004,7 +1055,6 @@ const Invoice = () => {
                                                         type="number"
                                                         value={item.price}
                                                         onChange={(e) => handleItemChange(index, 'price', e.target.value)}
-                                                        prefix="₹"
                                                         className="w-full text-right font-black"
                                                     />
                                                 </td>
@@ -1013,7 +1063,6 @@ const Invoice = () => {
                                                         type="number"
                                                         value={item.discountPercent}
                                                         onChange={(e) => handleItemChange(index, 'discountPercent', e.target.value)}
-                                                        suffix="%"
                                                         className="w-full text-center"
                                                     />
                                                 </td>
@@ -1027,7 +1076,6 @@ const Invoice = () => {
                                                         type="number"
                                                         value={item.gstPercent}
                                                         onChange={(e) => handleItemChange(index, 'gstPercent', e.target.value)}
-                                                        suffix="%"
                                                         className="w-full text-center"
                                                     />
                                                 </td>

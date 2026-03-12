@@ -59,7 +59,9 @@ const DailyReport = () => {
     };
 
     const totalPurchase = reportData.reduce((sum, row) => sum + Number(row.purchase_qty || 0), 0);
-    const totalSold = reportData.reduce((sum, row) => sum + Number(row.sold_qty || 0), 0);
+    const totalOriginalSold = reportData.reduce((sum, row) => sum + Number(row.original_sold_qty || 0), 0);
+    const totalReturn = reportData.reduce((sum, row) => sum + Number(row.return_qty || 0), 0);
+    const totalNetSold = reportData.reduce((sum, row) => sum + Number(row.sold_qty || 0), 0);
 
     const filteredData = reportData.filter(row =>
         row.product_name.toLowerCase().includes(tableSearch.toLowerCase()) ||
@@ -105,12 +107,32 @@ const DailyReport = () => {
             )
         },
         {
-            key: 'sold_qty',
+            key: 'original_sold_qty',
             label: 'SOLD',
             className: 'text-center',
             render: (val) => (
-                <span className={`text-xs font-bold ${val > 0 ? 'text-rose-600 bg-rose-50 px-2 py-1 rounded-lg' : 'text-slate-400'}`}>
-                    {val > 0 ? `-${val}` : val}
+                <span className={`text-xs font-bold ${val > 0 ? 'text-slate-600 bg-slate-50 px-2 py-1 rounded-lg' : 'text-slate-400'}`}>
+                    {val > 0 ? val : val}
+                </span>
+            )
+        },
+        {
+            key: 'return_qty',
+            label: 'RETURN',
+            className: 'text-center',
+            render: (val) => (
+                <span className={`text-xs font-bold ${val > 0 ? 'text-amber-600 bg-amber-50 px-2 py-1 rounded-lg' : 'text-slate-400'}`}>
+                    {val > 0 ? val : val}
+                </span>
+            )
+        },
+        {
+            key: 'sold_qty',
+            label: 'NET SOLD',
+            className: 'text-center',
+            render: (val) => (
+                <span className={`text-xs font-bold ${val !== 0 ? 'text-rose-600 bg-rose-50 px-2 py-1 rounded-lg' : 'text-slate-400'}`}>
+                    {val !== 0 ? val : val}
                 </span>
             )
         }
@@ -196,8 +218,12 @@ const DailyReport = () => {
                             <ArrowDownRight size={30} />
                         </div>
                         <div>
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-2">Total Sales</p>
-                            <h3 className="text-3xl font-black text-slate-900 tracking-tight">{totalSold} Units</h3>
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-2">Net Sales (Sold - Return)</p>
+                            <h3 className="text-3xl font-black text-slate-900 tracking-tight">{totalNetSold} Units</h3>
+                            <div className="flex gap-4 mt-2">
+                                <span className="text-[10px] font-bold text-slate-500 uppercase">Gross: {totalOriginalSold}</span>
+                                <span className="text-[10px] font-bold text-amber-600 uppercase">Return: {totalReturn}</span>
+                            </div>
                         </div>
                     </div>
                     <div className="text-[10px] font-black text-rose-500 uppercase bg-rose-50 px-3 py-1.5 rounded-full tracking-wider">Outbound</div>

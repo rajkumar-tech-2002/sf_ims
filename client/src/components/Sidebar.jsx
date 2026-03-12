@@ -54,7 +54,7 @@ const Sidebar = () => {
             children: [
                 { title: 'User Creation', icon: <UserPlus size={18} />, path: '/user-creation', roles: ['admin'], moduleId: 'user-creation' },
                 { title: 'Log Details', icon: <History size={18} />, path: '/log-details', roles: ['admin'], moduleId: 'log-details' },
-                { title: 'Help', icon: <HelpCircle size={18} />, path: '/help', roles: ['admin'] },
+                { title: 'Help', icon: <HelpCircle size={18} />, path: '/help', roles: ['admin', 'staff'] },
             ]
         },
         {
@@ -78,6 +78,7 @@ const Sidebar = () => {
             children: [
                 { title: 'Invoice', icon: <FileText size={18} />, path: '/invoice', roles: ['admin'], moduleId: 'invoice' },
                 { title: 'Quotation', icon: <FileText size={18} />, path: '/quotation', roles: ['admin'], moduleId: 'quotation' },
+                { title: 'Credit Collection', icon: <Wallet size={18} />, path: '/credit-collection', roles: ['admin'], moduleId: 'credit-collection' },
             ]
         },
         {
@@ -86,20 +87,6 @@ const Sidebar = () => {
             roles: ['admin'],
             children: [
                 { title: 'Stock Return', icon: <Package size={18} />, path: '/stock-return', roles: ['admin'], moduleId: 'stock-return' },
-            ]
-        },
-        {
-            title: 'Billing Report',
-            icon: <BarChart3 size={20} />,
-            roles: ['admin'],
-            children: [
-                { title: 'Bill Report', icon: <FileSearch size={18} />, path: '/bill-report', roles: ['admin'], moduleId: 'bill-report' },
-                { title: 'Purchase Report', icon: <ShoppingCart size={18} />, path: '/purchase-report', roles: ['admin'], moduleId: 'purchase-report' },
-                { title: 'Daily Report', icon: <BarChart3 size={18} />, path: '/daily-report', roles: ['admin'], moduleId: 'daily-report' },
-                { title: 'Return Report', icon: <RefreshCw size={18} />, path: '/return-report', roles: ['admin'], moduleId: 'return-report' },
-                { title: 'RM Purchase Report', icon: <ShoppingCart size={18} />, path: '/raw-material-purchase-report', roles: ['admin'], moduleId: 'raw-material-purchase-report' },
-                { title: 'Credit Collection', icon: <Wallet size={18} />, path: '/credit-collection', roles: ['admin'], moduleId: 'credit-collection' },
-                { title: 'Credit Collection Report', icon: <Wallet size={18} />, path: '/credit-collection-report', roles: ['admin'], moduleId: 'credit-collection-report' },
             ]
         },
         {
@@ -117,6 +104,12 @@ const Sidebar = () => {
             icon: <BookOpen size={20} />,
             roles: ['admin'],
             children: [
+                { title: 'Bill Report', icon: <FileSearch size={18} />, path: '/bill-report', roles: ['admin'], moduleId: 'bill-report' },
+                { title: 'Purchase Report', icon: <ShoppingCart size={18} />, path: '/purchase-report', roles: ['admin'], moduleId: 'purchase-report' },
+                { title: 'Daily Report', icon: <BarChart3 size={18} />, path: '/daily-report', roles: ['admin'], moduleId: 'daily-report' },
+                { title: 'Return Report', icon: <RefreshCw size={18} />, path: '/return-report', roles: ['admin'], moduleId: 'return-report' },
+                { title: 'RM Purchase Report', icon: <ShoppingCart size={18} />, path: '/raw-material-purchase-report', roles: ['admin'], moduleId: 'raw-material-purchase-report' },
+                { title: 'Credit Collection Report', icon: <Wallet size={18} />, path: '/credit-collection-report', roles: ['admin'], moduleId: 'credit-collection-report' },
                 { title: 'Income & Expense', icon: <BarChart3 size={18} />, path: '/income-expense-report', roles: ['admin'], moduleId: 'income-expense-report' },
                 { title: 'Cash Book', icon: <BookOpen size={18} />, path: '/cash-book', roles: ['admin'], moduleId: 'cash-book' },
             ]

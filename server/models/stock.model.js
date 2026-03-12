@@ -82,7 +82,9 @@ const Stock = {
                 sm.detail as description,
                 sm.qty as current_stock,
                 COALESCE(p.purchase_qty, 0) as purchase_qty,
-                COALESCE(s.sold_qty, 0) as sold_qty
+                COALESCE(s.original_sold_qty, 0) as original_sold_qty,
+                COALESCE(r.return_qty, 0) as return_qty,
+                (COALESCE(s.original_sold_qty, 0) - COALESCE(r.return_qty, 0)) as sold_qty
             FROM stock_master sm
             LEFT JOIN (
                 SELECT product_code, SUM(qty) as purchase_qty 
@@ -91,16 +93,30 @@ const Stock = {
                 GROUP BY product_code
             ) p ON sm.product_code = p.product_code
             LEFT JOIN (
-                SELECT product_code, SUM(qty) as sold_qty 
+                SELECT product_code, SUM(qty) as original_sold_qty 
                 FROM invoice_items ii
                 JOIN invoice_master im ON ii.invoice_id = im.id
                 WHERE DATE(im.invoice_date) BETWEEN ? AND ?
                 GROUP BY product_code
             ) s ON sm.product_code = s.product_code
-            WHERE COALESCE(p.purchase_qty, 0) > 0 OR COALESCE(s.sold_qty, 0) > 0 OR sm.qty > 0
+            LEFT JOIN (
+                SELECT product_code, SUM(return_qty) as return_qty
+                FROM stock_return_items sri
+                JOIN stock_return_master srm ON sri.return_id = srm.id
+                WHERE DATE(srm.return_date) BETWEEN ? AND ?
+                GROUP BY product_code
+            ) r ON sm.product_code = r.product_code
+            WHERE COALESCE(p.purchase_qty, 0) > 0 
+               OR COALESCE(s.original_sold_qty, 0) > 0 
+               OR COALESCE(r.return_qty, 0) > 0
+               OR sm.qty > 0
             ORDER BY sm.product_name ASC
         `;
-        const [rows] = await db.execute(query, [fromDate, toDate, fromDate, toDate]);
+        const [rows] = await db.execute(query, [
+            fromDate, toDate, 
+            fromDate, toDate, 
+            fromDate, toDate
+        ]);
         return rows;
     },
 

@@ -6,6 +6,19 @@ import { useToast } from '../../context/ToastContext';
 
 const MODULE_CATEGORIES = [
     {
+        name: 'Dashboard',
+        modules: [
+            { id: 'dashboard', label: 'Dashboard' },
+        ]
+    },
+    {
+        name: 'File',
+        modules: [
+            { id: 'user-creation', label: 'User Creation' },
+            { id: 'log-details', label: 'Log Details' },
+        ]
+    },
+    {
         name: 'Master Data',
         modules: [
             { id: 'stock-entry', label: 'Stock Entry' },
@@ -22,7 +35,21 @@ const MODULE_CATEGORIES = [
         modules: [
             { id: 'invoice', label: 'Invoice' },
             { id: 'quotation', label: 'Quotation' },
+            { id: 'credit-collection', label: 'Credit Collection' },
+        ]
+    },
+    {
+        name: 'Return Billing',
+        modules: [
             { id: 'stock-return', label: 'Stock Return' },
+        ]
+    },
+    {
+        name: 'Income Expense',
+        modules: [
+            { id: 'income-expense', label: 'Income / Expense' },
+            { id: 'transactions', label: 'Transaction' },
+            { id: 'assets', label: 'Asset' },
         ]
     },
     {
@@ -33,20 +60,10 @@ const MODULE_CATEGORIES = [
             { id: 'daily-report', label: 'Daily Report' },
             { id: 'return-report', label: 'Return Report' },
             { id: 'raw-material-purchase-report', label: 'RM Purchase Report' },
-            { id: 'credit-collection', label: 'Credit Collection' },
+            { id: 'credit-collection-report', label: 'Credit Collection Report' },
+            { id: 'income-expense-report', label: 'Income & Expense' },
+            { id: 'cash-book', label: 'Cash Book' },
             { id: 'customer-report', label: 'Customer Report' },
-            { id: 'income-expense-report', label: 'Income & Expense Report' },
-        ]
-    },
-    {
-        name: 'System',
-        modules: [
-            { id: 'dashboard', label: 'Dashboard' },
-            { id: 'user-creation', label: 'User Creation' },
-            { id: 'log-details', label: 'Log Details' },
-            { id: 'income-expense', label: 'Income / Expense' },
-            { id: 'transactions', label: 'Transaction' },
-            { id: 'assets', label: 'Asset' },
         ]
     }
 ];
@@ -481,9 +498,9 @@ const UserCreation = () => {
                                         </div>
                                     </div>
 
-                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                                    <div className="columns-1 md:columns-2 lg:columns-3 gap-10 space-y-10">
                                         {MODULE_CATEGORIES.map((cat) => (
-                                            <div key={cat.name} className="bg-slate-50/50 rounded-2xl border border-slate-100 overflow-hidden">
+                                            <div key={cat.name} className="break-inside-avoid bg-slate-50/50 rounded-2xl border border-slate-100 overflow-hidden shadow-sm">
                                                 <div className="px-6 py-4 bg-white border-b border-slate-100 flex items-center justify-between">
                                                     <span className="text-[10px] font-black text-slate-800 uppercase tracking-[0.2em]">{cat.name}</span>
                                                     <span className="text-[9px] font-bold text-slate-400">{cat.modules.length} Modules</span>

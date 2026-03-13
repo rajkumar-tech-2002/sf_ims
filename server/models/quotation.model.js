@@ -121,6 +121,31 @@ const Quotation = {
         return rows;
     },
 
+    findAllDetailed: async () => {
+        const query = `
+            SELECT 
+                qm.*, 
+                qi.product_code, 
+                qi.product_name, 
+                qi.hsn_code, 
+                qi.description, 
+                qi.qty, 
+                qi.price, 
+                qi.discount_percent, 
+                qi.taxable_amount, 
+                qi.gst_percent, 
+                qi.cgst_amount, 
+                qi.sgst_amount, 
+                qi.igst_amount,
+                qi.total_amount as item_total_amount
+            FROM quotation_master qm
+            JOIN quotation_items qi ON qm.id = qi.quotation_id
+            ORDER BY qm.created_at DESC
+        `;
+        const [rows] = await db.execute(query);
+        return rows;
+    },
+
     findByNo: async (quotationNo) => {
         const [master] = await db.execute('SELECT * FROM quotation_master WHERE quotation_no = ?', [quotationNo]);
         if (master.length === 0) return null;

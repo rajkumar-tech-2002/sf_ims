@@ -101,7 +101,7 @@ const QuotationPrint = ({ quotationDate, quotationNo, customer, items, totals, g
             </div>
 
             {/* Terms & Conditions */}
-            <div className="mt-20">
+            {/* <div className="mt-20">
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Terms & Conditions</p>
                 <div className="space-y-1.5">
                     <p className="text-[10px] text-slate-500 leading-relaxed">• This quotation is valid for 15 days from the date of issue.</p>
@@ -120,7 +120,7 @@ const QuotationPrint = ({ quotationDate, quotationNo, customer, items, totals, g
                     <div className="w-32 h-px bg-slate-900 mb-2 mx-auto"></div>
                     <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Authorized Signatory</p>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

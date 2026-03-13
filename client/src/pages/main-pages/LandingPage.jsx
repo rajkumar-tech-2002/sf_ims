@@ -99,24 +99,6 @@ const LandingPage = () => {
                 </div>
             </section>
 
-            {/* CTA Section */}
-            <section className="py-24 px-6">
-                <div className="max-w-5xl mx-auto card bg-slate-900 border-none relative overflow-hidden text-center p-16">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary-500/10 blur-[80px]" />
-                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/10 blur-[80px]" />
-                    <h2 className="text-4xl font-bold text-white mb-6">Ready to optimize?</h2>
-                    <p className="text-slate-400 text-lg mb-10 max-w-md mx-auto">
-                        Join 1,000+ companies using StockWise to run their logistics smoother than ever.
-                    </p>
-                    <button
-                        onClick={() => navigate('/login')}
-                        className="btn btn-primary px-12 py-4 shadow-primary-500/40"
-                    >
-                        Launch Your Dashboard
-                    </button>
-                </div>
-            </section>
-
             {/* Footer */}
             <footer className="py-12 border-t border-slate-200 px-6">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">

@@ -40,6 +40,15 @@ const getAllQuotations = async (req, res) => {
     }
 };
 
+const getAllQuotationsDetailed = async (req, res) => {
+    try {
+        const quotations = await Quotation.findAllDetailed();
+        res.json(quotations);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 const getQuotationByNo = async (req, res) => {
     try {
         const quotation = await Quotation.findByNo(req.params.no);
@@ -58,5 +67,6 @@ module.exports = {
     createQuotation,
     getProductByCode,
     getAllQuotations,
+    getAllQuotationsDetailed,
     getQuotationByNo
 };

@@ -16,6 +16,23 @@ const authMiddleware = (req, res, next) => {
     }
 };
 
+const optionalAuthMiddleware = (req, res, next) => {
+    const token = req.cookies.token;
+
+    if (!token) {
+        return next();
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded;
+        next();
+    } catch (err) {
+        // If token is invalid, just proceed without req.user
+        next();
+    }
+};
+
 const roleMiddleware = (allowedRoles) => {
     return (req, res, next) => {
         if (!req.user || !allowedRoles.includes(req.user.user_role)) {
@@ -25,4 +42,4 @@ const roleMiddleware = (allowedRoles) => {
     };
 };
 
-module.exports = { authMiddleware, roleMiddleware };
+module.exports = { authMiddleware, optionalAuthMiddleware, roleMiddleware };

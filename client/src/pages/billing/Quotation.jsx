@@ -137,7 +137,7 @@ const Quotation = () => {
     const fetchQuotations = async () => {
         setLoading(true);
         try {
-            const response = await api.get('/quotations');
+            const response = await api.get('/quotations/detailed');
             setQuotations(response.data);
         } catch (error) {
             showToast('error', 'Failed to fetch quotation records');
@@ -370,11 +370,10 @@ const Quotation = () => {
                     // Trigger Print
                     setTimeout(() => {
                         window.print();
+                        handleReset();
+                        fetchQuotations();
+                        fetchCustomerList();
                     }, 500);
-
-                    handleReset();
-                    fetchQuotations();
-                    fetchCustomerList();
                 } catch (error) {
                     showToast('error', error.response?.data?.message || 'Error saving quotation');
                 } finally {
@@ -383,6 +382,56 @@ const Quotation = () => {
             },
             'Save & Print'
         );
+    };
+
+    const handlePrintHistory = async (q) => {
+        try {
+            setLoading(true);
+            const response = await api.get(`/quotations/no/${q.quotation_no}`);
+            const data = response.data;
+
+            setQuotationNo(data.quotation_no);
+            setQuotationDate(data.quotation_date);
+            setCustomer({
+                id: data.customer_id,
+                name: data.customer_name,
+                gstNo: data.gst_no,
+                address: data.address,
+                mobile: data.mobile_no,
+                contact: data.contact_number,
+                state: data.state,
+                stateCode: data.state_code
+            });
+            setGstMode(data.gst_mode || 'CGST_SGST');
+
+            const formattedItems = data.items.map(item => ({
+                id: Date.now() + Math.random(),
+                productCode: item.product_code,
+                productName: item.product_name,
+                hsnCode: item.hsn_code,
+                description: item.description,
+                qty: item.qty,
+                price: item.price,
+                discountPercent: item.discount_percent,
+                taxableAmount: item.taxable_amount,
+                gstPercent: item.gst_percent,
+                cgstAmount: item.cgst_amount,
+                sgstAmount: item.sgst_amount,
+                igstAmount: item.igst_amount,
+                totalAmount: item.total_amount
+            }));
+            setItems(formattedItems);
+
+            setTimeout(() => {
+                window.print();
+                handleReset();
+            }, 500);
+
+        } catch (error) {
+            showToast('error', 'Failed to fetch quotation details');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleReset = () => {
@@ -423,10 +472,28 @@ const Quotation = () => {
     };
 
     const filteredQuotations = quotations.filter(q =>
-        q.customer_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        q.quotation_no.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (q.mobile_no && q.mobile_no.includes(searchTerm))
+        (q.quotation_no || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (q.customer_name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (q.product_name || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const qColumns = [
+        { key: 'quotation_no', label: 'Quotation No', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'quotation_date', label: 'Date', render: (val) => <span className="whitespace-nowrap font-bold text-slate-600">{new Date(val).toLocaleDateString()}</span> },
+        { key: 'customer_name', label: 'Customer', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'mobile_no', label: 'Mobile', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'gst_no', label: 'GST No', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'grand_total', label: 'Grand Total', render: (val) => <span className="font-black text-primary-700">₹{parseFloat(val || 0).toLocaleString()}</span> },
+        { key: 'product_name', label: 'Product', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'description', label: 'Description', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'hsn_code', label: 'HSN', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'qty', label: 'Qty', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'price', label: 'Price', className: 'whitespace-nowrap font-bold text-slate-600', render: (val) => `₹${parseFloat(val || 0).toLocaleString()}` },
+        { key: 'discount_percent', label: 'Discount', className: 'whitespace-nowrap font-bold text-slate-600', render: (val) => `${val || 0}%` },
+        { key: 'taxable_amount', label: 'Taxable', className: 'whitespace-nowrap font-bold text-slate-600', render: (val) => `₹${parseFloat(val || 0).toLocaleString()}` },
+        { key: 'gst_percent', label: 'GST', className: 'whitespace-nowrap font-bold text-slate-600', render: (val) => `${val || 0}%` },
+        { key: 'item_total_amount', label: 'Item Total', className: 'whitespace-nowrap font-bold text-slate-600', render: (val) => <span className="font-black text-slate-900">₹{parseFloat(val || 0).toLocaleString()}</span> }
+    ];
 
     return (
         <div className="page-container bg-slate-50/50 min-h-screen">
@@ -451,60 +518,38 @@ const Quotation = () => {
                 </div>
 
                 {showTable && (
-                    <div className="animate-in fade-in slide-in-from-top-4 duration-500">
-                        <DataTable
-                            columns={[
-                                {
-                                    key: 'serial',
-                                    label: 'S.No',
-                                    render: (value, row, index) => (
-                                        <span className="text-xs font-bold text-slate-600">{index + 1}</span>
-                                    )
-                                },
-                                {
-                                    key: 'quotation_no',
-                                    label: 'Quotation No',
-                                    render: (value) => <span className="font-bold text-primary-600">{value}</span>
-                                },
-                                {
-                                    key: 'quotation_date',
-                                    label: 'Date',
-                                    render: (value) => <span className="text-slate-600">{new Date(value).toLocaleDateString()}</span>
-                                },
-                                {
-                                    key: 'customer_name',
-                                    label: 'Customer Info',
-                                    render: (value, q) => (
-                                        <div className="flex flex-col">
-                                            <span className="font-bold text-slate-900">{value}</span>
-                                            <span className="text-xs text-slate-400">{q.mobile_no || 'No mobile'}</span>
-                                        </div>
-                                    )
-                                },
-                                {
-                                    key: 'grand_total',
-                                    label: 'Amount',
-                                    className: 'text-right',
-                                    render: (value) => <span className="font-bold text-slate-900">₹{parseFloat(value).toLocaleString()}</span>
-                                },
-                                {
-                                    key: 'gst_mode',
-                                    label: 'GST Mode',
-                                    className: 'text-center',
-                                    render: (value) => (
-                                        <span className={`px-2 py-0.5 rounded-lg text-[10px] font-bold ${value === 'IGST' ? 'bg-purple-50 text-purple-600' : 'bg-blue-50 text-blue-600'}`}>
-                                            {value}
-                                        </span>
-                                    )
-                                }
-                            ]}
-                            data={filteredQuotations}
-                            loading={loading}
-                            searchTerm={searchTerm}
-                            onSearchChange={setSearchTerm}
-                            searchPlaceholder="Search by customer or number..."
-                            emptyMessage="No quotations found"
-                        />
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <div className="bg-white rounded-[32px] shadow-xl shadow-slate-200/50 border border-slate-200/60 overflow-hidden">
+                            <div className="p-8 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                <h2 className="text-xl font-black text-slate-800 flex items-center gap-3">
+                                    Quotation Records
+                                    <span className="px-4 py-1.5 bg-primary-100 text-primary-700 text-[10px] font-black rounded-full uppercase tracking-widest leading-none">{quotations.length} RECORDS</span>
+                                </h2>
+                                <div className="relative w-full md:w-[450px]">
+                                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                                    <input
+                                        type="text"
+                                        placeholder="Search by quotation no or customer..."
+                                        className="w-full pl-14 pr-6 py-3.5 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none transition-all font-bold text-slate-800"
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                            <DataTable 
+                                columns={qColumns} 
+                                data={filteredQuotations} 
+                                actions={(item) => (
+                                    <button
+                                        onClick={() => handlePrintHistory(item)}
+                                        className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-all"
+                                        title="Print Quotation"
+                                    >
+                                        <Printer size={18} />
+                                    </button>
+                                )}
+                            />
+                        </div>
                     </div>
                 )}
 

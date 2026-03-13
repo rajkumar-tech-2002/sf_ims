@@ -67,9 +67,12 @@ const logout = (req, res) => {
 
 const getMe = async (req, res) => {
     try {
+        if (!req.user || !req.user.id) {
+            return res.json({ user: null });
+        }
         const user = await User.findById(req.user.id);
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.json({ user: null });
         }
         res.json({
             user: {

@@ -223,7 +223,7 @@ const Sidebar = () => {
                             <div className="w-9 h-9 bg-primary-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/20">
                                 <Package className="text-white" size={18} />
                             </div>
-                            <span className="text-xl font-bold tracking-tight text-white uppercase">StockWise</span>
+                            <span className="text-xl font-bold tracking-tight text-white uppercase">IMS</span>
                         </div>
                     )}
                     {isCollapsed && (

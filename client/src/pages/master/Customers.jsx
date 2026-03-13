@@ -220,7 +220,7 @@ const Customers = () => {
                             {/* Customer Name */}
                             <div className="space-y-3 lg:col-span-2">
                                 <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                    <Users size={14} className="text-primary-500" /> Client Identity
+                                    <Users size={14} className="text-primary-500" /> Client Name
                                 </label>
                                 <input
                                     type="text"
@@ -236,7 +236,7 @@ const Customers = () => {
                             {/* GST NO */}
                             <div className="space-y-3">
                                 <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                    <Briefcase size={14} className="text-primary-500" /> Fiscal Identifier
+                                    <Briefcase size={14} className="text-primary-500" /> GST Number
                                 </label>
                                 <input
                                     type="text"
@@ -251,7 +251,7 @@ const Customers = () => {
                             {/* Address */}
                             <div className="space-y-3 lg:col-span-4">
                                 <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                    <MapPin size={14} className="text-primary-500" /> Logistics Address
+                                    <MapPin size={14} className="text-primary-500" /> Address
                                 </label>
                                 <textarea
                                     name="customer_address"
@@ -266,7 +266,7 @@ const Customers = () => {
                             {/* Contact Person */}
                             <div className="space-y-3 lg:col-span-2">
                                 <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                    <Phone size={14} className="text-primary-500" /> Liaison Officer
+                                    <Phone size={14} className="text-primary-500" /> Primary Contact
                                 </label>
                                 <input
                                     type="text"
@@ -282,7 +282,7 @@ const Customers = () => {
                             {/* Mobile */}
                             <div className="space-y-3 lg:col-span-2">
                                 <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                    <Smartphone size={14} className="text-primary-500" /> Primary Mobile
+                                    <Smartphone size={14} className="text-primary-500" /> Optional Number
                                 </label>
                                 <input
                                     type="text"
@@ -299,7 +299,7 @@ const Customers = () => {
                             {/* State */}
                             <div className="space-y-3 lg:col-span-3">
                                 <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                    <MapPin size={14} className="text-primary-500" /> Regional Domain
+                                    <MapPin size={14} className="text-primary-500" /> State Name
                                 </label>
                                 <input
                                     type="text"
@@ -314,7 +314,7 @@ const Customers = () => {
                             {/* State Code */}
                             <div className="space-y-3">
                                 <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                    <Hash size={14} className="text-primary-500" /> Zone Code
+                                    <Hash size={14} className="text-primary-500" /> State Code
                                 </label>
                                 <input
                                     type="text"
@@ -379,16 +379,16 @@ const Customers = () => {
                                     )
                                 },
                                 {
-                                    key: 'customer_mobile',
+                                    key: 'customer_contact',
                                     label: 'Contact Info',
                                     render: (value, row) => (
                                         <div className="flex flex-col">
                                             <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
                                                 <Smartphone size={10} className="text-primary-500" /> {value}
                                             </div>
-                                            {row.customer_contact && (
+                                            {row.customer_mobile && (
                                                 <div className="flex items-center gap-1.5 text-[10px] text-slate-400">
-                                                    <Users size={10} strokeWidth={3} className="text-primary-500" /> {row.customer_contact}
+                                                    <Users size={10} strokeWidth={3} className="text-primary-500" /> {row.customer_mobile}
                                                 </div>
                                             )}
                                         </div>

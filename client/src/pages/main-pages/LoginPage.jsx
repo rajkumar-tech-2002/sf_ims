@@ -65,32 +65,30 @@ const LoginPage = () => {
     return (
         <div className="min-h-screen grid lg:grid-cols-2 bg-white">
             {/* Left Side: Visual/Branding */}
-            <div className="hidden lg:flex flex-col justify-between p-12 bg-slate-900 relative overflow-hidden">
+            <div className="hidden lg:flex flex-col justify-between p-22 bg-slate-900 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-full h-full bg-primary-600/10 blur-[150px]" />
                 <div className="relative z-10">
                     <div className="flex items-center gap-2 text-white">
                         <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center shadow-lg">
                             <Package size={20} />
                         </div>
-                        <span className="text-2xl font-bold tracking-tight">StockWise</span>
+                        <span className="text-2xl font-bold tracking-tight">IMS</span>
                     </div>
                 </div>
 
                 <div className="relative z-10">
                     <h1 className="text-5xl font-bold text-white mb-6 leading-tight">
-                        Powering the next <br />
-                        generation of <br />
-                        <span className="text-primary-400">logistics management.</span>
+                        Streamline Your <br />
+                        Business with <br />
+                        <span className="text-primary-400">Precision.</span>
                     </h1>
                     <p className="text-slate-400 text-lg max-w-md">
-                        Join thousands of companies optimizing their supply chain with our real-time analytics and inventory tools.
+                        Manage stocks, automate billing, and track financials in one unified, secure platform.
                     </p>
                 </div>
 
                 <div className="relative z-10 flex items-center gap-6 text-slate-500 text-sm font-medium">
-                    <span>© 2026 StockWise System</span>
-                    <span>Privacy Policy</span>
-                    <span>Support</span>
+                    <span>© 2026 Inventory Management System</span>
                 </div>
             </div>
 
@@ -107,7 +105,7 @@ const LoginPage = () => {
                 <div className="w-full max-w-md">
                     <div className="lg:hidden flex items-center gap-2 mb-12 justify-center">
                         <Package className="text-primary-600" size={32} />
-                        <span className="text-3xl font-bold text-slate-900">StockWise</span>
+                        <span className="text-3xl font-bold text-slate-900">IMS</span>
                     </div>
 
                     <div className="mb-10 text-center lg:text-left">

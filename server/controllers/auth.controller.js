@@ -32,6 +32,10 @@ const login = async (req, res) => {
             user_id: user.user_id,
             user_role: user.user_role,
             user_name: user.user_name,
+            qualification: user.qualification,
+            department: user.department,
+            contact: user.contact,
+            remark: user.remark,
             permissions: typeof user.permissions === 'string' ? JSON.parse(user.permissions) : (user.permissions || {})
         };
 
@@ -51,6 +55,10 @@ const login = async (req, res) => {
                 user_name: user.user_name,
                 user_role: user.user_role,
                 user_id: user.user_id,
+                qualification: user.qualification,
+                department: user.department,
+                contact: user.contact,
+                remark: user.remark,
                 permissions: typeof user.permissions === 'string' ? JSON.parse(user.permissions) : (user.permissions || {})
             }
         });
@@ -80,6 +88,10 @@ const getMe = async (req, res) => {
                 user_name: user.user_name,
                 user_role: user.user_role,
                 user_id: user.user_id,
+                qualification: user.qualification,
+                department: user.department,
+                contact: user.contact,
+                remark: user.remark,
                 permissions: typeof user.permissions === 'string' ? JSON.parse(user.permissions) : (user.permissions || {})
             }
         });
@@ -97,4 +109,42 @@ const getRoles = async (req, res) => {
     }
 };
 
-module.exports = { login, logout, getMe, getRoles };
+const updateProfile = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const profileData = req.body;
+        const success = await User.updateProfile(userId, profileData);
+        if (success) {
+            res.json({ message: 'Profile updated successfully' });
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+const changePassword = async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+    try {
+        const userId = req.user.id;
+        const user = await User.findById(userId);
+
+        if (!user || user.password !== oldPassword) {
+            return res.status(401).json({ message: 'Incorrect current password' });
+        }
+
+        const success = await User.updatePassword(userId, newPassword);
+        if (success) {
+            res.json({ message: 'Password updated successfully' });
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+module.exports = { login, logout, getMe, getRoles, updateProfile, changePassword };

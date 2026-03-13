@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../context/ToastContext';
 import {
     User,
     Mail,
@@ -12,17 +13,102 @@ import {
     Smartphone,
     Globe,
     ChevronDown,
-    Hash
+    Hash,
+    School,
+    MapPin,
+    Phone,
+    FileText
 } from 'lucide-react';
 
 const Profile = () => {
-    const { user } = useAuth();
+    const { user, login } = useAuth();
+    const { showToast } = useToast();
     const [activeSection, setActiveSection] = useState('general');
+    const [loading, setLoading] = useState(false);
+
+    const [profileData, setProfileData] = useState({
+        user_name: '',
+        qualification: '',
+        department: '',
+        contact: '',
+        remark: ''
+    });
+
+    const [passwordData, setPasswordData] = useState({
+        oldPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
+
+    useEffect(() => {
+        if (user) {
+            setProfileData({
+                user_name: user.user_name || '',
+                qualification: user.qualification || '',
+                department: user.department || '',
+                contact: user.contact || '',
+                remark: user.remark || ''
+            });
+        }
+    }, [user]);
+
+    const handleProfileUpdate = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            const response = await fetch('/api/auth/update-profile', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(profileData)
+            });
+            const data = await response.json();
+            if (response.ok) {
+                showToast('success', data.message);
+                // Update local auth context
+                login({ ...user, ...profileData });
+            } else {
+                showToast('error', data.message);
+            }
+        } catch (err) {
+            showToast('error', 'Failed to update profile');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handlePasswordChange = async (e) => {
+        e.preventDefault();
+        if (passwordData.newPassword !== passwordData.confirmPassword) {
+            showToast('error', 'Passwords do not match');
+            return;
+        }
+        setLoading(true);
+        try {
+            const response = await fetch('/api/auth/change-password', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    oldPassword: passwordData.oldPassword,
+                    newPassword: passwordData.newPassword
+                })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                showToast('success', data.message);
+                setPasswordData({ oldPassword: '', newPassword: '', confirmPassword: '' });
+            } else {
+                showToast('error', data.message);
+            }
+        } catch (err) {
+            showToast('error', 'Failed to change password');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const sections = [
         { id: 'general', label: 'General Info', icon: <User size={18} /> },
         { id: 'security', label: 'Security', icon: <Lock size={18} /> },
-        { id: 'notifications', label: 'Notifications', icon: <Bell size={18} /> },
     ];
 
     return (
@@ -60,9 +146,6 @@ const Profile = () => {
                                 <div className="w-32 h-32 bg-primary-50 rounded-3xl flex items-center justify-center text-primary-600 text-4xl font-black shadow-inner">
                                     {user?.user_name?.[0].toUpperCase()}
                                 </div>
-                                <button className="absolute -bottom-2 -right-2 p-3 bg-slate-900 text-white rounded-xl shadow-xl hover:scale-110 transition-transform">
-                                    <Camera size={18} />
-                                </button>
                             </div>
                             <div className="text-center md:text-left">
                                 <h2 className="text-3xl font-black text-slate-900 capitalize leading-none">{user?.user_name}</h2>
@@ -84,12 +167,12 @@ const Profile = () => {
                     {/* Section Content */}
                     <div className="card p-12">
                         {activeSection === 'general' && (
-                            <div className="space-y-10 animate-fade-in">
+                            <form onSubmit={handleProfileUpdate} className="space-y-10 animate-fade-in">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
                                             <User size={12} /> Full Name</label>
-                                        <input type="text" className="input-field py-4" defaultValue={user?.user_name} />
+                                        <input type="text" className="input-field py-4" value={profileData.user_name} onChange={(e) => setProfileData({ ...profileData, user_name: e.target.value })} />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
@@ -98,76 +181,69 @@ const Profile = () => {
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                            <Globe size={12} /> Primary Language</label>
-                                        <div className="relative">
-                                            <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
-                                            <select className="input-field pl-12 py-4 appearance-none bg-white w-full">
-                                                <option>English (United States)</option>
-                                                <option>Spanish (International)</option>
-                                                <option>German (Europe)</option>
-                                            </select>
-                                            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
-                                                <ChevronDown size={18} />
-                                            </div>
-                                        </div>
+                                            <School size={12} /> Qualification</label>
+                                        <input type="text" className="input-field py-4" value={profileData.qualification} onChange={(e) => setProfileData({ ...profileData, qualification: e.target.value })} placeholder="e.g. B.Tech Computer Science" />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                            <Smartphone size={12} /> Device Auth</label>
-                                        <div className="relative">
-                                            <Smartphone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
-                                            <input type="text" className="input-field pl-12 py-4" defaultValue="iPhone 15 Pro Max" disabled />
-                                        </div>
+                                            <MapPin size={12} /> Department</label>
+                                        <input type="text" className="input-field py-4" value={profileData.department} onChange={(e) => setProfileData({ ...profileData, department: e.target.value })} placeholder="e.g. IT Department" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                            <Phone size={12} /> Contact Number</label>
+                                        <input type="text" maxLength={10} className="input-field py-4" value={profileData.contact} onChange={(e) => setProfileData({ ...profileData, contact: e.target.value })} placeholder="e.g. +91 9876543210" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                            <FileText size={12} /> Remark</label>
+                                        <input type="text" className="input-field py-4" value={profileData.remark} onChange={(e) => setProfileData({ ...profileData, remark: e.target.value })} placeholder="Any additional notes..." />
                                     </div>
                                 </div>
                                 <div className="pt-8 border-t border-slate-100 flex justify-end">
-                                    <button className="btn btn-primary px-10 py-4 shadow-primary-500/30">Save Modifications</button>
+                                    <button type="submit" disabled={loading} className="btn btn-primary px-10 py-4 shadow-primary-500/30">
+                                        {loading ? 'Saving...' : 'Save Modifications'}
+                                    </button>
                                 </div>
-                            </div>
+                            </form>
                         )}
 
                         {activeSection === 'security' && (
-                            <div className="space-y-10 animate-fade-in">
+                            <form onSubmit={handlePasswordChange} className="space-y-10 animate-fade-in">
                                 <div className="flex items-center gap-4 p-6 bg-slate-50 rounded-2xl border border-slate-100">
                                     <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-primary-600 shadow-sm border border-slate-100">
                                         <Shield size={24} />
                                     </div>
                                     <div>
-                                        <h4 className="text-sm font-black text-slate-900 uppercase tracking-tight">Two-Factor Authentication</h4>
-                                        <p className="text-xs font-bold text-slate-400 mt-1">Enhanced security for administrative actions.</p>
+                                        <h4 className="text-sm font-black text-slate-900 uppercase tracking-tight">Password Settings</h4>
+                                        <p className="text-xs font-bold text-slate-400 mt-1">Change your password for enhanced security.</p>
                                     </div>
-                                    <button className="ml-auto btn btn-secondary text-[10px] font-black uppercase tracking-widest py-2 px-4">Enable 2FA</button>
                                 </div>
                                 <div className="space-y-6">
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
                                             <Lock size={12} /> Current Password</label>
-                                        <input type="password" placeholder="••••••••" className="input-field py-4" />
+                                        <input type="password" placeholder="••••••••" className="input-field py-4" value={passwordData.oldPassword} onChange={(e) => setPasswordData({ ...passwordData, oldPassword: e.target.value })} required />
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
                                                 <Lock size={12} /> New Password</label>
-                                            <input type="password" placeholder="••••••••" className="input-field py-4" />
+                                            <input type="password" placeholder="••••••••" className="input-field py-4" value={passwordData.newPassword} onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })} required />
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
                                                 <Lock size={12} /> Confirm Identity</label>
-                                            <input type="password" placeholder="••••••••" className="input-field py-4" />
+                                            <input type="password" placeholder="••••••••" className="input-field py-4" value={passwordData.confirmPassword} onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })} required />
                                         </div>
                                     </div>
                                 </div>
                                 <div className="pt-8 border-t border-slate-100 flex justify-end">
-                                    <button className="btn btn-primary px-10 py-4 shadow-primary-500/30">Update Security Keys</button>
+                                    <button type="submit" disabled={loading} className="btn btn-primary px-10 py-4 shadow-primary-500/30">
+                                        {loading ? 'Updating...' : 'Update Security Keys'}
+                                    </button>
                                 </div>
-                            </div>
-                        )}
-
-                        {activeSection === 'notifications' && (
-                            <div className="flex flex-col items-center justify-center py-20 text-center opacity-40">
-                                <Bell size={48} className="text-slate-300 mb-4" />
-                                <p className="font-black text-slate-400 uppercase tracking-widest text-xs">Standard broadcast settings loaded</p>
-                            </div>
+                            </form>
                         )}
                     </div>
                 </div>

@@ -53,6 +53,23 @@ const User = {
         return rows.map(row => row.user_role);
     },
 
+    updateProfile: async (id, profileData) => {
+        const { user_name, qualification, department, contact, remark } = profileData;
+        const [result] = await pool.execute(
+            'UPDATE users SET user_name = ?, qualification = ?, department = ?, contact = ?, remark = ? WHERE id = ?',
+            [user_name, qualification, department, contact, remark, id]
+        );
+        return result.affectedRows > 0;
+    },
+
+    updatePassword: async (id, newPassword) => {
+        const [result] = await pool.execute(
+            'UPDATE users SET password = ? WHERE id = ?',
+            [newPassword, id]
+        );
+        return result.affectedRows > 0;
+    },
+
     delete: async (id) => {
         const [result] = await pool.execute('DELETE FROM users WHERE id = ?', [id]);
         return result.affectedRows > 0;

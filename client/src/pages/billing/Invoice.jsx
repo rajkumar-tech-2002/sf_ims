@@ -467,7 +467,7 @@ const Invoice = () => {
                 stateCode: data.state_code
             });
             setGstMode(data.gst_mode || 'CGST_SGST');
-            
+
             const formattedItems = data.items.map(item => ({
                 id: Date.now() + Math.random(),
                 productCode: item.product_code,
@@ -547,7 +547,7 @@ const Invoice = () => {
         { key: 'invoice_no', label: 'Invoice No', className: 'whitespace-nowrap font-bold text-slate-600' },
         { key: 'invoice_date', label: 'Date', render: (val) => <span className="whitespace-nowrap font-bold text-slate-600">{new Date(val).toLocaleDateString()}</span> },
         { key: 'customer_name', label: 'Customer', className: 'whitespace-nowrap font-bold text-slate-600' },
-        { key: 'mobile_no', label: 'Mobile', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'contact_number', label: 'Mobile', className: 'whitespace-nowrap font-bold text-slate-600' },
         { key: 'gst_no', label: 'GST No', className: 'whitespace-nowrap font-bold text-slate-600' },
         { key: 'credit', label: 'Credit', render: (val) => <span className={`px-2 py-1 rounded text-[10px] font-black uppercase ${val === 'yes' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'}`}>{val || 'no'}</span> },
         { key: 'grand_total', label: 'Grand Total', render: (val) => <span className="font-black text-primary-700">₹{parseFloat(val || 0).toLocaleString()}</span> },
@@ -611,9 +611,9 @@ const Invoice = () => {
                                     />
                                 </div>
                             </div>
-                            <DataTable 
-                                columns={columns} 
-                                data={filteredInvoices} 
+                            <DataTable
+                                columns={columns}
+                                data={filteredInvoices}
                                 actions={(item) => (
                                     <button
                                         onClick={() => handlePrintHistory(item)}
@@ -846,25 +846,27 @@ const Invoice = () => {
 
                                     <div className="space-y-3">
                                         <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                            <Phone size={14} className="text-primary-500" /> Phone Contact
+                                            <Phone size={14} className="text-primary-500" /> Primary Mobile
                                         </label>
                                         <input
                                             type="text"
                                             className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800"
                                             placeholder="Mobile"
                                             value={customer.mobile}
+                                            maxLength={10}
                                             onChange={(e) => setCustomer({ ...customer, mobile: e.target.value })}
                                         />
                                     </div>
                                     <div className="space-y-3">
                                         <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                            <MapPin size={14} className="text-primary-500" /> Secondary Contact
+                                            <MapPin size={14} className="text-primary-500" /> Optional Number
                                         </label>
                                         <input
                                             type="text"
                                             className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800"
-                                            placeholder="Landline"
+                                            placeholder="Optional Number"
                                             value={customer.contact}
+                                            maxLength={10}
                                             onChange={(e) => setCustomer({ ...customer, contact: e.target.value })}
                                         />
                                     </div>
@@ -882,7 +884,7 @@ const Invoice = () => {
                                     </div>
                                     <div className="space-y-3">
                                         <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                            <MapPin size={14} className="text-primary-500" /> Regional Domain
+                                            <MapPin size={14} className="text-primary-500" /> State Name
                                         </label>
                                         <input
                                             type="text"
@@ -894,7 +896,7 @@ const Invoice = () => {
                                     </div>
                                     <div className="space-y-3">
                                         <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                            <Hash size={14} className="text-primary-500" /> Zone Code
+                                            <Hash size={14} className="text-primary-500" /> State Code
                                         </label>
                                         <input
                                             type="text"
@@ -906,7 +908,7 @@ const Invoice = () => {
                                     </div>
                                     <div className="space-y-3">
                                         <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                            <MapPin size={14} className="text-primary-500" /> Location
+                                            <MapPin size={14} className="text-primary-500" /> Address
                                         </label>
                                         <input
                                             type="text"

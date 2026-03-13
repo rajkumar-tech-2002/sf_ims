@@ -481,7 +481,7 @@ const Quotation = () => {
         { key: 'quotation_no', label: 'Quotation No', className: 'whitespace-nowrap font-bold text-slate-600' },
         { key: 'quotation_date', label: 'Date', render: (val) => <span className="whitespace-nowrap font-bold text-slate-600">{new Date(val).toLocaleDateString()}</span> },
         { key: 'customer_name', label: 'Customer', className: 'whitespace-nowrap font-bold text-slate-600' },
-        { key: 'mobile_no', label: 'Mobile', className: 'whitespace-nowrap font-bold text-slate-600' },
+        { key: 'contact_number', label: 'Mobile', className: 'whitespace-nowrap font-bold text-slate-600' },
         { key: 'gst_no', label: 'GST No', className: 'whitespace-nowrap font-bold text-slate-600' },
         { key: 'grand_total', label: 'Grand Total', render: (val) => <span className="font-black text-primary-700">₹{parseFloat(val || 0).toLocaleString()}</span> },
         { key: 'product_name', label: 'Product', className: 'whitespace-nowrap font-bold text-slate-600' },
@@ -579,7 +579,7 @@ const Quotation = () => {
                                     </div>
                                     <div className="space-y-3">
                                         <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                            <Hash size={14} className="text-primary-500" /> Reference No
+                                            <Hash size={14} className="text-primary-500" /> Quotation No
                                         </label>
                                         <input
                                             type="text"
@@ -638,26 +638,28 @@ const Quotation = () => {
 
                                     <div className="space-y-3">
                                         <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                            <Phone size={14} className="text-primary-500" /> Primary Contact
+                                            <Phone size={14} className="text-primary-500" /> Primary Mobile
                                         </label>
                                         <input
                                             type="text"
                                             className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800"
                                             placeholder="Mobile"
+                                            maxLength={10}
                                             value={customer.mobile}
                                             onChange={(e) => setCustomer({ ...customer, mobile: e.target.value })}
                                         />
                                     </div>
                                     <div className="space-y-3">
                                         <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                            <MapPin size={14} className="text-primary-500" /> Secondary Contact
+                                            <MapPin size={14} className="text-primary-500" /> Optional Mobile
                                         </label>
                                         <input
                                             type="text"
                                             className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800"
                                             value={customer.contact}
+                                            maxLength={10}
                                             onChange={(e) => setCustomer({ ...customer, contact: e.target.value })}
-                                            placeholder="Optional"
+                                            placeholder="Optional Mobile"
                                         />
                                     </div>
                                     <div className="space-y-3">
@@ -674,7 +676,7 @@ const Quotation = () => {
                                     </div>
                                     <div className="space-y-3">
                                         <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                            <MapPin size={14} className="text-primary-500" /> Regional Domain
+                                            <MapPin size={14} className="text-primary-500" /> State Name
                                         </label>
                                         <input
                                             type="text"
@@ -687,7 +689,7 @@ const Quotation = () => {
 
                                     <div className="space-y-3">
                                         <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                            <Hash size={14} className="text-primary-500" /> Zone Code
+                                            <Hash size={14} className="text-primary-500" /> State Code
                                         </label>
                                         <input
                                             type="text"
@@ -699,7 +701,7 @@ const Quotation = () => {
                                     </div>
                                     <div className="md:col-span-3 space-y-3">
                                         <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
-                                            <MapPin size={14} className="text-primary-500" /> Geographic Location
+                                            <MapPin size={14} className="text-primary-500" /> Address
                                         </label>
                                         <textarea
                                             rows="1"

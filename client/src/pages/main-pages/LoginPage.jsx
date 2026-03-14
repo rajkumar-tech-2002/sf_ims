@@ -114,9 +114,9 @@ const LoginPage = () => {
                     </div>
 
                     <form onSubmit={handleLogin} className="space-y-6">
-                        <div className="space-y-1.5">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                <Shield size={12} /> Select Role</label>
+                        <div className="form-group">
+                            <label className="input-label flex items-center gap-2">
+                                <Shield size={16} className="text-slate-400" /> Select Role</label>
                             <div className="relative">
                                 <select
                                     required
@@ -134,9 +134,9 @@ const LoginPage = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="space-y-1.5">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                <Mail size={12} /> User ID</label>
+                        <div className="form-group">
+                            <label className="input-label flex items-center gap-2">
+                                <Mail size={16} className="text-slate-400" /> User ID</label>
                             <div className="relative">
                                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                                 <input
@@ -150,10 +150,10 @@ const LoginPage = () => {
                             </div>
                         </div>
 
-                        <div className="space-y-1.5">
-                            <div className="flex justify-between items-center px-1">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                                    <Lock size={12} /> Password</label>
+                        <div className="form-group">
+                            <div className="flex justify-between items-center">
+                                <label className="input-label flex items-center gap-2">
+                                    <Lock size={16} className="text-slate-400" /> Password</label>
                             </div>
                             <div className="relative">
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
@@ -180,7 +180,7 @@ const LoginPage = () => {
                             <label htmlFor="remember" className="text-sm text-slate-600 font-medium cursor-pointer">Remember me</label>
                         </div>
 
-                        <button type="submit" className="w-full btn btn-primary py-4 text-base mt-2 flex items-center justify-center gap-2">
+                        <button type="submit" className="w-full btn btn-primary py-3.5 text-[15px] mt-6 flex items-center justify-center gap-2">
                             Sign In <ArrowRight size={20} />
                         </button>
                     </form>

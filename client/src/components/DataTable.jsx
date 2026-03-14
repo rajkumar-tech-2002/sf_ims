@@ -10,6 +10,8 @@ import {
     Filter
 } from 'lucide-react';
 
+const EMPTY_ARRAY = [];
+
 const DataTable = ({
     columns,
     data,
@@ -17,7 +19,7 @@ const DataTable = ({
     searchTerm = '',
     onSearchChange,
     searchPlaceholder = "Search...",
-    filters = [],
+    filters = EMPTY_ARRAY,
     pagination = { itemsPerPage: 10 },
     actions = null,
     emptyMessage = "No records found"
@@ -68,10 +70,10 @@ const DataTable = ({
     );
 
     return (
-        <div className="card p-0 overflow-hidden border-none shadow-premium bg-white">
+        <div className="card !p-0 overflow-hidden bg-white">
             {/* Toolbar */}
-            <div className="p-8 border-b border-slate-100 bg-slate-50/30 flex flex-col xl:flex-row xl:items-center justify-between gap-8">
-                <div className="relative flex-1 max-w-xl group">
+            <div className="px-6 py-5 border-b border-gray-100 flex flex-col xl:flex-row xl:items-center justify-between gap-6">
+                <div className="relative flex-1 max-w-sm group">
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-500 transition-all duration-300" size={18} />
                     <input
                         type="text"
@@ -87,7 +89,7 @@ const DataTable = ({
 
                 <div className="flex flex-wrap items-center gap-6">
                     {filters.map((filter, index) => (
-                        <div key={index} className="flex items-center gap-3">
+                        <div key={filter.label || index} className="flex items-center gap-3">
                             <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{filter.label}:</span>
                             <div className="relative">
                                 <select
@@ -163,7 +165,7 @@ const DataTable = ({
                                 </td>
                             </tr>
                         ) : paginatedData.length > 0 ? paginatedData.map((item, index) => (
-                            <tr key={item.id || index} className="hover:bg-slate-50/80 transition-all duration-300 group">
+                            <tr key={item.id || index} className="tr-body tr-zebra group">
                                 {columns.map((col) => (
                                     <td key={col.key} className={`td-cell ${col.cellClassName || ''}`}>
                                         {col.render ? col.render(item[col.key], item, (currentPage - 1) * itemsPerPage + index) : item[col.key]}

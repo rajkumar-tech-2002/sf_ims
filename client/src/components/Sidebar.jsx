@@ -198,19 +198,22 @@ const Sidebar = () => {
                 <div
                     className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300"
                     onClick={closeSidebar}
+                    onKeyDown={(e) => e.key === 'Escape' && closeSidebar()}
+                    role="presentation"
+                    tabIndex={-1}
                 />
             )}
 
             <aside
-                className={`fixed md:relative inset-y-0 left-0 bg-slate-900 h-screen transition-all duration-500 ease-in-out flex flex-col z-50 
-                ${isCollapsed ? 'md:w-24' : 'md:w-72'}
-                ${isSidebarOpen ? 'translate-x-0 w-72' : '-translate-x-full md:translate-x-0'}`}
+                className={`fixed md:relative inset-y-0 left-0 bg-gradient-to-b from-primary-950 to-slate-900 border-r border-slate-800/50 h-screen transition-all duration-500 ease-in-out flex flex-col z-50 
+                ${isCollapsed ? 'md:w-20' : 'md:w-72'}
+                ${isSidebarOpen ? 'translate-x-0 w-72 shadow-2xl shadow-slate-900/50' : '-translate-x-full md:translate-x-0'}`}
             >
                 {/* Mobile Close Button */}
                 {isSidebarOpen && (
                     <button
                         onClick={closeSidebar}
-                        className="absolute top-6 right-6 p-2 bg-white/10 text-white rounded-xl md:hidden hover:bg-white/20 transition-all"
+                        className="absolute top-6 right-6 p-2 bg-white/10 text-white rounded-full md:hidden hover:bg-white/20 transition-all backdrop-blur-sm"
                     >
                         <X size={20} />
                     </button>
@@ -234,7 +237,7 @@ const Sidebar = () => {
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 px-4 mt-2 space-y-1 overflow-y-auto no-scrollbar pb-10">
+                <nav className="flex-1 mt-4 space-y-1.5 overflow-y-auto no-scrollbar pb-10">
                     {filteredMenu.map((item) => (
                         <div key={item.title}>
                             {item.children ? (
@@ -254,33 +257,33 @@ const Sidebar = () => {
 
                 {/* Footer Section */}
                 <div className="p-4 mt-auto">
-                    <div className={`bg-slate-800/40 border border-slate-700/50 rounded-2xl p-4 transition-all duration-300 ${isCollapsed ? 'items-center px-2' : ''}`}>
+                    <div className={`bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-md transition-all duration-300 ${isCollapsed ? 'items-center px-1 py-3' : ''}`}>
                         {!isCollapsed && (
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="w-10 h-10 bg-slate-700 rounded-xl flex items-center justify-center text-white font-bold text-sm">
+                                <div className="w-10 h-10 bg-primary-500/20 text-primary-400 rounded-full flex items-center justify-center font-bold text-sm shadow-inner">
                                     {user?.user_name?.[0].toUpperCase() || 'U'}
                                 </div>
                                 <div className="min-w-0">
-                                    <p className="text-xs font-bold text-white truncate capitalize">{user?.user_name}</p>
-                                    <p className="text-[10px] text-slate-500 uppercase tracking-tighter mt-0.5">{userRole}</p>
+                                    <p className="text-sm font-semibold text-white truncate capitalize">{user?.user_name}</p>
+                                    <p className="text-[11px] text-slate-400 uppercase tracking-widest mt-0.5">{userRole}</p>
                                 </div>
                             </div>
                         )}
                         <div className="flex flex-col gap-2">
                             <button
                                 onClick={logout}
-                                className={`flex items-center justify-center gap-2 py-2.5 rounded-xl bg-danger-600/10 text-danger-600 hover:bg-danger-600 hover:text-white transition-all duration-300 text-xs font-bold uppercase tracking-wider ${isCollapsed ? 'w-10 h-10' : 'w-full px-4'}`}
+                                className={`flex items-center justify-center gap-2 py-2.5 rounded-full bg-danger-500/10 text-danger-400 hover:bg-danger-500 hover:text-white transition-all duration-300 text-xs font-bold uppercase tracking-wider ${isCollapsed ? 'w-10 h-10 mx-auto' : 'w-full px-4'}`}
                             >
-                                <LogOut size={18} />
+                                <LogOut size={16} />
                                 {!isCollapsed && <span>Logout</span>}
                             </button>
                             <button
                                 onClick={() => setIsCollapsed(!isCollapsed)}
-                                className={`flex items-center justify-center py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-all duration-300 shadow-sm ${isCollapsed ? 'w-10 h-10' : 'w-full'}`}
+                                className={`flex items-center justify-center py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition-all duration-300 shadow-sm ${isCollapsed ? 'w-10 h-10 mx-auto' : 'w-full'}`}
                             >
-                                {isCollapsed ? <Menu size={18} /> :
-                                    <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em]">
-                                        <ChevronLeft size={16} /> Collapse Sidebar
+                                {isCollapsed ? <Menu size={16} /> :
+                                    <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em]">
+                                        <ChevronLeft size={16} /> Collapse
                                     </div>
                                 }
                             </button>
@@ -296,16 +299,16 @@ const SidebarLink = ({ item, isCollapsed, isSubItem = false }) => (
     <NavLink
         to={item.path}
         className={({ isActive }) =>
-            `flex items-center gap-4 transition-all duration-300 group rounded-xl
-            ${isSubItem ? 'pl-11 pr-4 py-2.5' : 'px-4 py-3.5'}
+            `flex items-center gap-3.5 transition-all duration-300 group rounded-full mx-3
+            ${isSubItem ? 'pl-11 pr-4 py-2' : 'px-4 py-3'}
             ${isActive
-                ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/20'
-                : 'text-slate-400 hover:bg-white/5 hover:text-white'
+                ? 'bg-primary-500/20 text-primary-300 shadow-sm font-semibold'
+                : 'text-slate-400 hover:bg-white/5 hover:text-slate-200'
             }`
         }
     >
-        <span className="shrink-0">{item.icon}</span>
-        {!isCollapsed && <span className={`${isSubItem ? 'text-[13px] font-medium' : 'text-sm font-semibold'} tracking-wide`}>{item.title}</span>}
+        <span className="shrink-0 transition-transform group-hover:scale-110">{item.icon}</span>
+        {!isCollapsed && <span className={`${isSubItem ? 'text-[13px] font-medium' : 'text-sm font-medium'} tracking-wide`}>{item.title}</span>}
     </NavLink>
 );
 
@@ -316,12 +319,12 @@ const SidebarGroup = ({ item, isOpen, toggle, isCollapsed, activePath }) => {
         <div className="space-y-1">
             <button
                 onClick={toggle}
-                className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl transition-all duration-300 group
-                ${isAnyChildActive ? 'text-primary-400 font-bold' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}
+                className={`w-full flex items-center justify-between px-4 py-3 mx-3 rounded-full transition-all duration-300 group max-w-[calc(100%-24px)]
+                ${isAnyChildActive ? 'text-primary-300 font-semibold' : 'text-slate-400 hover:bg-white/5 hover:text-slate-200'}`}
             >
-                <div className="flex items-center gap-4">
-                    <span className="shrink-0">{item.icon}</span>
-                    {!isCollapsed && <span className="text-sm font-semibold tracking-wide">{item.title}</span>}
+                <div className="flex items-center gap-3.5">
+                    <span className="shrink-0 transition-transform group-hover:scale-110">{item.icon}</span>
+                    {!isCollapsed && <span className="text-sm font-medium tracking-wide">{item.title}</span>}
                 </div>
                 {!isCollapsed && (
                     <span className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>

@@ -303,7 +303,7 @@ const StockReturn = () => {
                     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                             {/* Process Card */}
-                            <div className="lg:col-span-2 card p-0 overflow-hidden">
+                            <div className="lg:col-span-2 card !p-0 overflow-hidden">
                                 <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center gap-4">
                                     <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
                                         <RotateCcw size={20} />
@@ -314,7 +314,7 @@ const StockReturn = () => {
                                 <div className="p-8">
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                                         <div className="space-y-3">
-                                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                                 <Calendar size={14} className="text-primary-500" /> Return Date
                                             </label>
                                             <input
@@ -325,7 +325,7 @@ const StockReturn = () => {
                                             />
                                         </div>
                                         <div className="space-y-3">
-                                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                                 <FileText size={14} className="text-primary-500" /> Bill Reference
                                             </label>
                                             <div className="relative group">
@@ -390,7 +390,7 @@ const StockReturn = () => {
                                             </div>
                                         </div>
                                         <div className="space-y-3">
-                                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                                 <Hash size={14} className="text-primary-500" /> Return ID
                                             </label>
                                             <input

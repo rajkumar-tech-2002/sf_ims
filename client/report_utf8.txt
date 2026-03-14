@@ -1,0 +1,177 @@
+﻿react-doctor v0.0.30
+
+[32mΓ£ö[39m Select projects to scan [2mΓÇ║[22m client
+Scanning changes: [36mdevelopment[39m ΓåÆ [36mmain[39m
+
+[2mScanning D:\SF Projects\IMS\client...[22m
+
+
+  [33mΓÜá[39m Enforce a clickable non-interactive element has at least one keyboard event listener.[33m (6)[39m
+[2m    Visible, non-interactive elements with click handlers must have one of `keyup`, `keydown`, or `keypress` listener.[22m
+[2m    src/components/Navbar.jsx: 68[22m
+[2m    src/pages/billing/Quotation.jsx: 631[22m
+[2m    src/pages/reports/CreditCollectionReport.jsx: 144[22m
+[2m    src/components/Sidebar.jsx: 198[22m
+[2m    src/pages/billing/Invoice.jsx: 785, 839[22m
+
+  [33mΓÜá[39m Static HTML elements with event handlers require a role.[33m (6)[39m
+[2m    Add a role attribute to this element, or use a semantic HTML element instead.[22m
+[2m    src/components/Navbar.jsx: 68[22m
+[2m    src/pages/billing/Quotation.jsx: 631[22m
+[2m    src/pages/reports/CreditCollectionReport.jsx: 144[22m
+[2m    src/components/Sidebar.jsx: 198[22m
+[2m    src/pages/billing/Invoice.jsx: 785, 839[22m
+
+  [33mΓÜá[39m Do not use `dangerouslySetInnerHTML` prop[33m (14)[39m
+[2m    `dangerouslySetInnerHTML` is a way to inject HTML into your React component. This is dangerous because it can easily lead to XSS vulnerabilities.[22m
+[2m    src/components/reports/QuotationPrint.jsx: 6[22m
+[2m    src/components/reports/CustomerReportPrint.jsx: 6[22m
+[2m    src/components/reports/PurchaseReportPrint.jsx: 6[22m
+[2m    src/components/reports/ReturnReportPrint.jsx: 6[22m
+[2m    src/components/reports/AssetReportPrint.jsx: 18[22m
+[2m    src/components/reports/InvoicePrint.jsx: 6[22m
+[2m    src/components/reports/DailyReportPrint.jsx: 6[22m
+[2m    src/components/reports/StockReportPrint.jsx: 6[22m
+[2m    src/components/reports/CreditCollectionReportPrint.jsx: 8[22m
+[2m    src/components/reports/RawMaterialStockReportPrint.jsx: 6[22m
+[2m    src/components/reports/CashBookPrint.jsx: 6[22m
+[2m    src/components/reports/RawMaterialPurchaseReportPrint.jsx: 6[22m
+[2m    src/components/reports/BillReportPrint.jsx: 11[22m
+[2m    src/components/reports/IncomeExpenseReportPrint.jsx: 10[22m
+
+  [33mΓÜá[39m Array index "index" used as key ΓÇö causes bugs when list is reordered or filtered[33m (20)[39m
+[2m    Use a stable unique identifier: `key={item.id}` or `key={item.slug}` ΓÇö index keys break on reorder/filter[22m
+[2m    src/pages/file/HelpCenter.jsx: 46[22m
+[2m    src/components/reports/CustomerReportPrint.jsx: 45[22m
+[2m    src/components/reports/PurchaseReportPrint.jsx: 46[22m
+[2m    src/components/reports/ReturnReportPrint.jsx: 46[22m
+[2m    src/components/reports/AssetReportPrint.jsx: 58[22m
+[2m    src/pages/reports/BillReport.jsx: 216, 236[22m
+[2m    src/pages/main-pages/LandingPage.jsx: 149, 226[22m
+[2m    src/components/reports/DailyReportPrint.jsx: 48[22m
+[2m    src/components/reports/StockReportPrint.jsx: 46[22m
+[2m    src/components/reports/CreditCollectionReportPrint.jsx: 57[22m
+[2m    src/components/reports/RawMaterialStockReportPrint.jsx: 46[22m
+[2m    src/components/DataTable.jsx: 90[22m
+[2m    src/components/reports/CashBookPrint.jsx: 53[22m
+[2m    src/components/reports/RawMaterialPurchaseReportPrint.jsx: 49[22m
+[2m    src/components/reports/BillReportPrint.jsx: 55[22m
+[2m    src/components/reports/IncomeExpenseReportPrint.jsx: 53[22m
+[2m    src/pages/main-pages/Dashboard.jsx: 205, 294[22m
+
+  [33mΓÜá[39m A form label must be associated with a control.[33m (142)[39m
+[2m    Either give the label a `htmlFor` attribute with the id of the associated control, or wrap the label around the control.[22m
+[2m    src/pages/reports/ReturnReport.jsx: 131, 144[22m
+[2m    src/pages/main-pages/Profile.jsx: 173, 178, 183, 188, 193, 198, 224, 230, 235[22m
+[2m    src/pages/billing/Quotation.jsx: 570, 581, 592, 640, 653, 666, 678, 691, 703[22m
+[2m    src/pages/reports/BillReport.jsx: 175, 190, 205, 224[22m
+[2m    src/pages/income-expense/Assets.jsx: 291, 305, 318, 332, 349[22m
+[2m    src/pages/return-billing/StockReturn.jsx: 317, 328, 393[22m
+[2m    src/pages/master/Customers.jsx: 206, 222, 238, 253, 268, 284, 301, 316[22m
+[2m    src/pages/master/RawMaterialStockEntry.jsx: 185, 197, 209, 222, 234, 246, 261, 282, 294[22m
+[2m    src/pages/file/UserCreation.jsx: 337, 354, 414, 429, 446, 471[22m
+[2m    src/pages/reports/CashBook.jsx: 175, 195, 211[22m
+[2m    src/pages/reports/PurchaseReport.jsx: 137, 150[22m
+[2m    src/pages/reports/IncomeExpenseReport.jsx: 181, 194, 220, 235, 250, 265[22m
+[2m    src/pages/income-expense/Transactions.jsx: 280, 293, 314, 336, 349, 362, 378[22m
+[2m    src/pages/master/RawMaterialPurchaseEntry.jsx: 248, 262, 285, 308, 322, 337, 355, 368[22m
+[2m    src/pages/income-expense/IncomeExpense.jsx: 312, 329, 351, 364, 378, 392, 408[22m
+[2m    src/pages/master/Enquiry.jsx: 176, 191, 215, 231, 247, 264[22m
+[2m    src/pages/reports/CreditCollectionReport.jsx: 111, 150[22m
+[2m    src/pages/master/Vendor.jsx: 160, 173, 187, 202, 215[22m
+[2m    src/pages/master/StockEntry.jsx: 229, 242, 255, 269, 282, 295, 312, 369, 382, 395[22m
+[2m    src/pages/reports/DailyReport.jsx: 164, 177[22m
+[2m    src/pages/reports/RawMaterialPurchaseReport.jsx: 154, 167[22m
+[2m    src/pages/billing/Invoice.jsx: 644, 725, 737, 750, 800, 848, 861, 874, 886, 898, 910[22m
+[2m    src/pages/billing/CreditCollection.jsx: 196, 210, 223, 241, 255, 269, 287[22m
+[2m    src/pages/master/PurchaseEntry.jsx: 253, 268, 292, 316, 332, 351[22m
+[2m    src/pages/main-pages/LoginPage.jsx: 118, 138, 155[22m
+
+  [33mΓÜá[39m useEffect simulating an event handler ΓÇö move logic to an actual event handler instead
+[2m    Move the conditional logic into onClick, onChange, or onSubmit handlers directly[22m
+[2m    src/pages/main-pages/Profile.jsx: 43[22m
+
+  [33mΓÜá[39m Component "Quotation" has 17 useState calls ΓÇö consider useReducer for related state[33m (19)[39m
+[2m    Group related state: `const [state, dispatch] = useReducer(reducer, { field1, field2, ... })`[22m
+[2m    src/pages/billing/Quotation.jsx: 54[22m
+[2m    src/pages/reports/BillReport.jsx: 18[22m
+[2m    src/pages/income-expense/Assets.jsx: 75[22m
+[2m    src/pages/return-billing/StockReturn.jsx: 26[22m
+[2m    src/pages/master/Customers.jsx: 25[22m
+[2m    src/pages/master/RawMaterialStockEntry.jsx: 26[22m
+[2m    src/pages/file/UserCreation.jsx: 71[22m
+[2m    src/pages/reports/IncomeExpenseReport.jsx: 18[22m
+[2m    src/pages/income-expense/Transactions.jsx: 74[22m
+[2m    src/pages/master/RawMaterialPurchaseEntry.jsx: 25[22m
+[2m    src/pages/income-expense/IncomeExpense.jsx: 77[22m
+[2m    src/pages/master/Enquiry.jsx: 23[22m
+[2m    src/pages/reports/CreditCollectionReport.jsx: 8[22m
+[2m    src/pages/master/Vendor.jsx: 22[22m
+[2m    src/pages/master/StockEntry.jsx: 29[22m
+[2m    src/pages/billing/Invoice.jsx: 54[22m
+[2m    src/pages/billing/CreditCollection.jsx: 23[22m
+[2m    src/pages/master/PurchaseEntry.jsx: 25[22m
+[2m    src/pages/main-pages/LoginPage.jsx: 7[22m
+
+  [33mΓÜá[39m Component "Quotation" is 942 lines ΓÇö consider breaking it into smaller focused components[33m (16)[39m
+[2m    Extract logical sections into focused components: `<UserHeader />`, `<UserActions />`, etc.[22m
+[2m    src/pages/billing/Quotation.jsx: 54[22m
+[2m    src/pages/income-expense/Assets.jsx: 75[22m
+[2m    src/pages/return-billing/StockReturn.jsx: 26[22m
+[2m    src/pages/master/Customers.jsx: 25[22m
+[2m    src/pages/master/RawMaterialStockEntry.jsx: 26[22m
+[2m    src/pages/file/UserCreation.jsx: 71[22m
+[2m    src/pages/reports/IncomeExpenseReport.jsx: 18[22m
+[2m    src/pages/income-expense/Transactions.jsx: 74[22m
+[2m    src/pages/master/RawMaterialPurchaseEntry.jsx: 25[22m
+[2m    src/pages/income-expense/IncomeExpense.jsx: 77[22m
+[2m    src/pages/master/Enquiry.jsx: 23[22m
+[2m    src/pages/master/Vendor.jsx: 22[22m
+[2m    src/pages/master/StockEntry.jsx: 29[22m
+[2m    src/pages/billing/Invoice.jsx: 54[22m
+[2m    src/pages/billing/CreditCollection.jsx: 23[22m
+[2m    src/pages/master/PurchaseEntry.jsx: 25[22m
+
+  [33mΓÜá[39m 4 setState calls in a single useEffect ΓÇö consider using useReducer or deriving state
+[2m    Combine into useReducer: `const [state, dispatch] = useReducer(reducer, initialState)`[22m
+[2m    src/pages/reports/BillReport.jsx: 48[22m
+
+  [33mΓÜá[39m The `autoFocus` attribute is found here, which can cause usability issues for sighted and non-sighted users.[33m (5)[39m
+[2m    Remove the `autoFocus` attribute.[22m
+[2m    src/pages/income-expense/Assets.jsx: 51[22m
+[2m    src/pages/file/UserCreation.jsx: 376[22m
+[2m    src/pages/income-expense/Transactions.jsx: 50[22m
+[2m    src/pages/income-expense/IncomeExpense.jsx: 53[22m
+[2m    src/pages/master/StockEntry.jsx: 332[22m
+
+  [33mΓÜá[39m Use of incorrect `href` for the 'a' element.[33m (2)[39m
+[2m    Provide a correct `href` for the `a` element.[22m
+[2m    src/pages/main-pages/LandingPage.jsx: 205, 206[22m
+
+  [33mΓÜá[39m Default prop value [] creates a new array reference every render ΓÇö extract to a module-level constant[33m (2)[39m
+[2m    Move to module scope: `const EMPTY_ITEMS: Item[] = []` then use as the default value[22m
+[2m    src/pages/main-pages/LandingPage.jsx: 215[22m
+[2m    src/components/DataTable.jsx: 20[22m
+
+  [33mΓÜá[39m "recharts" is a heavy library ΓÇö use React.lazy() or next/dynamic for code splitting
+[2m    Use `const Component = dynamic(() => import('library'), { ssr: false })` from next/dynamic or React.lazy()[22m
+[2m    src/pages/main-pages/Dashboard.jsx: 19[22m
+
+  [2mΓöîΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÉ[22m
+  [2mΓöé[22m [32mΓöîΓöÇΓöÇΓöÇΓöÇΓöÇΓöÉ[39m                                            [2mΓöé[22m
+  [2mΓöé[22m [32mΓöé Γùá Γùá Γöé[39m                                            [2mΓöé[22m
+  [2mΓöé[22m [32mΓöé  Γû╜  Γöé[39m                                            [2mΓöé[22m
+  [2mΓöé[22m [32mΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÿ[39m                                            [2mΓöé[22m
+  [2mΓöé[22m React Doctor [2m(www.react.doctor)[22m                    [2mΓöé[22m
+  [2mΓöé[22m                                                    [2mΓöé[22m
+  [2mΓöé[22m [32m90[39m / 100  [32mGreat[39m                                    [2mΓöé[22m
+  [2mΓöé[22m                                                    [2mΓöé[22m
+  [2mΓöé[22m [32mΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê[39m[2mΓûæΓûæΓûæΓûæΓûæ[22m [2mΓöé[22m
+  [2mΓöé[22m                                                    [2mΓöé[22m
+  [2mΓöé[22m [33mΓÜá 235 warnings[39m  [2macross 45/54 files[22m  [2min 438ms[22m       [2mΓöé[22m
+  [2mΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÿ[22m
+
+[2m  Full diagnostics written to C:\Users\rajku\AppData\Local\Temp\react-doctor-f2759c85-b024-41cc-bc5a-c35978028419[22m
+
+[2m  Share your results: [36mhttps://www.react.doctor/share?p=client&s=90&w=235&f=45[39m[22m
+

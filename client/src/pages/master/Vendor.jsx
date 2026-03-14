@@ -139,7 +139,7 @@ const Vendor = () => {
                 </div>
 
                 {/* Entry Form */}
-                <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300">
+                <div className="card !p-0 overflow-hidden transition-all duration-300">
                     <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white">
@@ -157,7 +157,7 @@ const Vendor = () => {
                     <form onSubmit={handleSubmit} className="p-8 space-y-8">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Building2 size={14} className="text-primary-500" /> Company Name
                                 </label>
                                 <input
@@ -170,7 +170,7 @@ const Vendor = () => {
                                 />
                             </div>
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <User size={14} className="text-primary-500" /> Vendor Name
                                 </label>
                                 <input
@@ -184,7 +184,7 @@ const Vendor = () => {
                                 />
                             </div>
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Phone size={14} className="text-primary-500" /> Phone Number
                                 </label>
                                 <input
@@ -199,7 +199,7 @@ const Vendor = () => {
                                 />
                             </div>
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Mail size={14} className="text-primary-500" /> Email Address
                                 </label>
                                 <input
@@ -212,7 +212,7 @@ const Vendor = () => {
                                 />
                             </div>
                             <div className="space-y-3 lg:col-span-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <MapPin size={14} className="text-primary-500" /> Business Address
                                 </label>
                                 <input

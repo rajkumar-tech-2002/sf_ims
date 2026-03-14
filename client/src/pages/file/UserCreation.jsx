@@ -311,7 +311,7 @@ const UserCreation = () => {
                 <div className="grid grid-cols-1 gap-10">
                     {/* Entry Form */}
                     {!showTable && (
-                        <div className="bg-white rounded-3xl shadow-premium border border-slate-200 overflow-hidden transition-all duration-300">
+                        <div className="card !p-0 transition-all duration-300">
                             <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary-500/20">
@@ -334,7 +334,7 @@ const UserCreation = () => {
                                     </h3>
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 gap-y-10">
                                         <div className="space-y-3">
-                                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                                 <User size={14} className="text-primary-500" /> Full Name
                                             </label>
                                             <input
@@ -351,7 +351,7 @@ const UserCreation = () => {
 
                                         <div className="space-y-3">
                                             <div className="flex items-center justify-between ml-1">
-                                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] flex items-center gap-2">
+                                                <label className="input-label flex items-center gap-2">
                                                     <Shield size={14} className="text-primary-500" /> Access Role
                                                 </label>
                                                 {!isEditing && (
@@ -411,7 +411,7 @@ const UserCreation = () => {
                                         </div>
 
                                         <div className="space-y-3">
-                                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                                 <Briefcase size={14} className="text-primary-500" /> Department
                                             </label>
                                             <input
@@ -426,7 +426,7 @@ const UserCreation = () => {
                                         </div>
 
                                         <div className="space-y-3 relative">
-                                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                                 <Hash size={14} className="text-primary-500" /> Login ID
                                             </label>
                                             <input
@@ -443,7 +443,7 @@ const UserCreation = () => {
 
                                         {!isEditing && (
                                             <div className="space-y-3">
-                                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                                <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                                     <Lock size={14} className="text-primary-500" /> Security Key
                                                 </label>
                                                 <div className="relative">
@@ -468,7 +468,7 @@ const UserCreation = () => {
                                         )}
 
                                         <div className="space-y-3">
-                                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                                 <Phone size={14} className="text-primary-500" /> Mobile Contact
                                             </label>
                                             <input
@@ -553,7 +553,7 @@ const UserCreation = () => {
                     {/* Table Section - Bottom */}
                     {showTable && (
                         <div className="animate-in fade-in slide-in-from-top-4 duration-500">
-                            <div className="bg-white rounded-3xl shadow-premium border border-slate-200 overflow-hidden">
+                            <div className="card !p-0 overflow-hidden">
                                 <DataTable
                                     columns={columns}
                                     data={users}

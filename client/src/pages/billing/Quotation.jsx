@@ -557,7 +557,7 @@ const Quotation = () => {
                     {/* Left: Customer & Items */}
                     <div className="lg:col-span-3 space-y-8">
 
-                        <div className="bg-white rounded-[2rem] shadow-premium border border-slate-200 overflow-hidden">
+                        <div className="card !p-0 overflow-hidden">
                             <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center gap-4">
                                 <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
                                     <User size={20} />
@@ -567,7 +567,7 @@ const Quotation = () => {
                             <div className="p-8">
                                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                                     <div className="space-y-3">
-                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                        <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                             <Calendar size={14} className="text-primary-500" /> Date
                                         </label>
                                         <input
@@ -578,7 +578,7 @@ const Quotation = () => {
                                         />
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                        <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                             <Hash size={14} className="text-primary-500" /> Quotation No
                                         </label>
                                         <input
@@ -589,7 +589,7 @@ const Quotation = () => {
                                         />
                                     </div>
                                     <div className="md:col-span-2 relative space-y-3">
-                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                        <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                             <User size={14} className="text-primary-500" /> Client Name
                                         </label>
                                         <div className="relative">
@@ -637,7 +637,7 @@ const Quotation = () => {
                                     </div>
 
                                     <div className="space-y-3">
-                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                        <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                             <Phone size={14} className="text-primary-500" /> Primary Mobile
                                         </label>
                                         <input
@@ -650,7 +650,7 @@ const Quotation = () => {
                                         />
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                        <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                             <MapPin size={14} className="text-primary-500" /> Optional Mobile
                                         </label>
                                         <input
@@ -663,7 +663,7 @@ const Quotation = () => {
                                         />
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                        <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                             <FileText size={14} className="text-primary-500" /> Tax Identifier (GST)
                                         </label>
                                         <input
@@ -675,7 +675,7 @@ const Quotation = () => {
                                         />
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                        <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                             <MapPin size={14} className="text-primary-500" /> State Name
                                         </label>
                                         <input
@@ -688,7 +688,7 @@ const Quotation = () => {
                                     </div>
 
                                     <div className="space-y-3">
-                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                        <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                             <Hash size={14} className="text-primary-500" /> State Code
                                         </label>
                                         <input
@@ -700,7 +700,7 @@ const Quotation = () => {
                                         />
                                     </div>
                                     <div className="md:col-span-3 space-y-3">
-                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                        <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                             <MapPin size={14} className="text-primary-500" /> Address
                                         </label>
                                         <textarea
@@ -715,7 +715,7 @@ const Quotation = () => {
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-[2rem] shadow-premium border border-slate-200 overflow-hidden">
+                        <div className="card !p-0 overflow-hidden">
                             <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                                 <div className="flex items-center gap-4">
                                     <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">

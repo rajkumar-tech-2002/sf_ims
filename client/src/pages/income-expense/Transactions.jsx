@@ -27,7 +27,7 @@ const DropdownWithAdd = ({ label, field, options, icon: Icon, formData, setFormD
     return (
         <div className="space-y-3">
             <div className="flex items-center justify-between ml-1">
-                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] flex items-center gap-2">
+                <label className="input-label mb-2 flex items-center gap-2">
                     {Icon && <Icon size={14} className="text-primary-500" />} {label}
                 </label>
                 <button
@@ -259,7 +259,7 @@ const Transactions = () => {
                 </div>
 
                 {!showTable ? (
-                    <div className="bg-white rounded-3xl shadow-premium border border-slate-200 overflow-hidden transition-all duration-300">
+                    <div className="card !p-0 overflow-hidden transition-all duration-300">
                         <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/20 flex items-center justify-between">
                             <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary-500/20">
@@ -277,7 +277,7 @@ const Transactions = () => {
                         <div className="p-8 lg:p-10 space-y-10">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                                 <div className="space-y-3">
-                                    <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                         <Calendar size={14} className="text-primary-500" /> Date
                                     </label>
                                     <input
@@ -290,7 +290,7 @@ const Transactions = () => {
 
                                 {/* Vendor */}
                                 <div className="space-y-3">
-                                    <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                         <Truck size={14} className="text-primary-500" /> Vendor
                                     </label>
                                     <div className="relative">
@@ -311,7 +311,7 @@ const Transactions = () => {
                                 </div>
 
                                 <div className="space-y-3">
-                                    <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] text-center ml-1">
+                                    <label className="input-label mb-2 ml-1 text-center">
                                         Payment Mode
                                     </label>
                                     <div className="flex bg-slate-50 p-1.5 rounded-2xl border border-slate-200 shadow-sm h-[52px]">
@@ -333,7 +333,7 @@ const Transactions = () => {
                                 </div>
 
                                 <div className="space-y-3">
-                                    <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                         <Hash size={14} className="text-primary-500" /> Bill Number
                                     </label>
                                     <input
@@ -346,7 +346,7 @@ const Transactions = () => {
                                 </div>
 
                                 <div className="space-y-3 lg:col-span-2">
-                                    <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                         <FileText size={14} className="text-primary-500" /> Description
                                     </label>
                                     <input
@@ -359,7 +359,7 @@ const Transactions = () => {
                                 </div>
 
                                 <div className="space-y-3">
-                                    <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                         <IndianRupee size={14} className="text-primary-500" /> Buy Amount
                                     </label>
                                     <div className="relative">
@@ -375,7 +375,7 @@ const Transactions = () => {
                                 </div>
 
                                 <div className="space-y-3">
-                                    <label className="block text-[11px] font-black text-green-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                    <label className="input-label mb-2 ml-1 flex items-center gap-2 !text-green-600">
                                         <IndianRupee size={14} className="text-green-500" /> Paid Amount
                                     </label>
                                     <div className="relative">

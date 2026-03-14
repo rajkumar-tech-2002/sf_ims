@@ -43,7 +43,7 @@ const HelpCenter = () => {
             {/* Support Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {supportContacts.map((contact, index) => (
-                    <div key={index} className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                    <div key={index} className="card p-8 group hover:-translate-y-1 transition-all duration-300">
                         <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                             {contact.icon}
                         </div>

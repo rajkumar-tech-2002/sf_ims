@@ -168,11 +168,11 @@ const CashBook = () => {
             </div>
 
             {/* Config & Filters */}
-            <div className="card !p-0 bg-white border-slate-200 shadow-premium overflow-hidden mb-10 no-print">
+            <div className="card !p-0 overflow-hidden mb-10 no-print">
                 <div className="p-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-end">
                         <div className="space-y-3">
-                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                 <Wallet size={14} className="text-primary-500" /> Payment Type
                             </label>
                             <div className="flex items-center bg-slate-50 p-1 rounded-xl border border-slate-200 h-[52px]">
@@ -192,7 +192,7 @@ const CashBook = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                 <Calendar size={14} className="text-primary-500" /> From Date
                             </label>
                             <div className="relative">
@@ -208,7 +208,7 @@ const CashBook = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                 <Calendar size={14} className="text-primary-500" /> To Date
                             </label>
                             <div className="relative">

@@ -167,7 +167,7 @@ const IncomeExpenseReport = () => {
             </div>
 
             {/* Filter Section */}
-            <div className="card !p-0 bg-white border-slate-200 shadow-premium overflow-hidden mb-10">
+            <div className="card !p-0 overflow-hidden mb-10">
                 <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center gap-4">
                     <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
                         <Filter size={20} />
@@ -178,7 +178,7 @@ const IncomeExpenseReport = () => {
                     {/* Row 1: Dates */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-end">
                         <div className="space-y-3">
-                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                 <Calendar size={14} className="text-primary-500" /> Start Date
                             </label>
                             <input
@@ -191,7 +191,7 @@ const IncomeExpenseReport = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                 <Calendar size={14} className="text-primary-500" /> End Date
                             </label>
                             <input
@@ -217,7 +217,7 @@ const IncomeExpenseReport = () => {
                     {/* Row 2: Advanced Filters */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         <div className="space-y-3">
-                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1">
+                            <label className="input-label mb-2 ml-1">
                                 Group
                             </label>
                             <select
@@ -232,7 +232,7 @@ const IncomeExpenseReport = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1">
+                            <label className="input-label mb-2 ml-1">
                                 Head (Auth)
                             </label>
                             <select
@@ -247,7 +247,7 @@ const IncomeExpenseReport = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1">
+                            <label className="input-label mb-2 ml-1">
                                 Description
                             </label>
                             <select
@@ -262,7 +262,7 @@ const IncomeExpenseReport = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1">
+                            <label className="input-label mb-2 ml-1">
                                 Bill No
                             </label>
                             <select

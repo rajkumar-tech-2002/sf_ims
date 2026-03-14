@@ -37,24 +37,24 @@ import api from '../../utils/api';
 import { useAuth } from '../../context/AuthContext';
 
 const StatCard = ({ title, value, icon, color, change, trend }) => (
-    <div className="card group hover:-translate-y-1 duration-500 overflow-hidden relative">
+    <div className="card group hover:-translate-y-1 duration-500 overflow-hidden relative border border-slate-200">
         <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
-                <div className={`p-3 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-500 ${color}`}>
+                <div className={`p-3 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 duration-500 ${color}`}>
                     {React.cloneElement(icon, { size: 20 })}
                 </div>
                 {change && (
-                    <div className={`flex items-center text-[10px] font-black px-2 py-1 rounded-full ${trend === 'up' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'
+                    <div className={`flex items-center text-[11px] font-semibold px-2 py-1 rounded-full ${trend === 'up' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'
                         }`}>
-                        {trend === 'up' ? <ArrowUpRight size={12} className="mr-0.5" /> : <ArrowDownRight size={12} className="mr-0.5" />}
-                        <span className="uppercase tracking-tighter">{change}</span>
+                        {trend === 'up' ? <ArrowUpRight size={14} className="mr-0.5" /> : <ArrowDownRight size={14} className="mr-0.5" />}
+                        <span>{change}</span>
                     </div>
                 )}
             </div>
             <div>
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-2">{title}</p>
+                <p className="text-xs font-medium text-slate-500 mb-1">{title}</p>
                 <div className="flex items-baseline gap-1 overflow-hidden">
-                    <h3 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight truncate">{value}</h3>
+                    <h3 className="card-metric truncate">{value}</h3>
                 </div>
             </div>
         </div>
@@ -222,41 +222,48 @@ const Dashboard = () => {
             )}
 
             <div className="grid grid-cols-1 gap-8">
-                {/* Net Financial Throughput (Line Chart) */}
-                <div className="card !p-10">
-                    <div className="flex items-center justify-between mb-10">
+                {/* Net Financial Throughput (Area Chart) */}
+                <div className="card !p-8">
+                    <div className="flex items-center justify-between mb-8">
                         <div>
-                            <h3 className="text-xl font-black text-slate-900 tracking-tight">Net Financial Vector</h3>
-                            <p className="text-slate-500 text-[11px] font-bold uppercase tracking-widest mt-1">Monthly Revenue Margin (Invoices - Returns)</p>
+                            <h3 className="text-lg font-bold text-slate-900 tracking-tight">Net Financial Vector</h3>
+                            <p className="text-sm text-slate-500 font-medium mt-1">Monthly Revenue Margin (Invoices - Returns)</p>
                         </div>
                     </div>
                     <div className="h-72 w-full">
                         <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
-                            <LineChart data={trend}>
+                            <AreaChart data={trend} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                                <defs>
+                                    <linearGradient id="colorVolume" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3}/>
+                                        <stop offset="95%" stopColor="#6366f1" stopOpacity={0}/>
+                                    </linearGradient>
+                                </defs>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                                 <XAxis
                                     dataKey="date"
                                     axisLine={false}
                                     tickLine={false}
-                                    tick={{ fill: '#64748b', fontSize: 10, fontWeight: 800 }}
+                                    tick={{ fill: '#64748b', fontSize: 12, fontWeight: 500 }}
                                 />
                                 <YAxis
                                     axisLine={false}
                                     tickLine={false}
-                                    tick={{ fill: '#64748b', fontSize: 10, fontWeight: 800 }}
+                                    tick={{ fill: '#64748b', fontSize: 12, fontWeight: 500 }}
                                 />
                                 <Tooltip
-                                    contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)' }}
+                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
                                 />
-                                <Line
+                                <Area
                                     type="monotone"
                                     dataKey="volume"
                                     stroke="#6366f1"
-                                    strokeWidth={4}
-                                    dot={{ r: 4, fill: '#6366f1', strokeWidth: 2, stroke: '#fff' }}
-                                    activeDot={{ r: 6, strokeWidth: 0 }}
+                                    strokeWidth={3}
+                                    fillOpacity={1}
+                                    fill="url(#colorVolume)"
+                                    activeDot={{ r: 6, strokeWidth: 0, fill: '#6366f1' }}
                                 />
-                            </LineChart>
+                            </AreaChart>
                         </ResponsiveContainer>
                     </div>
                 </div>
@@ -264,9 +271,9 @@ const Dashboard = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 pb-8">
                 {/* Top Products and Stock Health */}
-                <div className="lg:col-span-2 card !p-10">
-                    <h3 className="text-xl font-black text-slate-900 tracking-tight mb-2">Stock Availability Assets</h3>
-                    <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-8">Current inventory Volume (Units Available)</p>
+                <div className="lg:col-span-2 card !p-8">
+                    <h3 className="text-lg font-bold text-slate-900 tracking-tight mb-1">Stock Availability Assets</h3>
+                    <p className="text-sm text-slate-500 font-medium mb-6">Current inventory Volume (Units Available)</p>
                     <div className="h-64 w-full">
                         <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                             <BarChart data={topProducts} margin={{ top: 20 }}>
@@ -275,14 +282,14 @@ const Dashboard = () => {
                                     dataKey="product_name"
                                     axisLine={false}
                                     tickLine={false}
-                                    tick={{ fill: '#1e293b', fontSize: 10, fontWeight: 900 }}
+                                    tick={{ fill: '#64748b', fontSize: 11, fontWeight: 500 }}
                                 />
                                 <YAxis axisLine={false} tickLine={false} hide />
                                 <Tooltip
                                     cursor={{ fill: '#f8fafc' }}
                                     contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
                                 />
-                                <Bar dataKey="total_qty" radius={[8, 8, 0, 0]} barSize={40}>
+                                <Bar dataKey="total_qty" radius={[6, 6, 0, 0]} barSize={32}>
                                     {topProducts.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                     ))}

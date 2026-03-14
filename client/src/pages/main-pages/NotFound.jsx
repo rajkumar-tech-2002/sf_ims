@@ -17,7 +17,7 @@ const NotFound = () => {
                     The logistics pathway you followed does not currently exist in our global registry.
                 </p>
 
-                <Link to="/" className="btn btn-primary px-10 py-4 flex items-center gap-3 mx-auto shadow-primary-500/30">
+                <Link to="/" className="btn btn-primary px-8 py-3.5 flex items-center gap-2 mx-auto shadow-sm">
                     <ArrowLeft size={18} /> Re-route to Hub
                 </Link>
             </div>

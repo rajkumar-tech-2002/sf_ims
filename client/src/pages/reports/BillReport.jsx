@@ -162,7 +162,7 @@ const BillReport = () => {
                 </div>
             </div>
 
-            <div className="card !p-0 bg-white border-slate-200/60 shadow-premium relative overflow-hidden ring-1 ring-slate-100">
+            <div className="card !p-0 relative overflow-hidden">
                 <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center gap-4">
                     <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
                         <Filter size={20} />
@@ -172,7 +172,7 @@ const BillReport = () => {
                 <div className="p-10">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8 items-end">
                         <div className="space-y-4">
-                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                 <Calendar size={14} className="text-primary-500" /> From Date
                             </label>
                             <div className="relative group">
@@ -187,7 +187,7 @@ const BillReport = () => {
                         </div>
 
                         <div className="space-y-4">
-                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                 <Calendar size={14} className="text-primary-500" /> To Date
                             </label>
                             <div className="relative group">
@@ -202,7 +202,7 @@ const BillReport = () => {
                         </div>
 
                         <div className="space-y-4">
-                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                 <Filter size={14} className="text-primary-500" /> Product Category
                             </label>
                             <div className="relative group">
@@ -221,7 +221,7 @@ const BillReport = () => {
                         </div>
 
                         <div className="space-y-4">
-                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                 <Search size={14} className="text-primary-500" /> Item Description
                             </label>
                             <div className="relative group">

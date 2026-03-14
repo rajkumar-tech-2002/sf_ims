@@ -184,7 +184,7 @@ const Customers = () => {
                 </div>
 
                 {/* Entry Form */}
-                <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300">
+                <div className="card !p-0 overflow-hidden transition-all duration-300">
                     <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white">
@@ -203,7 +203,7 @@ const Customers = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             {/* Customer ID */}
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Hash size={14} className="text-primary-500" /> Reference ID
                                 </label>
                                 <input
@@ -219,7 +219,7 @@ const Customers = () => {
 
                             {/* Customer Name */}
                             <div className="space-y-3 lg:col-span-2">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Users size={14} className="text-primary-500" /> Client Name
                                 </label>
                                 <input
@@ -235,7 +235,7 @@ const Customers = () => {
 
                             {/* GST NO */}
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Briefcase size={14} className="text-primary-500" /> GST Number
                                 </label>
                                 <input
@@ -250,7 +250,7 @@ const Customers = () => {
 
                             {/* Address */}
                             <div className="space-y-3 lg:col-span-4">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <MapPin size={14} className="text-primary-500" /> Address
                                 </label>
                                 <textarea
@@ -265,7 +265,7 @@ const Customers = () => {
 
                             {/* Contact Person */}
                             <div className="space-y-3 lg:col-span-2">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Phone size={14} className="text-primary-500" /> Primary Contact
                                 </label>
                                 <input
@@ -281,7 +281,7 @@ const Customers = () => {
 
                             {/* Mobile */}
                             <div className="space-y-3 lg:col-span-2">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Smartphone size={14} className="text-primary-500" /> Optional Number
                                 </label>
                                 <input
@@ -298,7 +298,7 @@ const Customers = () => {
 
                             {/* State */}
                             <div className="space-y-3 lg:col-span-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <MapPin size={14} className="text-primary-500" /> State Name
                                 </label>
                                 <input
@@ -313,7 +313,7 @@ const Customers = () => {
 
                             {/* State Code */}
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Hash size={14} className="text-primary-500" /> State Code
                                 </label>
                                 <input

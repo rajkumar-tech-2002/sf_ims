@@ -632,7 +632,7 @@ const Invoice = () => {
                         {/* Quotation Import & Bill Header */}
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                             {/* Import Card */}
-                            <div className="bg-white rounded-[2rem] shadow-premium border border-slate-100 overflow-hidden transition-all hover:shadow-2xl hover:shadow-primary-500/5">
+                            <div className="card !p-0 overflow-hidden transition-all hover:shadow-2xl hover:shadow-primary-500/5">
                                 <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center gap-4">
                                     <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
                                         <Download size={20} />
@@ -712,7 +712,7 @@ const Invoice = () => {
                             </div>
 
                             {/* Invoice Header Details */}
-                            <div className="lg:col-span-2 bg-white rounded-[2rem] shadow-premium border border-slate-100 overflow-hidden">
+                            <div className="lg:col-span-2 card !p-0 overflow-hidden">
                                 <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center gap-4">
                                     <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
                                         <FileText size={20} />
@@ -734,7 +734,7 @@ const Invoice = () => {
                                             </div>
                                         </div>
                                         <div className="space-y-3">
-                                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                                 <Calendar size={14} className="text-primary-500" /> Posting Date
                                             </label>
                                             <div className="relative">
@@ -747,7 +747,7 @@ const Invoice = () => {
                                             </div>
                                         </div>
                                         <div className="space-y-3">
-                                            <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                                 <Percent size={14} className="text-primary-500" /> GST
                                             </label>
                                             <div className="relative">
@@ -774,7 +774,7 @@ const Invoice = () => {
                         </div>
 
                         {/* Customer Info Section */}
-                        <div className="bg-white rounded-[2rem] shadow-premium border border-slate-100 overflow-hidden relative group">
+                            <div className="card !p-0 overflow-hidden group">
                             <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                                 <div className="flex items-center gap-4">
                                     <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
@@ -797,7 +797,7 @@ const Invoice = () => {
 
                                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                                     <div className="md:col-span-2 relative space-y-3">
-                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                        <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                             <User size={14} className="text-primary-500" /> Client Name
                                         </label>
                                         <div className="relative">
@@ -845,7 +845,7 @@ const Invoice = () => {
                                     </div>
 
                                     <div className="space-y-3">
-                                        <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                        <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                             <Phone size={14} className="text-primary-500" /> Primary Mobile
                                         </label>
                                         <input

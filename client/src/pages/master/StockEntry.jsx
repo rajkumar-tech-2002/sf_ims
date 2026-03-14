@@ -208,7 +208,7 @@ const StockEntry = () => {
                 </div>
 
                 {/* Entry Form */}
-                <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300">
+                <div className="card !p-0 overflow-hidden transition-all duration-300">
                     <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white">
@@ -226,73 +226,73 @@ const StockEntry = () => {
                     <form onSubmit={handleSubmit} className="p-10 space-y-10">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Hash size={14} className="text-primary-500" /> HSN Code
                                 </label>
                                 <input
                                     type="text"
                                     name="hsn_code"
-                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
+                                    className="input-field"
                                     value={formData.hsn_code}
                                     onChange={handleInputChange}
                                     placeholder="Enter HSN"
                                 />
                             </div>
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Hash size={14} className="text-primary-500" /> Product Code
                                 </label>
                                 <input
                                     type="text"
                                     name="product_code"
-                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
+                                    className="input-field"
                                     value={formData.product_code}
                                     onChange={handleInputChange}
                                     placeholder="SKU-001"
                                 />
                             </div>
                             <div className="space-y-3 lg:col-span-2">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Tag size={14} className="text-primary-500" /> Brand / Name
                                 </label>
                                 <input
                                     type="text"
                                     required
                                     name="product_name"
-                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
+                                    className="input-field"
                                     value={formData.product_name}
                                     onChange={handleInputChange}
                                     placeholder={'e.g. 5" JACQUARD Premium'}
                                 />
                             </div>
                             <div className="space-y-3 lg:col-span-4">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Package size={14} className="text-primary-500" /> Technical Description
                                 </label>
                                 <textarea
                                     name="detail"
                                     rows="2"
-                                    className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all min-h-[100px]"
+                                    className="input-field min-h-[100px] py-4"
                                     value={formData.detail}
                                     onChange={handleInputChange}
                                     placeholder="Specify material, batch info or additional details..."
                                 />
                             </div>
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Hash size={14} className="text-primary-500" /> Current Stock
                                 </label>
                                 <input
                                     type="number"
                                     required
                                     name="qty"
-                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
+                                    className="input-field"
                                     value={formData.qty}
                                     onChange={handleInputChange}
                                 />
                             </div>
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <IndianRupee size={14} className="text-primary-500" /> Unit Sale Price
                                 </label>
                                 <div className="relative">
@@ -301,7 +301,7 @@ const StockEntry = () => {
                                         type="number"
                                         required
                                         name="sale_price"
-                                        className="w-full pl-10 pr-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
+                                        className="input-field pl-10 pr-5"
                                         value={formData.sale_price}
                                         onChange={handleInputChange}
                                     />
@@ -309,7 +309,7 @@ const StockEntry = () => {
                             </div>
                             <div className="space-y-3">
                                 <div className="flex items-center justify-between ml-1">
-                                    <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] flex items-center gap-2">
+                                    <label className="input-label flex items-center gap-2">
                                         <Layers size={14} className="text-primary-500" /> Measurement Unit
                                     </label>
                                     <button
@@ -350,7 +350,7 @@ const StockEntry = () => {
                                     <div className="relative">
                                         <select
                                             name="scale"
-                                            className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-black text-slate-700 uppercase appearance-none cursor-pointer transition-all"
+                                            className="input-field uppercase appearance-none cursor-pointer"
                                             value={formData.scale}
                                             onChange={handleInputChange}
                                         >
@@ -366,39 +366,39 @@ const StockEntry = () => {
                                 )}
                             </div>
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Percent size={14} className="text-primary-500" /> GST Rate
                                 </label>
                                 <input
                                     type="number"
                                     step="0.01"
                                     name="gst"
-                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
+                                    className="input-field"
                                     value={formData.gst}
                                     onChange={handleInputChange}
                                 />
                             </div>
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Percent size={14} className="text-primary-500" /> Max Discount
                                 </label>
                                 <input
                                     type="number"
                                     step="0.01"
                                     name="discount_percent"
-                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
+                                    className="input-field"
                                     value={formData.discount_percent}
                                     onChange={handleInputChange}
                                 />
                             </div>
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <AlertTriangle size={14} className="text-rose-500" /> Alert Threshold
                                 </label>
                                 <input
                                     type="number"
                                     name="reorder_level"
-                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800 transition-all"
+                                    className="input-field"
                                     value={formData.reorder_level}
                                     onChange={handleInputChange}
                                 />

@@ -189,7 +189,7 @@ const PurchaseEntry = () => {
                 </div>
 
                 {/* Entry Form */}
-                <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+                <div className="card !p-0 overflow-hidden">
                     <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white">
@@ -250,14 +250,14 @@ const PurchaseEntry = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {/* Date */}
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Calendar size={14} className="text-primary-500" /> Procurement Date
                                 </label>
                                 <input
                                     type="date"
                                     required
                                     name="purchase_date"
-                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800"
+                                    className="input-field"
                                     value={formData.purchase_date}
                                     onChange={handleInputChange}
                                 />
@@ -265,14 +265,14 @@ const PurchaseEntry = () => {
 
                             {/* Product Dropdown */}
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Package size={14} className="text-primary-500" /> Stock Product
                                 </label>
                                 <div className="relative">
                                     <select
                                         required
                                         name="product_name"
-                                        className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-black text-slate-700 uppercase appearance-none cursor-pointer transition-all"
+                                        className="input-field uppercase appearance-none cursor-pointer"
                                         value={formData.product_name}
                                         onChange={handleInputChange}
                                     >
@@ -289,7 +289,7 @@ const PurchaseEntry = () => {
 
                             {/* Vendor Dropdown */}
                             <div className="space-y-2">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Truck size={12} className="text-primary-500" /> Vendor Name
                                 </label>
                                 <div className="relative">
@@ -313,14 +313,14 @@ const PurchaseEntry = () => {
 
                             {/* Qty */}
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <Hash size={14} className="text-primary-500" /> Procurement Qty
                                 </label>
                                 <input
                                     type="number"
                                     required
                                     name="qty"
-                                    className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 outline-none text-sm font-bold text-slate-800"
+                                    className="input-field"
                                     value={formData.qty}
                                     onChange={handleInputChange}
                                     placeholder="0"
@@ -329,7 +329,7 @@ const PurchaseEntry = () => {
 
                             {/* Purchase Rate */}
                             <div className="space-y-2">
-                                <label className="block text-[11px] font-black text-slate-600 uppercase tracking-[0.2em] ml-1 flex items-center gap-2">
+                                <label className="input-label ml-1 flex items-center gap-2">
                                     <IndianRupee size={12} className="text-primary-500" /> Purchase Rate
                                 </label>
                                 <div className="relative">

@@ -183,7 +183,7 @@ const CreditCollection = () => {
                 </div>
 
                 {/* Entry Form */}
-                <div className="bg-white rounded-[2rem] shadow-premium border border-slate-100 overflow-hidden">
+                <div className="card !p-0 overflow-hidden">
                     <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center gap-4">
                         <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
                             <Plus size={20} />
@@ -193,7 +193,7 @@ const CreditCollection = () => {
                     <div className="p-8">
                         <form onSubmit={handleSave} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-end">
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Credit ID</label>
+                                <label className="input-label mb-2 ml-1">Credit ID</label>
                                 <div className="relative">
                                     <Hash className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold" size={16} />
                                     <input
@@ -207,7 +207,7 @@ const CreditCollection = () => {
                             </div>
 
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Date</label>
+                                <label className="input-label mb-2 ml-1">Date</label>
                                 <div className="relative">
                                     <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                     <input
@@ -220,7 +220,7 @@ const CreditCollection = () => {
                             </div>
 
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Customer Name</label>
+                                <label className="input-label mb-2 ml-1">Customer Name</label>
                                 <div className="relative">
                                     <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                     <select
@@ -238,7 +238,7 @@ const CreditCollection = () => {
                             </div>
 
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Customer ID</label>
+                                <label className="input-label mb-2 ml-1">Customer ID</label>
                                 <div className="relative">
                                     <Hash className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                     <input
@@ -252,7 +252,7 @@ const CreditCollection = () => {
                             </div>
 
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Description</label>
+                                <label className="input-label mb-2 ml-1">Description</label>
                                 <div className="relative">
                                     <FileText className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                     <input
@@ -266,7 +266,7 @@ const CreditCollection = () => {
                             </div>
 
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Bill Number</label>
+                                <label className="input-label mb-2 ml-1">Bill Number</label>
                                 <div className="relative">
                                     <Hash className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                     <select
@@ -284,7 +284,7 @@ const CreditCollection = () => {
                             </div>
 
                             <div className="space-y-3">
-                                <label className="block text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Paid Amount (Rs)</label>
+                                <label className="input-label mb-2 ml-1">Paid Amount (Rs)</label>
                                 <div className="relative">
                                     <IndianRupee className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold" size={16} />
                                     <input

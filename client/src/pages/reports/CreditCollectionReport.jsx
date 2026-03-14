@@ -105,10 +105,10 @@ const CreditCollectionReport = () => {
                 </div>
 
                 {/* Filter Section */}
-                <div className="bg-white rounded-[2rem] shadow-premium border border-slate-100 p-8 no-print">
+                <div className="card p-8 no-print">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
                         <div className="md:col-span-2 relative">
-                            <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 ml-1">Search Customer</label>
+                            <label className="input-label mb-2 ml-1">Search Customer</label>
                             <div className="relative">
                                 <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                                 <input
@@ -147,7 +147,7 @@ const CreditCollectionReport = () => {
                         </div>
 
                         <div>
-                            <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 ml-1">Credit ID</label>
+                            <label className="input-label mb-2 ml-1">Credit ID</label>
                             <div className="relative">
                                 <Hash className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                                 <input
@@ -164,7 +164,7 @@ const CreditCollectionReport = () => {
 
                 {/* Report Table */}
                 {selectedCustomer && (
-                    <div className="bg-white rounded-[2rem] shadow-premium border border-slate-100 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="card !p-0 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <div className="p-8 border-b border-slate-100 bg-slate-50/50 no-print">
 
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">

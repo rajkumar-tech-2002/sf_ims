@@ -146,7 +146,7 @@ const LandingPage = () => {
                                     'Real-time Financial Vitals',
                                     'Audit Logs & Traceability'
                                 ].map((item, i) => (
-                                    <li key={i} className="flex items-center gap-3 text-slate-300">
+                                    <li key={item} className="flex items-center gap-3 text-slate-300">
                                         <ShieldCheck className="text-primary-500" size={18} />
                                         <span>{item}</span>
                                     </li>
@@ -202,8 +202,8 @@ const LandingPage = () => {
                     <div className="pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-6">
                         <p className="text-slate-400 text-sm">© 2026 Inventory Management System. All rights reserved.</p>
                         <div className="flex gap-8 text-sm font-medium text-slate-400">
-                            <a href="#" className="hover:text-primary-600 transition-colors">Privacy Policy</a>
-                            <a href="#" className="hover:text-primary-600 transition-colors">Terms of Service</a>
+                            <a href="/privacy" className="hover:text-primary-600 transition-colors">Privacy Policy</a>
+                            <a href="/terms" className="hover:text-primary-600 transition-colors">Terms of Service</a>
                         </div>
                     </div>
                 </div>
@@ -212,7 +212,8 @@ const LandingPage = () => {
     );
 };
 
-const FeatureCard = ({ icon, title, desc, tags = [] }) => (
+const EMPTY_TAGS = [];
+const FeatureCard = ({ icon, title, desc, tags = EMPTY_TAGS }) => (
     <div className="group p-8 rounded-[2.5rem] border border-slate-100 bg-slate-50/30 hover:bg-white hover:border-primary-100 hover:shadow-2xl hover:shadow-slate-200/50 transition-all duration-500">
         <div className="w-14 h-14 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-primary-50 group-hover:border-primary-100 transition-all duration-500">
             {React.cloneElement(icon, { size: 24 })}
@@ -223,7 +224,7 @@ const FeatureCard = ({ icon, title, desc, tags = [] }) => (
         </p>
         <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-100">
             {tags.map((tag, idx) => (
-                <span key={idx} className="px-2 py-1 bg-white border border-slate-100 rounded-lg text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                <span key={tag} className="px-2 py-1 bg-white border border-slate-100 rounded-lg text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                     {tag}
                 </span>
             ))}

@@ -164,7 +164,7 @@ const RawMaterialStockEntry = () => {
                 </div>
 
                 {/* Entry Form */}
-                <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300">
+                <div className="card !p-0 overflow-hidden transition-all duration-300">
                     <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white">
@@ -182,7 +182,7 @@ const RawMaterialStockEntry = () => {
                     <form onSubmit={handleSubmit} className="p-8 space-y-8">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                     <Hash size={12} className="text-primary-500" /> HSN Code</label>
                                 <input
                                     type="text"
@@ -194,7 +194,7 @@ const RawMaterialStockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                     <Hash size={12} className="text-primary-500" /> Product Code</label>
                                 <input
                                     type="text"
@@ -206,7 +206,7 @@ const RawMaterialStockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5 lg:col-span-2">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                     <Tag size={12} className="text-primary-500" /> Product Name</label>
                                 <input
                                     type="text"
@@ -219,7 +219,7 @@ const RawMaterialStockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5 lg:col-span-4">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                     <Package size={12} className="text-primary-500" /> Detail / Description</label>
                                 <textarea
                                     name="detail"
@@ -231,7 +231,7 @@ const RawMaterialStockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                     <Hash size={12} className="text-primary-500" /> Opening Quantity</label>
                                 <input
                                     type="number"
@@ -243,7 +243,7 @@ const RawMaterialStockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                     <IndianRupee size={12} className="text-primary-500" /> Price Rate</label>
                                 <div className="relative">
                                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
@@ -258,7 +258,7 @@ const RawMaterialStockEntry = () => {
                                 </div>
                             </div>
                             <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                     <Layers size={12} className="text-primary-500" /> Scale / Unit</label>
                                 <div className="relative">
                                     <select
@@ -279,7 +279,7 @@ const RawMaterialStockEntry = () => {
                                 </div>
                             </div>
                             <div className="space-y-1.5">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                     <Percent size={12} className="text-primary-500" /> GST</label>
                                 <input
                                     type="number"
@@ -291,7 +291,7 @@ const RawMaterialStockEntry = () => {
                                 />
                             </div>
                             <div className="space-y-1.5 lg:col-span-2">
-                                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                     <AlertTriangle size={12} className="text-primary-500" /> ReOrder Level</label>
                                 <input
                                     type="number"

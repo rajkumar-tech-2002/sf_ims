@@ -329,8 +329,8 @@ const Invoice = () => {
     };
 
     const handleImportQuotation = async (qNo) => {
-        const targetQNo = qNo || importQuotationNo;
-        if (!targetQNo.trim()) {
+        const targetQNo = typeof qNo === 'string' ? qNo : importQuotationNo;
+        if (!targetQNo || typeof targetQNo !== 'string' || !targetQNo.trim()) {
             showToast('warning', 'Please enter a quotation number');
             return;
         }
@@ -632,8 +632,8 @@ const Invoice = () => {
                         {/* Quotation Import & Bill Header */}
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                             {/* Import Card */}
-                            <div className="card !p-0 overflow-hidden transition-all hover:shadow-2xl hover:shadow-primary-500/5">
-                                <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center gap-4">
+                            <div className="card !p-0 transition-all hover:shadow-2xl hover:shadow-primary-500/5">
+                                <div className="px-8 py-6 border-b border-slate-100 bg-slate-50/50 flex items-center gap-4 rounded-t-[16px]">
                                     <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
                                         <Download size={20} />
                                     </div>
@@ -644,59 +644,57 @@ const Invoice = () => {
                                         <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-widest flex items-center gap-1.5">
                                             <Hash size={12} className="text-primary-500" /> Quotation Number</label>
                                         <div className="space-y-2">
-                                            <input
-                                                type="text"
-                                                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold placeholder:font-normal"
-                                                placeholder="QTN-XXXX"
-                                                value={importQuotationNo}
-                                                onChange={(e) => {
-                                                    const val = e.target.value.toUpperCase();
-                                                    setImportQuotationNo(val);
-                                                    if (val.trim()) {
-                                                        const filtered = quotationList.filter(q =>
-                                                            q.quotation_no.toUpperCase().includes(val) ||
-                                                            q.customer_name.toUpperCase().includes(val)
-                                                        ).slice(0, 5);
-                                                        setQuotationSuggestions(filtered);
-                                                        const rect = e.target.getBoundingClientRect();
-                                                        setImportDropdownPos({ top: rect.bottom + 4, left: rect.left });
-                                                        setShowQuotationSuggestions(true);
-                                                    } else {
-                                                        setShowQuotationSuggestions(false);
-                                                    }
-                                                }}
-                                                onBlur={() => setTimeout(() => setShowQuotationSuggestions(false), 200)}
-                                                onKeyDown={(e) => e.key === 'Enter' && handleImportQuotation()}
-                                            />
-
-                                            {showQuotationSuggestions && quotationSuggestions.length > 0 && (
-                                                <div
-                                                    style={{
-                                                        position: 'fixed',
-                                                        top: importDropdownPos.top,
-                                                        left: importDropdownPos.left,
-                                                        width: '300px',
-                                                        zIndex: 9999
+                                            <div className="relative">
+                                                <input
+                                                    type="text"
+                                                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none text-sm font-bold placeholder:font-normal"
+                                                    placeholder="QTN-XXXX"
+                                                    value={importQuotationNo}
+                                                    onChange={(e) => {
+                                                        const val = e.target.value.toUpperCase();
+                                                        setImportQuotationNo(val);
+                                                        if (val.trim()) {
+                                                            const filtered = quotationList.filter(q =>
+                                                                (q.quotation_no || '').toUpperCase().includes(val) ||
+                                                                (q.customer_name || '').toUpperCase().includes(val)
+                                                            ).slice(0, 5);
+                                                            setQuotationSuggestions(filtered);
+                                                            setShowQuotationSuggestions(true);
+                                                        } else {
+                                                            setShowQuotationSuggestions(false);
+                                                        }
                                                     }}
-                                                    className="bg-white border border-slate-200 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200"
-                                                >
-                                                    {quotationSuggestions.map((q) => (
-                                                        <button
-                                                            key={q.id}
-                                                            onMouseDown={() => handleImportQuotation(q.quotation_no)}
-                                                            className="w-full px-4 py-3 text-left hover:bg-primary-50 border-b border-slate-50 last:border-0 transition-colors group"
-                                                        >
-                                                            <div className="flex justify-between items-start">
-                                                                <div>
-                                                                    <p className="text-xs font-black text-primary-600 font-mono tracking-tighter uppercase">{q.quotation_no}</p>
-                                                                    <p className="text-[10px] font-bold text-slate-800 uppercase mt-0.5">{q.customer_name}</p>
+                                                    onKeyDown={(e) => e.key === 'Enter' && handleImportQuotation()}
+                                                />
+
+                                                {showQuotationSuggestions && quotationSuggestions.length > 0 && (
+                                                    <>
+                                                        <div className="absolute top-full left-0 w-full mt-2 bg-white border border-slate-200 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 z-[9999]">
+                                                            {quotationSuggestions.map((q) => (
+                                                            <button
+                                                                key={q.id}
+                                                                type="button"
+                                                                onClick={() => handleImportQuotation(q.quotation_no)}
+                                                                className="w-full px-4 py-3 text-left hover:bg-primary-50 border-b border-slate-50 last:border-0 transition-colors group"
+                                                            >
+                                                                <div className="flex justify-between items-start">
+                                                                    <div>
+                                                                        <p className="text-xs font-black text-primary-600 font-mono tracking-tighter uppercase">{q.quotation_no}</p>
+                                                                        <p className="text-[10px] font-bold text-slate-800 uppercase mt-0.5">{q.customer_name}</p>
+                                                                    </div>
+                                                                    <span className="text-[10px] font-black text-slate-400 group-hover:text-primary-500">{new Date(q.quotation_date).toLocaleDateString()}</span>
                                                                 </div>
-                                                                <span className="text-[10px] font-black text-slate-400 group-hover:text-primary-500">{new Date(q.quotation_date).toLocaleDateString()}</span>
-                                                            </div>
-                                                        </button>
-                                                    ))}
-                                                </div>
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                    {/* Click outside to close */}
+                                                    <div
+                                                        className="fixed inset-0 z-40"
+                                                        onClick={() => setShowQuotationSuggestions(false)}
+                                                    />
+                                                </>
                                             )}
+                                            </div>
                                             <button
                                                 onClick={handleImportQuotation}
                                                 disabled={loading || !canEdit(moduleId)}

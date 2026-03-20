@@ -8,22 +8,35 @@ const User = {
 
     findById: async (id) => {
         const [rows] = await pool.execute('SELECT * FROM users WHERE id = ?', [id]);
-        return rows[0];
+        if (!rows[0]) return null;
+        return {
+            ...rows[0],
+            permissions: typeof rows[0].permissions === 'string' ? JSON.parse(rows[0].permissions) : rows[0].permissions
+        };
     },
 
     getAll: async () => {
-        const [rows] = await pool.execute('SELECT id, user_name, user_role, qualification, department, user_id, contact, remark, status, permissions, created_at, updated_at FROM users');
+        const query = `
+            SELECT id, user_name, user_role, qualification, department, 
+                   user_id, contact, remark, status, permissions, created_at, updated_at,
+                   basic_salary, bank_name, bank_account, ifsc_code, other_bank_account, join_date
+            FROM users
+        `;
+        const [rows] = await pool.execute(query);
         return rows.map(r => ({ ...r, permissions: typeof r.permissions === 'string' ? JSON.parse(r.permissions) : r.permissions }));
     },
 
     create: async (userData) => {
         const {
             user_name, user_role, qualification, department,
-            user_id, password, contact, remark, status, permissions
+            user_id, password, contact, remark, status, permissions,
+            basic_salary, bank_name, bank_account, ifsc_code, other_bank_account, join_date
         } = userData;
 
         const [result] = await pool.execute(
-            'INSERT INTO users (user_name, user_role, qualification, department, user_id, password, contact, remark, status, permissions) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            `INSERT INTO users 
+            (user_name, user_role, qualification, department, user_id, password, contact, remark, status, permissions, basic_salary, bank_name, bank_account, ifsc_code, other_bank_account, join_date) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 user_name ?? null,
                 user_role ?? null,
@@ -34,7 +47,13 @@ const User = {
                 contact ?? null,
                 remark ?? null,
                 status ?? null,
-                permissions ? JSON.stringify(permissions) : null
+                permissions ? JSON.stringify(permissions) : null,
+                basic_salary || 0.00,
+                bank_name ?? null,
+                bank_account ?? null,
+                ifsc_code ?? null,
+                other_bank_account ?? null,
+                join_date ?? null
             ]
         );
         return result.insertId;

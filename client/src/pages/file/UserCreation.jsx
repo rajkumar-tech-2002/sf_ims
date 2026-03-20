@@ -71,6 +71,7 @@ const MODULE_CATEGORIES = [
 const UserCreation = () => {
     const { showToast, confirmToast } = useToast();
     const [users, setUsers] = useState([]);
+    const [bankMasterList, setBankMasterList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -87,15 +88,32 @@ const UserCreation = () => {
         user_id: '',
         password: '',
         user_role: 'Staff',
+        qualification: '',
         department: '',
         contact: '',
-        permissions: {}
+        permissions: {},
+        basic_salary: '',
+        bank_name: '',
+        bank_account: '',
+        ifsc_code: '',
+        other_bank_account: '',
+        join_date: ''
     });
 
     useEffect(() => {
         fetchUsers();
         fetchRoles();
+        fetchBanks();
     }, []);
+
+    const fetchBanks = async () => {
+        try {
+            const response = await api.get('/payroll/banks');
+            setBankMasterList(response.data);
+        } catch (error) {
+            console.error('Failed to fetch banks:', error);
+        }
+    };
 
     const fetchRoles = async () => {
         try {
@@ -135,15 +153,35 @@ const UserCreation = () => {
         }));
     };
 
+    const handleSetAllPermissions = (level) => {
+        const newPermissions = {};
+        MODULE_CATEGORIES.forEach(cat => {
+            cat.modules.forEach(mod => {
+                newPermissions[mod.id] = level;
+            });
+        });
+        setFormData(prev => ({
+            ...prev,
+            permissions: newPermissions
+        }));
+    };
+
     const resetForm = () => {
         setFormData({
             user_name: '',
             user_id: '',
             password: '',
             user_role: 'Staff',
+            qualification: '',
             department: '',
             contact: '',
-            permissions: {}
+            permissions: {},
+            basic_salary: '',
+            bank_name: '',
+            bank_account: '',
+            ifsc_code: '',
+            other_bank_account: '',
+            join_date: ''
         });
         setIsEditing(false);
         setEditingUserId(null);
@@ -178,9 +216,16 @@ const UserCreation = () => {
             user_id: user.user_id || '',
             password: '', // Don't show password
             user_role: user.user_role || 'Staff',
+            qualification: user.qualification || '',
             department: user.department || '',
             contact: user.contact || '',
-            permissions: user.permissions || {}
+            permissions: user.permissions || {},
+            basic_salary: user.basic_salary || '',
+            bank_name: user.bank_name || '',
+            bank_account: user.bank_account || '',
+            ifsc_code: user.ifsc_code || '',
+            other_bank_account: user.other_bank_account || '',
+            join_date: user.join_date ? user.join_date.split('T')[0] : ''
         });
         setEditingUserId(user.id);
         setIsEditing(true);
@@ -257,6 +302,22 @@ const UserCreation = () => {
                 <div className="flex items-center gap-2">
                     <Shield size={14} className="text-primary-500" />
                     <span className="font-bold text-slate-600">{value || 'N/A'}</span>
+                </div>
+            )
+        },
+        {
+            key: 'payroll_info',
+            label: 'Payroll Info',
+            render: (_, user) => (
+                <div className="flex flex-col gap-0.5 text-xs">
+                    {user.basic_salary ? (
+                        <>
+                            <span className="font-bold text-emerald-600">₹{user.basic_salary}</span>
+                            <span className="text-[10px] text-slate-500 uppercase tracking-wider">{user.bank_name || 'No Bank'} - {user.bank_account || 'N/A'}</span>
+                        </>
+                    ) : (
+                        <span className="text-slate-400 italic">Not set</span>
+                    )}
                 </div>
             )
         },
@@ -412,6 +473,21 @@ const UserCreation = () => {
 
                                         <div className="space-y-3">
                                             <label className="input-label mb-2 ml-1 flex items-center gap-2">
+                                                <GraduationCap size={14} className="text-primary-500" /> Qualification
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="qualification"
+                                                value={formData.qualification}
+                                                onChange={handleInputChange}
+                                                className="input-field"
+                                                placeholder="e.g. B.Tech / MBA"
+                                                disabled={isEditing}
+                                            />
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
                                                 <Briefcase size={14} className="text-primary-500" /> Department
                                             </label>
                                             <input
@@ -485,16 +561,124 @@ const UserCreation = () => {
                                     </div>
                                 </div>
 
-                                {/* Permissions Matrix */}
+                                {/* Payroll & Employee Details Row */}
+                                <div className="space-y-6">
+                                    <h3 className="text-[11px] font-black text-primary-600 uppercase tracking-[0.25em] flex items-center gap-2">
+                                        <span className="w-1.5 h-1.5 bg-primary-600 rounded-full"></span> Payroll & Employee Details
+                                    </h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 gap-y-10">
+                                        <div className="space-y-3">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
+                                                <Briefcase size={14} className="text-primary-500" /> Basic Salary
+                                            </label>
+                                            <input
+                                                type="number"
+                                                name="basic_salary"
+                                                value={formData.basic_salary}
+                                                onChange={handleInputChange}
+                                                className="input-field"
+                                                placeholder="e.g. 50000"
+                                                disabled={isEditing}
+                                            />
+                                        </div>
+                                        <div className="space-y-3">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
+                                                <Hash size={14} className="text-primary-500" /> Bank Name
+                                            </label>
+                                            <input
+                                                list="bank-names"
+                                                name="bank_name"
+                                                value={formData.bank_name}
+                                                onChange={handleInputChange}
+                                                className="input-field"
+                                                placeholder="e.g. State Bank of India"
+                                                disabled={isEditing}
+                                                autoComplete="off"
+                                            />
+                                            <datalist id="bank-names">
+                                                {bankMasterList.map(bank => (
+                                                    <option key={bank.id} value={bank.bank_name} />
+                                                ))}
+                                            </datalist>
+                                        </div>
+                                        <div className="space-y-3">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
+                                                <Hash size={14} className="text-primary-500" /> Bank Account
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="bank_account"
+                                                value={formData.bank_account}
+                                                onChange={handleInputChange}
+                                                className="input-field"
+                                                placeholder="Account Number"
+                                                disabled={isEditing}
+                                            />
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
+                                                <Hash size={14} className="text-primary-500" /> IFSC Code
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="ifsc_code"
+                                                value={formData.ifsc_code}
+                                                onChange={handleInputChange}
+                                                className="input-field uppercase"
+                                                placeholder="e.g. SBIN0001234"
+                                                disabled={isEditing}
+                                            />
+                                        </div>
+                                        <div className="space-y-3">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
+                                                <Hash size={14} className="text-primary-500" /> Other Bank Acct (Opt)
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="other_bank_account"
+                                                value={formData.other_bank_account}
+                                                onChange={handleInputChange}
+                                                className="input-field"
+                                                placeholder="Other Account Number"
+                                                disabled={isEditing}
+                                            />
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <label className="input-label mb-2 ml-1 flex items-center gap-2">
+                                                <Check size={14} className="text-primary-500" /> Joining Date
+                                            </label>
+                                            <input
+                                                type="date"
+                                                name="join_date"
+                                                value={formData.join_date}
+                                                onChange={handleInputChange}
+                                                className="input-field"
+                                                disabled={isEditing}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div className="space-y-8 pt-4">
-                                    <div className="flex items-center justify-between">
+                                    <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                                         <h3 className="text-[11px] font-black text-primary-600 uppercase tracking-[0.25em] flex items-center gap-2">
                                             <span className="w-1.5 h-1.5 bg-primary-600 rounded-full"></span> Module Access Control Matrix
                                         </h3>
-                                        <div className="flex items-center gap-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                                            <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-slate-200"></div> No Access</span>
-                                            <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-blue-500"></div> View Only</span>
-                                            <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-emerald-500"></div> Edit & Save</span>
+
+                                        <div className="flex flex-wrap items-center gap-4">
+                                            <div className="flex bg-slate-100 p-1 rounded-lg border border-slate-200 shadow-inner">
+                                                <button type="button" onClick={() => handleSetAllPermissions('none')} className="px-3 py-1.5 rounded-md text-[9px] font-black uppercase tracking-tighter transition-all hover:bg-white hover:text-slate-600 text-slate-500">Clear All</button>
+                                                <button type="button" onClick={() => handleSetAllPermissions('view')} className="px-3 py-1.5 rounded-md text-[9px] font-black uppercase tracking-tighter transition-all hover:bg-blue-600 hover:text-white text-slate-500">View All</button>
+                                                <button type="button" onClick={() => handleSetAllPermissions('edit')} className="px-3 py-1.5 rounded-md text-[9px] font-black uppercase tracking-tighter transition-all hover:bg-emerald-600 hover:text-white text-slate-500">Edit All</button>
+                                            </div>
+
+                                            <div className="hidden xl:flex items-center gap-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-4 border-l border-slate-200">
+                                                <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-slate-200"></div> No Access</span>
+                                                <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-blue-500"></div> View Only</span>
+                                                <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-emerald-500"></div> Edit & Save</span>
+                                            </div>
                                         </div>
                                     </div>
 

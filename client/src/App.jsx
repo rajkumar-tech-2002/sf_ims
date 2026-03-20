@@ -29,6 +29,15 @@ import RawMaterialPurchaseReport from './pages/reports/RawMaterialPurchaseReport
 import IncomeExpenseReport from './pages/reports/IncomeExpenseReport';
 import CashBook from './pages/reports/CashBook';
 import CreditCollectionReport from './pages/reports/CreditCollectionReport';
+
+// Payroll Module Imports
+import PayrollLayout from './layouts/PayrollLayout';
+import PayrollDashboard from './pages/payroll/PayrollDashboard';
+import EmployeeManagement from './pages/payroll/EmployeeManagement';
+import AttendanceEntry from './pages/payroll/AttendanceEntry';
+import SalaryProcessing from './pages/payroll/SalaryProcessing';
+import PayrollReports from './pages/payroll/PayrollReports';
+
 import NotFound from './pages/main-pages/NotFound';
 import MainLayout from './layouts/MainLayout';
 import { AuthProvider } from './context/AuthContext';
@@ -75,6 +84,13 @@ function App() {
                                 <Route path="/transactions" element={<Transactions />} />
                                 <Route path="/assets" element={<Assets />} />
                                 <Route path="/credit-collection-report" element={<CreditCollectionReport />} />
+                            </Route>
+                            <Route element={<PayrollLayout />}>
+                                <Route path="/payroll/dashboard" element={<PayrollDashboard />} />
+                                <Route path="/payroll/employees" element={<EmployeeManagement />} />
+                                <Route path="/payroll/attendance" element={<AttendanceEntry />} />
+                                <Route path="/payroll/salary" element={<SalaryProcessing />} />
+                                <Route path="/payroll/reports" element={<PayrollReports />} />
                             </Route>
                         </Route>
 

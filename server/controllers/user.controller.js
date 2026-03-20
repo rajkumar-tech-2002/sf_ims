@@ -22,16 +22,22 @@ const createUser = async (req, res) => {
 
         // Create new user (should hash password if needed)
         const newUserId = await User.create({
-            user_name,
-            user_role,
-            qualification,
-            department,
-            user_id,
-            password, // Save as plain text for now or hash
-            contact,
-            remark,
-            status: status || 'Active',
-            permissions: permissions || {}
+            user_name: req.body.user_name,
+            user_role: req.body.user_role,
+            qualification: req.body.qualification,
+            department: req.body.department,
+            user_id: req.body.user_id,
+            password: req.body.password,
+            contact: req.body.contact,
+            remark: req.body.remark,
+            status: req.body.status || 'Active',
+            permissions: req.body.permissions || {},
+            basic_salary: req.body.basic_salary,
+            bank_name: req.body.bank_name,
+            bank_account: req.body.bank_account,
+            ifsc_code: req.body.ifsc_code,
+            other_bank_account: req.body.other_bank_account,
+            join_date: req.body.join_date
         });
 
         res.status(201).json({ message: 'User created successfully', id: newUserId });

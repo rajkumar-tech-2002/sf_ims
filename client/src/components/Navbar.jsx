@@ -5,7 +5,7 @@ import { useSidebar } from '../context/SidebarContext';
 import { LogOut, User, ChevronDown, Calendar, Search, Menu, Plus } from 'lucide-react';
 import NotificationBell from './NotificationBell';
 
-const Navbar = () => {
+const Navbar = ({ hideNotification = false, hideProfile = false }) => {
     const { user, logout } = useAuth();
     const { toggleSidebar, searchQuery, setSearchQuery } = useSidebar();
     const navigate = useNavigate();
@@ -46,7 +46,7 @@ const Navbar = () => {
                     </button>
                 </div> */}
 
-                <NotificationBell />
+                {!hideNotification && <NotificationBell />}
 
                 {/* Profile Dropdown */}
                 <div className="relative">
@@ -71,15 +71,21 @@ const Navbar = () => {
                                     <p className="text-sm font-semibold text-slate-800 capitalize">{user?.user_name}</p>
                                     <p className="text-[11px] text-slate-500 font-medium uppercase tracking-wider">{user?.user_role}</p>
                                 </div>
-                                <MenuItem
-                                    icon={<User size={16} />}
-                                    label="My Profile"
-                                    onClick={() => {
-                                        navigate('/profile');
-                                        setIsProfileOpen(false);
-                                    }}
-                                />
-                                <div className="h-px bg-slate-100 my-1 mx-2" />
+
+                                {!hideProfile && (
+                                    <>
+                                        <MenuItem
+                                            icon={<User size={16} />}
+                                            label="My Profile"
+                                            onClick={() => {
+                                                navigate('/profile');
+                                                setIsProfileOpen(false);
+                                            }}
+                                        />
+                                        <div className="h-px bg-slate-100 my-1 mx-2" />
+                                    </>
+                                )}
+
                                 <button
                                     onClick={logout}
                                     className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-danger-600 hover:bg-danger-50 rounded-xl transition-colors"

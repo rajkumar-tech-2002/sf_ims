@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import api from '../utils/api';
 
 const AuthContext = createContext();
 
@@ -10,14 +11,9 @@ export const AuthProvider = ({ children }) => {
         // Check for existing session on mount
         const checkSession = async () => {
             try {
-                const response = await fetch('/api/auth/me', {
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include'
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    const userData = data.user;
-                    setUser(userData);
+                const response = await api.get('/auth/me');
+                if (response.data && response.data.user) {
+                    setUser(response.data.user);
                 } else {
                     setUser(null);
                 }
@@ -38,10 +34,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await fetch('/api/auth/logout', {
-                method: 'POST',
-                credentials: 'include'
-            });
+            await api.post('/auth/logout');
             setUser(null);
         } catch (error) {
             console.error('Logout failed:', error);

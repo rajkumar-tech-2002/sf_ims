@@ -23,6 +23,7 @@ const creditCollectionRoutes = require('./routes/creditCollection.routes');
 const incomeExpenseRoutes = require('./routes/incomeExpense.routes');
 const transactionRoutes = require('./routes/transaction.routes');
 const assetRoutes = require('./routes/assets.routes');
+const payrollRoutes = require('./routes/payroll.routes');
 
 const app = express();
 
@@ -55,6 +56,7 @@ app.use('/api/credit-collections', creditCollectionRoutes);
 app.use('/api/income-expenses', incomeExpenseRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/assets', assetRoutes);
+app.use('/api/payroll', payrollRoutes);
 
 // Basic error handler
 app.use((err, req, res, next) => {

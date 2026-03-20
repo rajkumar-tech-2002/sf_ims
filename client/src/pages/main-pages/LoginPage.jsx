@@ -10,6 +10,7 @@ const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [role, setRole] = useState('');
     const [roles, setRoles] = useState([]);
+    const [moduleType, setModuleType] = useState('inventory');
     const { login } = useAuth();
     const { showToast } = useToast();
     const navigate = useNavigate();
@@ -39,6 +40,11 @@ const LoginPage = () => {
             return;
         }
 
+        if (role === 'Staff' && moduleType === 'payroll') {
+            showToast('error', 'Staff accounts do not have access to the Payroll module');
+            return;
+        }
+
         try {
             const response = await fetch('/api/auth/login', {
                 method: 'POST',
@@ -52,7 +58,7 @@ const LoginPage = () => {
             if (response.ok) {
                 login(data.user);
                 showToast('success', `Welcome back, ${data.user.user_name}!`);
-                navigate('/dashboard');
+                navigate(moduleType === 'payroll' ? '/payroll/dashboard' : '/dashboard');
             } else {
                 showToast('error', data.message || 'Login failed');
             }
@@ -122,12 +128,36 @@ const LoginPage = () => {
                                     required
                                     className="input-field appearance-none bg-white"
                                     value={role}
-                                    onChange={(e) => setRole(e.target.value)}
+                                    onChange={(e) => {
+                                        const newRole = e.target.value;
+                                        setRole(newRole);
+                                        if (newRole === 'Staff' && moduleType === 'payroll') {
+                                            setModuleType('inventory');
+                                        }
+                                    }}
                                 >
                                     <option value="">Select your role</option>
                                     {roles.map((r) => (
                                         <option key={r} value={r}>{r}</option>
                                     ))}
+                                </select>
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                                    <ChevronDown size={18} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label className="input-label flex items-center gap-2">
+                                <Package size={16} className="text-slate-400" /> Select Module</label>
+                            <div className="relative">
+                                <select
+                                    required
+                                    className="input-field appearance-none bg-white"
+                                    value={moduleType}
+                                    onChange={(e) => setModuleType(e.target.value)}
+                                >
+                                    <option value="inventory">Inventory Management</option>
+                                    <option value="payroll" disabled={role === 'Staff'}>Payroll System {role === 'Staff' ? '(Restricted)' : ''}</option>
                                 </select>
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
                                     <ChevronDown size={18} />
